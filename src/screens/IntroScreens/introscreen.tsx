@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
-import { styles }from '../../styles/introstyle/introstyle';
+import {  Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useMemo } from 'react';
+import { useTheme } from '../../utils/themeManager';
+import { Styles } from '../../styles/introstyle/introstyle';
+
 const IntroScreen = ({ navigation }: any) => {
+  const { theme } = useTheme();
+  const styles = useMemo(() => Styles(theme), [theme]);
   return (
     <View style={styles.container}>
       <Image
@@ -15,8 +19,8 @@ const IntroScreen = ({ navigation }: any) => {
       </Text>
 
       <TouchableOpacity
-    style={styles.button}
-    onPress={() => navigation.replace('Drawer')}
+        style={styles.button}
+        onPress={() => navigation.replace('Drawer')}
       >
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>

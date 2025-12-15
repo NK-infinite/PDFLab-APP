@@ -1,17 +1,17 @@
 import { StyleSheet, useColorScheme } from "react-native";
-import {isDark  } from '../../utils/themeManager';
-
-
-export const style = StyleSheet .create({
+import { ThemeType, useTheme } from "../../utils/themeManager";
+export const Style = (theme:ThemeType)=>
+    
+    StyleSheet .create({
    
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: isDark ? "#000" : "#fff",
+        backgroundColor: theme.background,
     },
     text:{
-        color: isDark ? "#fff" : "#000",
+        color:theme.textPrimary,
         fontSize: 30
     }
 });

@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
-import { isDark } from "../../utils/themeManager";
-
-export  const styles = StyleSheet.create({
+import { ThemeType  } from '../../utils/themeManager';
+export  const Styles =(theme:ThemeType) =>
+  
+  StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: isDark ? '#000' :  '#fff',
+    backgroundColor: theme.background,
   },
   logo: {
     width: 200,
@@ -18,12 +19,12 @@ export  const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: isDark ? '#fff' : '#000',
+    color: theme.textPrimary,
   },
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
-    color:isDark ? '#c4bcbcff' : '#555',
+    color: theme.textSecondary,
     marginBottom: 40,
   },
   button: {

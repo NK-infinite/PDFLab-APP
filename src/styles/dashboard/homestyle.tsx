@@ -4,9 +4,7 @@ import {useTheme  }from '../../utils/themeManager';
 import { ThemeType } from '../../utils/themeManager';
 export const Styles = (theme:ThemeType) =>
 
-
  StyleSheet.create({
-  
    container: {
     flex: 1,
     backgroundColor: theme.background,
@@ -47,6 +45,8 @@ export const Styles = (theme:ThemeType) =>
     marginRight: 12,
     padding: 14,
     borderRadius: 14,
+    borderWidth: 2,
+    borderColor: theme.quickCardBorder,
     alignItems: 'center',
     minWidth: 110,
     shadowColor: '#000',
@@ -69,6 +69,8 @@ export const Styles = (theme:ThemeType) =>
     backgroundColor: theme.toolCard,
     margin: 8,
     borderRadius: 14,
+    borderWidth: 2,
+    borderColor: theme.toolCardBorder,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
@@ -91,6 +93,8 @@ export const Styles = (theme:ThemeType) =>
     height: 80,
     backgroundColor: theme.recentCard,
     borderRadius: 12,
+    borderWidth: 2,
+    borderColor: theme.recentCardBorder,
     marginRight: 12,
     elevation: 3,
     padding: 10,
