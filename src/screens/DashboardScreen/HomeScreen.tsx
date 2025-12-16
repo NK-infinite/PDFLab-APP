@@ -23,8 +23,8 @@ const HomeScreen = () => {
     const Animation2 = useSharedValue(0);
     const navigation = useNavigation<any>();
     const isFocused = useIsFocused();
-    const [styles, setStyles] = useState(Styles(theme));
-
+    //const [styles, setStyles] = useState(Styles(theme));
+   const styles = useMemo(() => Styles(theme), [theme]);
     const gearAnimation = () => {
         Animation.value = (withSpring(Animation.value + 120, { duration: 500 }))
         Animation2.value = (withSpring(1, { duration: 500 }))

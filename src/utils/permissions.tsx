@@ -1,48 +1,28 @@
-import { useEffect } from 'react';
-import { PermissionsAndroid, Platform, Alert } from 'react-native';
+// utils/permissions.ts (The FIX)
+import { PermissionsAndroid, Platform, Alert, Linking } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const useRequestPermissions = () => {
-  useEffect(() => {
-    const requestAllPermissions = async () => {
-      if (Platform.OS === 'android' && Platform.Version >= 23) {
-        try {
-          const storage = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-            {
-              title: 'Storage Permission',
-              message: 'App needs access to your storage to save PDFs',
-              buttonNeutral: 'Ask Me Later',
-              buttonNegative: 'Cancel',
-              buttonPositive: 'OK',
-            }
-          );
+export const requestStoragePermissions = async () => {
+  
+    try {
+        const results = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      ]);
 
-          const readStorage = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-            {
-              title: 'Read Storage Permission',
-              message: 'App needs access to read your PDFs',
-              buttonNeutral: 'Ask Me Later',
-              buttonNegative: 'Cancel',
-              buttonPositive: 'OK',
-            }
-          );
+      const writeResult = results['android.permission.WRITE_EXTERNAL_STORAGE'];
+      const readResult = results['android.permission.READ_EXTERNAL_STORAGE'];
 
-          if (
-            storage !== PermissionsAndroid.RESULTS.GRANTED ||
-            readStorage !== PermissionsAndroid.RESULTS.GRANTED
-          ) {
-            Alert.alert(
-              'Permission Denied',
-              'Storage permission is required to compress PDFs'
-            );
-          }
-        } catch (err) {
-          console.warn(err);
-        }
+      const allGranted = writeResult === PermissionsAndroid.RESULTS.GRANTED && readResult === PermissionsAndroid.RESULTS.GRANTED;
+
+      if (allGranted) {
+        return true; // Access granted
       }
-    };
 
-    requestAllPermissions();
-  }, []);
+  
+    } catch (err) {
+      console.warn('Permission error:', err);
+      return false;
+    }
+  
 };

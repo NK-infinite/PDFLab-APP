@@ -29,6 +29,7 @@ export  const Styles = (theme: ThemeType) => {
     },
     cardContainer: {
       marginTop: 8,
+      flex: 1,
     },
     title: {
       fontSize: 28,

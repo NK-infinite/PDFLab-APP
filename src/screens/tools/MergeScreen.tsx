@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useMemo, useState } from 'react';
 import { View, Text,  FlatList,  } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useTheme } from '../../utils/themeManager';
@@ -20,12 +20,13 @@ interface PDFFile {
 const MergeScreen = ({ navigation }: any) => {
 
   const { theme } = useTheme();
-  // const styles = useMemo(() => Styles(theme), [theme]);
+  const styles = useMemo(() => Styles(theme), [theme]);
 
   const [files, setFiles] = useState<PDFFile[]>([]);
   const [isPicking, setIsPicking] = useState(false);
   const [isMerging, setIsMerging] = useState(false);
-  const [styles, setStyles] = useState(Styles(theme));
+  
+ // const [styles, setStyles] = useState(Styles(theme));
 
   // useEffect(() => {
   //         // Development-only interval to refresh styles

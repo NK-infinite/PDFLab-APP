@@ -8,7 +8,7 @@ import {
     TextInput,
     ScrollView,
 } from 'react-native';
-import React, {  useState } from 'react';
+import React, {  useMemo, useState } from 'react';
 import { useTheme } from '../../utils/themeManager';
 import Animated, { BounceInLeft, BounceInRight,  } from 'react-native-reanimated';
 import { Styles } from '../../styles/toolsstyle/splitstyle';
@@ -34,10 +34,10 @@ const SplitScreen = ({ navigation, route }: any) => {
     const [splitSize, setSplitSize] = useState('');
     const [splitMode, setSplitMode] = useState<'separate' | 'single'>('separate');
     const [outputFiles, setOutputFiles] = useState<{ path: string; name: string }[]>([]);
-    //const styles = useMemo(() => Styles(theme), [theme]);
+    const styles = useMemo(() => Styles(theme), [theme]);
 
 
-    const [styles, setStyles] = useState(Styles(theme));
+    //const [styles, setStyles] = useState(Styles(theme));
 
     // useEffect(() => {
     //     if (__DEV__) {

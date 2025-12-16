@@ -5,26 +5,29 @@ import { Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useTheme } from '../../utils/themeManager'
 import { Style } from '../../styles/introstyle/splashstyle'
+
 const Splashscreen = ({ navigation }: any) => {
   const { theme } = useTheme();
   const style = useMemo(() => Style(theme), [theme]);
-  useEffect(() => {
-    const checkFirstLaunch = async () => {
-      const hasLaunched = await AsyncStorage.getItem('firtstime');
-      setTimeout(async () => {
-        if (!hasLaunched) {
-          await AsyncStorage.setItem('firtstime', 'true');
-          navigation.replace('IntroScreen');
-        } else {
-          navigation.replace('Drawer');
-        }
-      }, 2500);
-    };
+ 
+// Splashscreen.tsx
+useEffect(() => {
+  const checkFirstLaunch = async () => {
+    const hasLaunched = await AsyncStorage.getItem('firtstime');
 
-    checkFirstLaunch();
-  }, []);
+    setTimeout(async () => {
+      if (!hasLaunched) {
+        await AsyncStorage.setItem('firtstime', 'true');
+        navigation.replace('IntroScreen');
+      } else {
+        // Always go to IntroScreen for permissions
+        navigation.replace('Home');
+      }
+    }, 2500);
+  };
 
-
+  checkFirstLaunch();
+}, []);
   return (
     <View style={style.container}>
 

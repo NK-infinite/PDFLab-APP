@@ -49,8 +49,7 @@ export const Styles = (theme: ThemeType) => {
 
         // PDF Preview
         pdfPreviewContainer: {
-            marginBottom: 15,
-            
+            marginBottom: 15,   
         },
 
         pdfCard: {
