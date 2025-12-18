@@ -41,7 +41,7 @@ export type ThemeType = {
   quickCard: string;
   quickCardBorder: string;
   toolCard: string;
-  toolCardBorder: string,       // blu
+  toolCardBorder: string,      
   recentCard: string;
   recentCardBorder: string;
   textPrimary: string;

@@ -1,5 +1,5 @@
 import { FlatList, Image, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useEffect,  useState, } from 'react'
+import React, { useEffect,  useMemo,  useState, } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Animated, {
@@ -22,8 +22,8 @@ const HomeScreen = () => {
     const Animation2 = useSharedValue(0);
     const navigation = useNavigation<any>();
     const isFocused = useIsFocused();
-    const [styles, setStyles] = useState(Styles(theme));
-    //const styles = useMemo(() => Styles(theme), [theme]);
+   // const [styles, setStyles] = useState(Styles(theme));
+    const styles = useMemo(() => Styles(theme), [theme]);
 
     const gearAnimation = () => {
         Animation.value = (withSpring(Animation.value + 120, { duration: 500 }))
@@ -38,15 +38,15 @@ const HomeScreen = () => {
         transform: [{ translateX: -Animation2.value * 150 }],
     }));
 
-    useEffect(() => {
-        // Development-only interval to refresh styles
-        if (__DEV__) {
-            const interval = setInterval(() => {
-                setStyles(Styles(theme));
-            }, 200); // 200ms, adjust if needed
-            return () => clearInterval(interval);
-        }
-    }, [theme]);
+    // useEffect(() => {
+    //     // Development-only interval to refresh styles
+    //     if (__DEV__) {
+    //         const interval = setInterval(() => {
+    //             setStyles(Styles(theme));
+    //         }, 200); // 200ms, adjust if needed
+    //         return () => clearInterval(interval);
+    //     }
+    // }, [theme]);
 
 
     const QUICK_ACTIONS = [
@@ -62,8 +62,8 @@ const HomeScreen = () => {
         //{ key: 'unlock', label: 'Unlock-PDF', icon: 'lock-open' },
         { key: 'pagenum', label: 'Page No.', icon: 'arrow-down-1-9' },
         //{ key: 'pdf2img', label: 'PDF → Image', icon: 'file-image' },
-        { key: 'meta', label: 'Metadata', icon: 'file-pen' },
-        { key: 'blank', label: 'Add Page in PDf', icon: 'file-circle-plus' },
+        { key: 'metadata', label: 'Metadata', icon: 'file-pen' },
+        { key: 'addpage', label: 'Add Page in PDf', icon: 'file-circle-plus' },
     ];
 
     const RECENT_FILES = [

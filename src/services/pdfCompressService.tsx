@@ -9,28 +9,28 @@ interface PDFFile {
 
 export const compressPDF = async (file: PDFFile): Promise<PDFFile | null> => {
   try {
-    // 1️⃣ Read the PDF as base64
+    // 1️ Read the PDF as base64
     console.log('1');
     
     const pdfBase64 = await RNFS.readFile(file.uri, 'base64');
     const pdfBytes = Buffer.from(pdfBase64, 'base64');
     
     console.log('2');
-    // 2️⃣ Load the existing PDF
+    // 2️ Load the existing PDF
     const oldPdf = await PDFDocument.load(pdfBytes);
     
     
     console.log('3');
-    // 3️⃣ Create a new PDF
+    // 3️ Create a new PDF
     const newPdf = await PDFDocument.create();
     
     console.log('4');
-    // 4️⃣ Copy all pages from old PDF
+    // 4️ Copy all pages from old PDF
     const pages = await newPdf.copyPages(oldPdf, oldPdf.getPageIndices());
     pages.forEach(page => newPdf.addPage(page));
     
     console.log('5');
-    // 5️⃣ Save the new PDF
+    // 5️ Save the new PDF
     const newPdfBytes = await newPdf.save();
     const outputPath = `${RNFS.DownloadDirectoryPath}/compressed_${file.name}`;
     await RNFS.writeFile(outputPath, Buffer.from(newPdfBytes).toString('base64'), 'base64');

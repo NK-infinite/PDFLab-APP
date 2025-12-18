@@ -15,20 +15,20 @@ import { protectPDFFile } from '../../services/protectPdf';
 
 const protect_pdf = ({ navigation }: any) => {
     const { theme } = useTheme();
-    //const style = useMemo(() => Styles(theme), [theme]);
+    const style = useMemo(() => Styles(theme), [theme]);
     const [Files, setFiles] = React.useState<PDFFile[]>([]);
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmpassword, setconfirmpassword] = useState('');
-    const [style, setStyles] = useState(Styles(theme));
+    //const [style, setStyles] = useState(Styles(theme));
 
-    useEffect(() => {
-        if (__DEV__) {
-            const interval = setInterval(() => setStyles(Styles(theme)), 200);
-            return () => clearInterval(interval);
-        }
-    }, [theme]);
+    // useEffect(() => {
+    //     if (__DEV__) {
+    //         const interval = setInterval(() => setStyles(Styles(theme)), 200);
+    //         return () => clearInterval(interval);
+    //     }
+    // }, [theme]);
 
     const handleFileSelect = (selectedFiles: PDFFile[]) => {
         setFiles(selectedFiles);
@@ -57,7 +57,7 @@ const protect_pdf = ({ navigation }: any) => {
 
         const protectedPath = await protectPDFFile(Files[0].uri, password);
         if (protectedPath) {
-            Alert.alert('Success',`1PDF Protected! Saved to:\n${protectedPath}`);
+            Alert.alert('Success', `1PDF Protected! Saved to:\n${protectedPath}`);
         }
     }
 
@@ -156,6 +156,14 @@ const protect_pdf = ({ navigation }: any) => {
                                 <ClearButton onPress={() => setFiles([])} />
                             </View>
                         </>
+                    )}
+                    
+                    {Files.length === 0 && (
+                        <View style={style.placeholder}>
+                            <Icon name="file-pdf" size={80} color={theme.textSecondary} />
+                            <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
+                            <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
+                        </View>
                     )}
                 </View>
             </ScrollView>

@@ -11,6 +11,8 @@ import scanScreen from '../screens/tools/scanScreen';
 import image_pdfScreen from '../screens/tools/image_pdfScreen';
 import protect_pdf from '../screens/tools/protect_pdfScreen';
 import pagenum from '../screens/tools/pagenum';
+import MataData from '../screens/tools/MataDataScreen';
+import AddPage_pdf from '../screens/tools/AddPage_pdf';
 
 const Pagenavigations = () => {
   const Stack = createNativeStackNavigator();
@@ -28,6 +30,8 @@ const Pagenavigations = () => {
         <Stack.Screen name="scan" component={scanScreen} />
         <Stack.Screen name="protect" component={protect_pdf} />
         <Stack.Screen name="pagenum" component={pagenum} />
+        <Stack.Screen name="metadata" component={MataData} />
+        <Stack.Screen name="addpage" component={AddPage_pdf} />
       </Stack.Navigator>
 
     </NavigationContainer>
