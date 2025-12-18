@@ -44,28 +44,28 @@ const CompressScreen = ({ navigation }: CompressScreenProps) => {
     }
   };
 
- const handleCompress = async () => {
-  if (files.length === 0) {
-    Alert.alert('No File', 'Please select a PDF file first');
-    return;
-  }
-
-  setIsCompressing(true);
-
-  try {
-    const compressed = await compressPDF(files[0]); 
-    if (compressed) {
-      setCompressedFile(compressed);
-      Alert.alert('Success', 'PDF compressed successfully!');
-    } else {
-      Alert.alert('Failed', 'Compression failed.');
+  const handleCompress = async () => {
+    if (files.length === 0) {
+      Alert.alert('No File', 'Please select a PDF file first');
+      return;
     }
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setIsCompressing(false);
-  }
-};
+
+    setIsCompressing(true);
+
+    try {
+      const compressed = await compressPDF(files[0]);
+      if (compressed) {
+        setCompressedFile(compressed);
+        Alert.alert('Success', 'PDF compressed successfully!');
+      } else {
+        Alert.alert('Failed', 'Compression failed.');
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsCompressing(false);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>

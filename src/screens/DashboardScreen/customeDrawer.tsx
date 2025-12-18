@@ -14,7 +14,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
 
     <View style={styles.container}>
 
-      <View style={styles.header}>
+      <View style={[styles.header]}>
         <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
           <Icon name="arrow-left" size={24} color={theme.textPrimary} />
         </TouchableOpacity>

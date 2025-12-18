@@ -25,7 +25,7 @@ const SelectPDFButton = ({
 
     setIsPicking(true);
     try {
-      const selectedFiles = await selectPDFs();  
+      const selectedFiles = await selectPDFs();
       onFilesSelected(selectedFiles);
     } catch (err) {
       console.log("Error picking PDFs:", err);

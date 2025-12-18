@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@pdfsmaller/pdf-encrypt-lite": "^1.0.1",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-documents/picker": "^11.0.3",
     "@react-native-vector-icons/fontawesome6": "^12.3.0",

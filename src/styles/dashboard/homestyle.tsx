@@ -11,6 +11,7 @@ export const Styles = (theme:ThemeType) =>
   },
 
   header: {
+
     padding: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -41,6 +42,7 @@ export const Styles = (theme:ThemeType) =>
 
   // Quick Actions
   quickCard: {
+    position: 'relative',
     backgroundColor: theme.quickCard,
     marginRight: 12,
     padding: 14,
@@ -64,6 +66,7 @@ export const Styles = (theme:ThemeType) =>
 
   // Featured Tools
   toolCard: {
+
     width: SCREEN_WIDTH / 2 - 18,
     height: SCREEN_WIDTH / 2.3,
     backgroundColor: theme.toolCard,
@@ -89,6 +92,7 @@ export const Styles = (theme:ThemeType) =>
 
   // Recent Files
   recentCard: {
+
     width: 260,
     height: 80,
     backgroundColor: theme.recentCard,
@@ -122,7 +126,7 @@ export const Styles = (theme:ThemeType) =>
   },
 
   section: {
-    marginTop: 15,
+    paddingTop: 15,
   },
 
   viewAllBtn: {

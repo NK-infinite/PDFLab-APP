@@ -12,7 +12,7 @@ export const Styles = (theme:ThemeType) =>
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 16,
-        paddingTop: 50, 
+        paddingTop: 50,
         borderBottomWidth: 1,
         borderBottomColor: theme.header,
     },

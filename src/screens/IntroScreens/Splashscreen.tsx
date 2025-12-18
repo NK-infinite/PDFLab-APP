@@ -17,11 +17,9 @@ useEffect(() => {
 
     setTimeout(async () => {
       if (!hasLaunched) {
-        await AsyncStorage.setItem('firtstime', 'true');
         navigation.replace('IntroScreen');
       } else {
-        // Always go to IntroScreen for permissions
-        navigation.replace('Home');
+        navigation.replace('Drawer');
       }
     }, 2500);
   };

@@ -20,12 +20,12 @@ interface image_pdfScreenProps {
 }
 
 const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
-  
+
   const { theme } = useTheme();
   //const [styles, setStyles] = useState(Styles(theme));
   const [isImage, setImage] = useState<PDFFile[]>([]);
   const [isimage2pdf, setIsimage2pdf] = useState(false);
- const styles = useMemo(() => Styles(theme), [theme]); 
+  const styles = useMemo(() => Styles(theme), [theme]);
   // useEffect(() => { 
   //   // Development-only interval to refresh styles
   //   if (__DEV__) {
@@ -37,38 +37,38 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
   // })
 
   const image2pdf = async () => {
-  
+
     if (isImage.length === 0) {
-    Alert.alert('No images selected');
-    return;
+      Alert.alert('No images selected');
+      return;
+    }
+
+    try {
+      setIsimage2pdf(true);
+
+      const imageFiles: ImageFile[] = isImage.map(file => ({
+        uri: file.uri,
+        type: 'jpg',
+        name: file.name,
+      }));
+
+      const pdfPath = await imagesToPDF(imageFiles, `Image2PDf.pdf`);
+      Alert.alert('PDF Created', `Saved at: ${pdfPath}`);
+
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert('Error', error.message || 'Something went wrong');
+
+    } finally {
+
+      setIsimage2pdf(false);
+    }
   }
 
-  try {
-    setIsimage2pdf(true);
 
-    const imageFiles: ImageFile[] = isImage.map(file => ({
-      uri: file.uri,
-      type: 'jpg',
-      name: file.name,
-    }));
-
-    const pdfPath = await imagesToPDF(imageFiles, `Image2PDf.pdf`);
-    Alert.alert('PDF Created', `Saved at: ${pdfPath}`);
-  
-  } catch (error: any) {
-    console.error(error);
-    Alert.alert('Error', error.message || 'Something went wrong');
-  
-  } finally {
-
-    setIsimage2pdf(false);
-  }
-}
-
-
-  const renderFile = ({ item ,  }: { item: PDFFile }) => (
+  const renderFile = ({ item, }: { item: PDFFile }) => (
     <ImageCard file={item}
-   
+
     />
   );
 
@@ -93,7 +93,7 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
           <Animated.View entering={BounceInRight.delay(300).duration(1100)}>
             <ActionButton
               title="Convert to PDF"
-               loading={isimage2pdf}
+              loading={isimage2pdf}
               onPress={image2pdf}
             />
           </Animated.View>
@@ -124,8 +124,8 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
             </View>
           }
         </View>
-     </View>
-     
+      </View>
+
     </SafeAreaView>
   )
 }

@@ -17,8 +17,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({ title, onPress, loading = f
         <TouchableOpacity
             style={[styles.button, style]}
             onPress={onPress}
-            disabled={loading} // Disable while loading
-        >
+            disabled={loading} >
             {loading ? (
                 <ActivityIndicator size={15} color={theme.textPrimary} />
             ) : (

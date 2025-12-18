@@ -1,5 +1,5 @@
 import { FlatList, Image, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect,  useState, } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Animated, {
@@ -17,14 +17,14 @@ import { useTheme } from '../../utils/themeManager';
 
 const HomeScreen = () => {
     const { theme } = useTheme();
-    //const styles = useMemo(() => Styles(theme), [theme]);
     const isDarkMode = useColorScheme() === 'dark';
     const Animation = useSharedValue(0);
     const Animation2 = useSharedValue(0);
     const navigation = useNavigation<any>();
     const isFocused = useIsFocused();
-    //const [styles, setStyles] = useState(Styles(theme));
-   const styles = useMemo(() => Styles(theme), [theme]);
+    const [styles, setStyles] = useState(Styles(theme));
+    //const styles = useMemo(() => Styles(theme), [theme]);
+
     const gearAnimation = () => {
         Animation.value = (withSpring(Animation.value + 120, { duration: 500 }))
         Animation2.value = (withSpring(1, { duration: 500 }))
@@ -33,20 +33,20 @@ const HomeScreen = () => {
     const gearstyle = useAnimatedStyle(() => ({
         transform: [{ rotate: `${Animation.value}deg` }]
     }));
-    
+
     const pdfstyle = useAnimatedStyle(() => ({
         transform: [{ translateX: -Animation2.value * 150 }],
     }));
 
-    // useEffect(() => {
-    //     // Development-only interval to refresh styles
-    //     if (__DEV__) {
-    //         const interval = setInterval(() => {
-    //             setStyles(Styles(theme));
-    //         }, 200); // 200ms, adjust if needed
-    //         return () => clearInterval(interval);
-    //     }
-    // }, [theme]);
+    useEffect(() => {
+        // Development-only interval to refresh styles
+        if (__DEV__) {
+            const interval = setInterval(() => {
+                setStyles(Styles(theme));
+            }, 200); // 200ms, adjust if needed
+            return () => clearInterval(interval);
+        }
+    }, [theme]);
 
 
     const QUICK_ACTIONS = [
@@ -58,12 +58,12 @@ const HomeScreen = () => {
     ];
 
     const FEATURED_TOOLS = [
-        { key: 'protect', label: 'Protect-PDF', icon: 'lock' },
-        { key: 'unlock', label: 'Unlock-PDF', icon: 'lock-open' },
-        { key: 'pagenum', label: 'Page No.', icon: 'sort-numeric-variant' },
-        { key: 'pdf2img', label: 'PDF → Image', icon: 'file-image' },
-        { key: 'meta', label: 'Metadata', icon: 'file-document-edit' },
-        { key: 'blank', label: 'Add Page in PDf', icon: 'plus-box' },
+        { key: 'protect', label: 'Protect-PDF', icon: 'file-shield' },
+        //{ key: 'unlock', label: 'Unlock-PDF', icon: 'lock-open' },
+        { key: 'pagenum', label: 'Page No.', icon: 'arrow-down-1-9' },
+        //{ key: 'pdf2img', label: 'PDF → Image', icon: 'file-image' },
+        { key: 'meta', label: 'Metadata', icon: 'file-pen' },
+        { key: 'blank', label: 'Add Page in PDf', icon: 'file-circle-plus' },
     ];
 
     const RECENT_FILES = [
@@ -74,12 +74,11 @@ const HomeScreen = () => {
 
     const renderQuick = ({ item }: any) => (
         <Animated.View
-            entering={BounceInLeft.delay(300).duration(1000)}
-        >
+            entering={BounceInLeft.delay(300).duration(1000)}>
             <TouchableOpacity
                 style={styles.quickCard}
-                onPress={() => navigation.navigate(item.key)}
-            >
+                onPress={() => navigation.navigate(item.key)}>
+
                 <Icon name={item.icon} size={26} color={isDarkMode ? '#fff' : '#000'} />
                 <Text style={styles.quickLabel}>{item.label}</Text>
             </TouchableOpacity>
@@ -92,7 +91,7 @@ const HomeScreen = () => {
             entering={BounceInRight.delay(300).duration(1000)}>
             <TouchableOpacity
                 style={styles.toolCard}
-                onPress={() => console.log('Open tool', item.key)}>
+                onPress={() => navigation.navigate( item.key)}>
                 <Icon name={item.icon} size={35} color={isDarkMode ? '#fff' : '#000'} />
                 <Text style={styles.toolLabel}>{item.label}</Text>
             </TouchableOpacity>
@@ -102,8 +101,8 @@ const HomeScreen = () => {
 
     const renderRecent = ({ item }: any) => (
         <Animated.View
-            entering={BounceInRight.delay(300).duration(1000)}
-        >
+            entering={BounceInRight.delay(300).duration(1000)}>
+                
             <TouchableOpacity style={styles.recentCard} onPress={() => console.log('Open file', item.id)}>
                 <Image
                     source={require('../../assets/Image/PDFLab.png')}
@@ -121,37 +120,36 @@ const HomeScreen = () => {
     return (
         <SafeAreaView
             style={{ flex: 1, backgroundColor: theme.background }}>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                style={styles.container}>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Animated.View
+                        entering={BounceInLeft.delay(300).duration(1000)}
+                        style={[{ flexDirection: 'row', alignItems: 'center', }]}>
+                        <Icon name='file-pdf' size={30} color={'blue'} />
+                        <Text style={[styles.title, { marginLeft: 10, marginRight: 5, color: isDarkMode ? '#1789f9' : '#78bbfeff' }]} >PDF
+                        </Text>
+                        <Text style={[styles.title, { marginTop: 7, fontSize: 17, color: isDarkMode ? '#ff8508' : '#faa045ff' }]}>
+                            Lab
+                        </Text>
+                    </Animated.View>
 
-                <View style={{ marginBottom: 20 }} >
-                    <View style={styles.header}>
-                        <Animated.View
-                            entering={BounceInLeft.delay(300).duration(1000)}
-                            style={[{ flexDirection: 'row', alignItems: 'center', }]}>
-                            <Icon name='file-pdf' size={30} color={'blue'} />
-                            <Text style={[styles.title, { marginLeft: 10, marginRight: 5, color: isDarkMode ? '#1789f9' : '#78bbfeff' }]} >PDF
-                            </Text>
-                            <Text style={[styles.title, { marginTop: 7, fontSize: 17, color: isDarkMode ? '#ff8508' : '#faa045ff' }]}>
-                                Lab
-                            </Text>
-                        </Animated.View>
+                    <Animated.View
+                        entering={BounceInRight.delay(300).duration(1000)}
+                        style={[gearstyle, { justifyContent: 'center', alignItems: 'center' }]}>
 
-                        <Animated.View
-                            entering={BounceInRight.delay(300).duration(1000)}
-                            style={[gearstyle, { justifyContent: 'center', alignItems: 'center' }]}
-                        >
-                            <TouchableOpacity onPress={() => {
-                                navigation.openDrawer();
-                                gearAnimation();
-                            }
-                            }>
-                                <Icon
-                                    name="gear" size={30} color={isDarkMode ? '#fff' : '#000'} />
-                            </TouchableOpacity>
-                        </Animated.View>
-                    </View>
+                        <TouchableOpacity onPress={() => {
+                            navigation.openDrawer();
+                            gearAnimation();
+                        }}>
+
+                            <Icon
+                            name="gear" size={30} color={isDarkMode ? '#fff' : '#000'} />
+                        </TouchableOpacity>
+                    </Animated.View>
+                </View>
+                <ScrollView
+                    // style={styles.container}
+                    showsVerticalScrollIndicator={false}>
 
                     {/* Quick Actions */}
                     <View style={styles.section}>
@@ -183,12 +181,13 @@ const HomeScreen = () => {
                             showsVerticalScrollIndicator={false}
                         />
 
-                        <TouchableOpacity style={styles.viewAllBtn} onPress={() => console.log('View all tools')}>
+                        {/* <TouchableOpacity style={styles.viewAllBtn} onPress={() => console.log('View all tools')}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                                 <Text style={styles.viewAllText}>View All Tools </Text>
                                 <Icon name="arrow-right" size={18} style={{ marginTop: 2 }} color="#2b6ef6" />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+
                     </View>
 
 
@@ -206,8 +205,8 @@ const HomeScreen = () => {
                             contentContainerStyle={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 26 }}
                         />
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         </SafeAreaView>
     )
 }

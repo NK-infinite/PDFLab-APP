@@ -38,8 +38,6 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
     const y = (pageHeight - height) / 2;
       
     page.drawImage(embeddedImage, { x, y, width, height });
-
-
   }
   
 
@@ -49,7 +47,7 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
   // Write to file system
   const pdfBase64 = Buffer.from(pdfBytes).toString('base64');
   const pdfPath = `${RNFS.DownloadDirectoryPath}/${outputFileName}`;
-await RNFS.writeFile(pdfPath, pdfBase64, 'base64');
+  RNFS.writeFile(pdfPath, pdfBase64, 'base64');
 
 
   return pdfPath; // return PDF file path

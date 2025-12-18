@@ -1,5 +1,5 @@
-import React, {  useMemo, useState } from 'react';
-import { View, Text,  FlatList,  } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, Text, FlatList, } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/toolsstyle/mergestyle';
@@ -25,8 +25,8 @@ const MergeScreen = ({ navigation }: any) => {
   const [files, setFiles] = useState<PDFFile[]>([]);
   const [isPicking, setIsPicking] = useState(false);
   const [isMerging, setIsMerging] = useState(false);
-  
- // const [styles, setStyles] = useState(Styles(theme));
+
+  // const [styles, setStyles] = useState(Styles(theme));
 
   // useEffect(() => {
   //         // Development-only interval to refresh styles
@@ -42,31 +42,31 @@ const MergeScreen = ({ navigation }: any) => {
   const clearAllFiles = () => setFiles([]);
 
   const renderFile = ({ item }: { item: PDFFile }) => (
-    <PDFCard file={item}  onPress={() => openPDF(files[0].uri)} />
+    <PDFCard file={item} onPress={() => openPDF(files[0].uri)} />
   );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
 
       <View style={[styles.container, { padding: 16 }]}>
-        
-        <Header 
-        title={`Merge PDFs`}
-        onPress={() => navigation.goBack()}
+
+        <Header
+          title={`Merge PDFs`}
+          onPress={() => navigation.goBack()}
         />
-          
+
         <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 20 }}>
-          
+
           <Animated.View
-          entering={BounceInLeft.delay(300).duration(1100)}>
+            entering={BounceInLeft.delay(300).duration(1100)}>
 
             <SelectPDFButton
               onFilesSelected={(selected) => setFiles(prev => [...prev, ...selected])}
-              buttonText={`Select PDFs`}/>
+              buttonText={`Select PDFs`} />
           </Animated.View>
 
           <Animated.View
-          entering={BounceInRight.delay(300).duration(1100)}>
+            entering={BounceInRight.delay(300).duration(1100)}>
             <ActionButton
               title={`Merge ${files.length} PDFs`}
               onPress={async () => {
@@ -86,16 +86,16 @@ const MergeScreen = ({ navigation }: any) => {
         {files.length > 0 && (
           <>
             <View style={{ marginTop: 20, flex: 1, justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: "row",   }}>
-         <Text style={styles.sectionTitle}>Selected PDFs ({files.length})</Text> 
-          </View>
+              <View style={{ flexDirection: "row", }}>
+                <Text style={styles.sectionTitle}>Selected PDFs ({files.length})</Text>
+              </View>
               <FlatList
                 data={files}
                 keyExtractor={(item, index) => item.uri + index}
                 renderItem={renderFile}
                 style={styles.fileList}
-                />
-          
+              />
+
               <ClearButton onPress={clearAllFiles} />
             </View>
 

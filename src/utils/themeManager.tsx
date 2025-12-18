@@ -5,7 +5,7 @@ import { useColorScheme } from 'react-native';
 export const COLORS = {
   light: {
     background: 'white',
-    header: '#ffffff',
+    header: '#f4f4f4ff',
     quickCard: '#ffcccc', 
     quickCardBorder: '#ffcccc',      // light pink
     toolCard: '#cce5ff',    

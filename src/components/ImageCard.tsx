@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { useTheme } from '../utils/themeManager';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
@@ -31,25 +31,21 @@ const ImageCard: React.FC<ImageCardProps> = ({ file, onPress }) => {
     opacity: opacity.value,
   }));
 
-
-  
   return (
     <Animated.View style={animatedStyle}>
-      {/* <TouchableOpacity onPress={onPress ?? (() => {})}> */}
-        <View style={styles.card}>
-          <Image
-            source={{ uri: file.uri }}
-            style={styles.thumbnail}
-          />
-          <Text
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={styles.text}
-          >
-            {file.name}
-          </Text>
-        </View>
-      {/* </TouchableOpacity> */}
+      <View style={styles.card}>
+        <Image
+          source={{ uri: file.uri }}
+          style={styles.thumbnail}
+        />
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={styles.text}
+        >
+          {file.name}
+        </Text>
+      </View>
     </Animated.View>
   );
 };

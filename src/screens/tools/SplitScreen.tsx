@@ -8,9 +8,9 @@ import {
     TextInput,
     ScrollView,
 } from 'react-native';
-import React, {  useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTheme } from '../../utils/themeManager';
-import Animated, { BounceInLeft, BounceInRight,  } from 'react-native-reanimated';
+import Animated, { BounceInLeft, BounceInRight, } from 'react-native-reanimated';
 import { Styles } from '../../styles/toolsstyle/splitstyle';
 import { PDFFile } from '../../services/pdfPickerService';
 import SelectPDFButton from '../../components/SelectPDF';
@@ -48,10 +48,13 @@ const SplitScreen = ({ navigation, route }: any) => {
     //     }
     // }, [theme]);
 
-   
+
 
     const splitPDFs = async () => {
-        if (files.length === 0) return;
+        if (files.length === 0) {
+            Alert.alert("No File", "Please select a PDF file first");
+            return;
+        };
 
         setIsspliting(true);
 
@@ -92,6 +95,10 @@ const SplitScreen = ({ navigation, route }: any) => {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 20}>
 
+
+                    <View style={styles.container}>
+                        {/* Header Section */}
+                        <Header title={`Split PDFs`} onPress={() => navigation.goBack()} />
                 <ScrollView
                     contentContainerStyle={{
                         flexGrow: 1,
@@ -100,10 +107,6 @@ const SplitScreen = ({ navigation, route }: any) => {
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
                     keyboardDismissMode="interactive">
-
-                    <View style={styles.container}>
-                        {/* Header Section */}
-                        <Header title={`Split PDFs`} onPress={() => navigation.goBack()} />
 
                         {/* Action Buttons */}
                         <View style={styles.actionButtonsContainer}>
@@ -130,7 +133,7 @@ const SplitScreen = ({ navigation, route }: any) => {
                                 {outputFiles.map(({ path, name }) => (
                                     <PDFCard
                                         file={{ name, uri: path }}
-                                         onPress={() => openPDF(files[0].uri)}
+                                        onPress={() => openPDF(files[0].uri)}
                                     />
                                 ))}
                             </View>
@@ -140,17 +143,17 @@ const SplitScreen = ({ navigation, route }: any) => {
                         {files.length > 0 ? (
                             <View style={styles.mainContent}>
                                 {/* Selected PDF Preview */}
-                                <Text style={styles.sectionTitle}>Selected PDF</Text>                               
-                                    
-                                    <View style={styles.pdfPreviewContainer}>
-                                        <PDFCard
-                                            file={files[0]}
-                                             onPress={() => openPDF(files[0].uri)}
-                                        />
-                                    </View>
-                              
+                                <Text style={styles.sectionTitle}>Selected PDF</Text>
+
+                                <View style={styles.pdfPreviewContainer}>
+                                    <PDFCard
+                                        file={files[0]}
+                                        onPress={() => openPDF(files[0].uri)}
+                                    />
+                                </View>
+
                                 {/* Selected Files Count */}
-                                
+
                                 <View style={styles.fileCountContainer}>
                                     <Text style={styles.fileCountText}>
                                         Selected Files: {files.length}
@@ -283,8 +286,8 @@ const SplitScreen = ({ navigation, route }: any) => {
                                 <Text style={styles.emptyStateSubtitle}>Select at least 1 PDF to split</Text>
                             </View>
                         )}
-                    </View>
                 </ScrollView>
+                    </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
     );

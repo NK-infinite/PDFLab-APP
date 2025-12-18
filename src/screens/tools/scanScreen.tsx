@@ -1,30 +1,185 @@
-import { View, Text } from 'react-native'
-import React, {  useEffect, useState } from 'react'
+import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../utils/themeManager";
 import { Styles } from "../../styles/toolsstyle/scanstyle";
-import { useMemo } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-const scanScreen = () => {
-   
-   const { theme } = useTheme();
-   const [styles, setStyles] = useState(Styles(theme));
-  // const styles = useMemo(() => Styles(theme), [theme]);
-   useEffect(() => {
-             // Development-only interval to refresh styles
-             if (__DEV__) {
-                 const interval = setInterval(() => {
-                     setStyles(Styles(theme));
-                 }, 200); // 200ms, adjust if needed
-                 return () => clearInterval(interval);
-             }
-         }, [theme]);
-    return (
- <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
-    <View style={styles.container}>
-      <Text>scanScreen</Text>
-    </View>
-    </SafeAreaView>
-  )
-}
+import Header from "../../components/header";
+import DocumentScanner from "react-native-document-scanner-plugin";
+import { Alert, FlatList, PermissionsAndroid, Platform, TouchableOpacity, View } from "react-native";
+import { Text } from "react-native-gesture-handler";
+import { captureImage } from "../../services/cameraService";
+import ImageCard, { ImageFile } from "../../components/ImageCard";
+import { imagesToPDF } from "../../services/imageToPdfService";
+import ClearButton from "../../components/Clear_all";
+import Animated, { BounceIn, BounceInLeft, BounceInRight, BounceInUp } from "react-native-reanimated";
+import PDFCard from "../../components/PDFCard";
+import { openPDF } from "../../utils/open_pdf";
 
-export default scanScreen
+
+type PDFImageFile = {
+  uri: string;
+  name: string;
+  type: string;
+};
+
+const scanScreen = ({ navigation }: any) => {
+
+  const { theme } = useTheme();
+  const [styles, setStyles] = useState(Styles(theme));
+  const [scannedImage, setScannedImage] = useState<string[]>([]);
+  const [isimage2pdf, setIsimage2pdf] = useState(false);
+  const [pdfFilePath, setPdfFilePath] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (__DEV__) {
+      const interval = setInterval(() => setStyles(Styles(theme)), 200);
+      return () => clearInterval(interval);
+    }
+  }, [theme]);
+
+
+  const image2pdf = async () => {
+
+    if (scannedImage.length === 0) {
+      Alert.alert('No images selected');
+      return;
+    }
+
+    try {
+
+      setIsimage2pdf(true);
+      const imageFiles: PDFImageFile[] = scannedImage.map(file => ({
+        uri: file,
+        name: 'image.jpg',
+        type: 'jpg',
+      }));
+
+      const pdfPath = await imagesToPDF(imageFiles, `Image2PDf_${new Date().getTime()}.pdf`);
+      setPdfFilePath(pdfPath);
+      setIsimage2pdf(true);
+      Alert.alert(`PDF Created at: ${pdfPath}`);
+
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert('Error', error.message || 'Something went wrong');
+    }
+  }
+
+  const clearAllFiles = () => {
+    setIsimage2pdf(false);
+    setScannedImage([]);
+  }
+
+  const handleScan = async () => {
+    if (Platform.OS === 'android' && await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA
+    ) !== PermissionsAndroid.RESULTS.GRANTED) {
+      Alert.alert('Error', 'User must grant camera permissions to use document scanner.')
+      return
+    }
+    try {
+
+      if (Platform.OS === "android" && Platform.Version >= 33) {
+        const result = await DocumentScanner.scanDocument({
+          croppedImageQuality: 100,
+          maxNumDocuments: 10,
+        });
+
+        if (result?.scannedImages?.length) {
+          setScannedImage(prev => [...prev, ...result.scannedImages || []]);
+        }
+
+      } else {
+        const result = await captureImage();
+        if (result?.length) {
+          const uris = result.map(item => item.uri);
+          setScannedImage(prev => [...prev, ...uris]);
+        }
+      }
+    } catch (err) {
+      console.error("Scan failed:", err);
+    }
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
+      <View style={styles.container}>
+        <Header title="Scan" onPress={() => navigation.goBack()} />
+
+        {/* Buttons */}
+
+        <View style={styles.buttonRow}>
+          <Animated.View entering={BounceInLeft.duration(1000)}>
+            <TouchableOpacity onPress={handleScan} style={styles.button}>
+              <Text style={styles.buttonText}>Scan</Text>
+            </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View entering={BounceInRight.duration(1000)}>
+            <TouchableOpacity onPress={image2pdf} style={styles.button}>
+              <Text style={styles.buttonText}>PDF</Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </View>
+
+        {/* Images List */}
+
+        {scannedImage.length ? (
+          <View style={{ flex: 1, marginTop: 10 }}>
+
+            <View style={{ justifyContent: 'center', }}>
+              <Text style={styles.sectionTitle}>
+                Selected Images ({scannedImage.length})
+              </Text>
+
+              <FlatList
+                data={scannedImage}
+                keyExtractor={(item, index) => item + index}
+                renderItem={({ item, index }) => (
+
+                  <ImageCard
+                    key={index}
+                    file={{
+                      uri:
+                        item.startsWith("file://") || item.startsWith("/")
+                          ? item.startsWith("file://")
+                            ? item
+                            : `file://${item}`
+                          : `data:image/jpeg;base64,${item}`,
+                      name: `Scan ${index + 1}`,
+                    }}
+                  />
+                )}
+                style={{ marginTop: 10 }}
+              />
+
+              {isimage2pdf && pdfFilePath && (
+                <View style={{ marginTop: 20 }}>
+                  <Text style={styles.sectionTitle}>
+                    Generated PDF
+                  </Text>
+                  <Animated.View entering={BounceInUp.duration(1000)}>
+                    <PDFCard file={{ name: "PDF", uri: pdfFilePath }} onPress={() => openPDF(pdfFilePath)} />
+                  </Animated.View>
+                </View>
+              )}
+
+            </View>
+
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+              <ClearButton onPress={clearAllFiles} />
+            </View>
+
+          </View>
+        ) : (
+          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+            <Text style={[styles.title, { fontSize: 20 }]}>Not Any Scanned Image</Text>
+          </View>
+        )}
+
+      </View>
+    </SafeAreaView>
+
+  );
+};
+
+export default scanScreen;

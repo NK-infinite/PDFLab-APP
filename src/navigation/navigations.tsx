@@ -9,6 +9,8 @@ import SplitScreen from '../screens/tools/SplitScreen';
 import compressScreen from '../screens/tools/compressScreen';
 import scanScreen from '../screens/tools/scanScreen';
 import image_pdfScreen from '../screens/tools/image_pdfScreen';
+import protect_pdf from '../screens/tools/protect_pdfScreen';
+import pagenum from '../screens/tools/pagenum';
 
 const Pagenavigations = () => {
   const Stack = createNativeStackNavigator();
@@ -20,10 +22,12 @@ const Pagenavigations = () => {
 
         <Stack.Screen name="Drawer" component={drawernavigations} />
         <Stack.Screen name="merge" component={MergeScreen} />
-        <Stack.Screen name="split" component={SplitScreen}   />
+        <Stack.Screen name="split" component={SplitScreen} />
         <Stack.Screen name="compress" component={compressScreen} />
         <Stack.Screen name="images2pdf" component={image_pdfScreen} />
         <Stack.Screen name="scan" component={scanScreen} />
+        <Stack.Screen name="protect" component={protect_pdf} />
+        <Stack.Screen name="pagenum" component={pagenum} />
       </Stack.Navigator>
 
     </NavigationContainer>
