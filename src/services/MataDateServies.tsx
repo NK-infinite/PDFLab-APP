@@ -38,6 +38,8 @@ export const editPDFMetadata = async (
         subject?: string;
         keywords?: string;
         creator?: string;
+        producer?: string;
+
     }
 ) => {
     try {
@@ -49,13 +51,14 @@ export const editPDFMetadata = async (
         if (newMetadata.subject) pdfDoc.setSubject(newMetadata.subject);
         if (newMetadata.keywords) pdfDoc.setKeywords([newMetadata.keywords]);
         if (newMetadata.creator) pdfDoc.setCreator(newMetadata.creator);
+        if (newMetadata.producer) pdfDoc.setProducer(newMetadata.producer);
 
         const pdfBytes = await pdfDoc.save();
         const pdfBase64Out = Buffer.from(pdfBytes).toString('base64');
-       // const outputPath = RNFS.DownloadDirectoryPath + '/EditedPDF_' + Date.now() + '.pdf';
+         const outputPath = RNFS.DownloadDirectoryPath + '/EditedPDF_' + Date.now() + '.pdf';
 
-        await RNFS.writeFile(fileUri, pdfBase64Out, 'base64');
-        return fileUri; 
+        await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
+        return outputPath; 
     } catch (err) {
         console.error('Edit Metadata Error:', err);
         Alert.alert('Error', 'Failed to edit metadata');
@@ -77,10 +80,10 @@ export const removePDFMetadata = async (fileUri: string) => {
 
         const pdfBytes = await pdfDoc.save();
         const pdfBase64Out = Buffer.from(pdfBytes).toString('base64');
-       // const outputPath = RNFS.DownloadDirectoryPath + '/NoMetadataPDF_' + Date.now() + '.pdf';
+        const outputPath = RNFS.DownloadDirectoryPath + '/NoMetadataPDF_' + Date.now() + '.pdf';
 
-        await RNFS.writeFile(fileUri, pdfBase64Out, 'base64');
-        return fileUri;
+        await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
+        return outputPath;
     } catch (err) {
         console.error('Remove Metadata Error:', err);
         Alert.alert('Error', 'Failed to remove metadata');

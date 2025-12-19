@@ -13,14 +13,24 @@ import { openPDF } from '../../utils/open_pdf';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import ClearButton from '../../components/Clear_all';
 import { editPDFMetadata, removePDFMetadata, viewPDFMetadata } from '../../services/MataDateServies';
+import { TextInput } from 'react-native';
+import { ScrollView } from 'react-native';
+import { SCREEN_HEIGHT } from '../../utils/hightwidth';
 
 const MataData = ({ navigation }: any) => {
     const { theme } = useTheme()
     //const styles = Styles(theme)
     const [styles, setStyles] = useState(Styles(theme));
-    const [files, setFiles] = React.useState<PDFFile[]>([]);
+    const [files, setFiles] = useState<PDFFile[]>([]);
     const [metadataAction, setMetadataAction] = useState<'view' | 'edit' | 'remove'>('view');
-    const [viewmatadata, setviewmatadata] = useState<any>(null)
+    const [viewmatadata, setviewmatadata] = useState<any>()
+    const [title, setTitle] = useState('');
+    const [author, setAuthor] = useState('');
+    const [creator, setCreator] = useState('');
+    const [subject, setSubject] = useState('');
+    const [keywords, setKeywords] = useState('');
+    const [producer, setProducer] = useState('');
+ //   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
     useEffect(() => {
         // Development-only interval to refresh styles
@@ -32,8 +42,32 @@ const MataData = ({ navigation }: any) => {
         }
     }, [theme]);
 
+    const formatDate = (date: any) => {
+        if (!date) return 'No data';
+        try {
+            return new Date(date).toLocaleString();
+        } catch {
+            return '—';
+        }
+    };
+
+    // const toggleSelect = (key: string) => {
+    //     if (selectedKeys.includes(key)) {
+    //         setSelectedKeys(prev => prev.filter(k => k !== key));
+    //     } else {
+    //         setSelectedKeys(prev => [...prev, key]);
+    //     }
+    // };
+
+    const isEmptyMetadata = (meta: any) => {
+        if (!meta || typeof meta !== 'object') return true;
+        return Object.values(meta).every(
+            value => value === undefined || value === null || value === ''
+        );
+    };
 
     const handleFileSelect = (selectedFiles: PDFFile[]) => {
+        clearAllFiles();
         setFiles(selectedFiles);
     }
 
@@ -44,27 +78,30 @@ const MataData = ({ navigation }: any) => {
         }
 
         const fileUri = files[0].uri;
+
         switch (metadataAction) {
             case 'view':
                 const data = await viewPDFMetadata(fileUri);
-                const Datas = JSON.stringify(data, null, 2)
-                setviewmatadata(Datas)
-                Alert.alert('PDF Metadata', `${Datas}`);
+                setviewmatadata(data)
+                if (isEmptyMetadata(data)) {
+                    Alert.alert('PDF has Alredy No Metadata');
+                }
                 break;
 
             case 'edit':
                 const editedPath = await editPDFMetadata(fileUri, {
-                    title: 'My Resume',
-                    author: 'Nikhil',
-                    creator: 'My PDF App',
+                    title: title,
+                    author: author,
+                    creator: creator,
+                    subject: subject,
+                    keywords: keywords,
+                    producer: producer
                 });
-
                 Alert.alert('Success', `Metadata updated!\nSaved to:\n${editedPath}`);
                 break;
-
             case 'remove':
-                const cleanPath = await removePDFMetadata(fileUri);
-                Alert.alert('Success', `All metadata removed!\nSaved to:\n${cleanPath}`);
+                const cleanPath = await removePDFMetadata(fileUri,);
+                Alert.alert('Success', `Selected metadata removed!\nSaved to:\n${cleanPath}`);
                 break;
         }
     }
@@ -72,91 +109,198 @@ const MataData = ({ navigation }: any) => {
     const clearAllFiles = () => {
         setFiles([]);
         setMetadataAction('view');
+        setviewmatadata('')
+        setAuthor('');
+        setCreator('');
+        setKeywords('');
+        setProducer('');
+        setTitle('');
+        setSubject('');
     }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
             <View style={styles.container}>
                 <Header title="Metadata" onPress={() => navigation.goBack()} />
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-                    <Animated.View entering={BounceInLeft.duration(1000)}>
-                        <SelectPDFButton
-                            onFilesSelected={handleFileSelect}
-                            buttonText="Select PDF"
-                            style={{
-                                backgroundColor: theme.toolCard,
-                                borderColor: theme.toolCardBorder
-                            }} />
-                    </Animated.View>
+                <ScrollView
+                    contentContainerStyle={{
+                        flexGrow: 1,
+                    }}
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
+                    keyboardDismissMode="interactive">
 
-                    <Animated.View entering={BounceInRight.duration(1000)}>
-                        <ActionButton
-                            title={metadataAction === 'view'
-                                ? 'View Metadata' 
-                                : metadataAction === 'edit' 
-                                ? 'Edit Metadata' 
-                                : 'Remove Metadata'}
-                            onPress={matadata}
-                            style={{
-                                backgroundColor: theme.toolCard,
-                                borderColor: theme.toolCardBorder
-                            }} />
-                    </Animated.View>
-                </View>
-
-                {files && files.length > 0 &&
-                    <View style={{ justifyContent: 'center', flexDirection: 'row', marginVertical: 10, gap: 10 }}>
-                        {['view', 'edit', 'remove'].map((action) => (
-                            <TouchableOpacity
-                                key={action}
-                                onPress={() => setMetadataAction(action as 'view' | 'edit' | 'remove')}
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
+                        <Animated.View entering={BounceInLeft.duration(1000)}>
+                            <SelectPDFButton
+                                onFilesSelected={handleFileSelect}
+                                buttonText="Select PDF"
                                 style={{
-                                    padding: 8,
-                                    borderWidth: 1,
-                                    borderColor: metadataAction === action ? theme.toolCardBorder : '#ccc',
-                                    borderRadius: 5,
-                                    backgroundColor: metadataAction === action ? theme.toolCard : '#fff',
-                                }}
-                            >
-                                <Text style={{ color: metadataAction === action ? theme.textPrimary : theme.textSecondary }}>
-                                    {action === 'view' ? 'View' : action === 'edit' ? 'Edit' : 'Remove'}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                }
+                                    backgroundColor: theme.toolCard,
+                                    borderColor: theme.toolCardBorder
+                                }} />
+                        </Animated.View>
 
-                {files && files.length > 0 &&
-                    <>
-                        <View style={{ flex: 1, paddingTop: 10, justifyContent: 'space-between' }}>
-                            <View>
-                                <Text style={styles.sectionTitle}>Selected PDF</Text>
-                                <View style={styles.pdfPreviewContainer}>
-                                    <PDFCard
-                                        file={files[0]}
-                                        onPress={() => openPDF(files[0].uri)}
-                                    />
-                                </View>
-                            </View>
-                            {viewmatadata && (
-                                <View style={{ padding: 10 }}>
-                                    <Text style={{ color: theme.textPrimary, fontSize: 14, fontFamily: 'monospace' }}>
-                                        {viewmatadata}
+                        <Animated.View entering={BounceInRight.duration(1000)}>
+                            <ActionButton
+                                title={metadataAction === 'view'
+                                    ? 'View Metadata'
+                                    : metadataAction === 'edit'
+                                        ? 'Edit Metadata'
+                                        : 'Remove Metadata'}
+                                onPress={matadata}
+                                style={{
+                                    backgroundColor: theme.toolCard,
+                                    borderColor: theme.toolCardBorder
+                                }} />
+                        </Animated.View>
+                    </View>
+
+                    {files && files.length > 0 &&
+                        <View style={{ justifyContent: 'center', flexDirection: 'row', marginVertical: 10, gap: 10 }}>
+                            {['view', 'edit', 'remove'].map((action) => (
+                                <TouchableOpacity
+                                    key={action}
+                                    onPress={() => setMetadataAction(action as 'view' | 'edit' | 'remove')}
+                                    style={{
+                                        padding: 8,
+                                        borderWidth: 1,
+                                        borderColor: metadataAction === action ? theme.toolCardBorder : '#ccc',
+                                        borderRadius: 5,
+                                        backgroundColor: metadataAction === action ? theme.toolCard : '#fff',
+                                    }}
+                                >
+                                    <Text style={{ color: metadataAction === action ? theme.textPrimary : theme.textSecondary }}>
+                                        {action === 'view' ? 'View' : action === 'edit' ? 'Edit' : 'Remove'}
                                     </Text>
-                                </View>
-                            )}
-                            <ClearButton onPress={clearAllFiles} />
+                                </TouchableOpacity>
+                            ))}
                         </View>
-                    </>
-                }
+                    }
 
-                {files.length === 0 && (
-                    <View style={styles.placeholder}>
-                        <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-                        <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
-                        <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
-                    </View>
-                )}
+                    {files && files.length > 0 &&
+                        <>
+                            <View style={{ flex: 1, paddingTop: 10, justifyContent: 'space-between' }}>
+                                <View >
+                                    <Text style={styles.sectionTitle}>Selected PDF</Text>
+                                    <View style={styles.pdfPreviewContainer}>
+                                        <PDFCard
+                                            file={files[0]}
+                                            onPress={() => openPDF(files[0].uri)}
+                                        />
+                                    </View>
+                                </View>
+                                {metadataAction === 'view' && (
+                                    <View style={styles.metadataBox}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: 10 }}>
+                                            <Text style={styles.metaTitle}>PDF Metadata </Text>
+                                            <Text style={styles.metaItem}>(Click View matadata to view)</Text>
+                                        </View>
+
+                                        <Text style={styles.metaItem}>Title: {viewmatadata?.title ? viewmatadata?.title : 'No title'}</Text>
+                                        <Text style={styles.metaItem}>Author: {viewmatadata?.author ? viewmatadata?.author : 'No author'}</Text>
+                                        <Text style={styles.metaItem}>Subject: {viewmatadata?.subject ? viewmatadata?.subject : 'No subject'}</Text>
+                                        <Text style={styles.metaItem}>Keywords: {viewmatadata?.keywords ? viewmatadata?.keyword : 'No keywords'}</Text>
+                                        <Text style={styles.metaItem}>Creator: {viewmatadata?.creator ? viewmatadata?.creator : 'No creator'}</Text>
+                                        <Text style={styles.metaItem}>Producer: {viewmatadata?.producer ? viewmatadata?.producer : 'No producer'}</Text>
+
+                                        <Text style={styles.metaItem}>Created: {formatDate(viewmatadata?.creationDate)}</Text>
+                                        <Text style={styles.metaItem}>Modified: {formatDate(viewmatadata?.modificationDate)}</Text>
+                                    </View>
+                                )}
+
+                                {metadataAction === 'edit' &&
+                                    <View style={{ flexDirection: 'column', marginTop: 20, justifyContent: 'flex-start', gap: 10 }}>
+                                        <TextInput
+                                            value={title}
+                                            onChangeText={setTitle}
+                                            style={styles.textinput}
+                                            placeholder="Enter title"
+                                            placeholderTextColor={theme.textPrimary || '#000'}
+                                        />
+                                        <TextInput
+                                            value={author}
+                                            onChangeText={setAuthor}
+                                            style={styles.textinput}
+                                            placeholder="Enter author"
+                                            placeholderTextColor={theme.textPrimary || '#000'}
+                                        />
+                                        <TextInput
+                                            value={subject}
+                                            onChangeText={setSubject}
+                                            style={styles.textinput}
+                                            placeholder="Enter subject"
+                                            placeholderTextColor={theme.textPrimary || '#000'}
+                                        />
+                                        <TextInput
+                                            value={keywords}
+                                            onChangeText={setKeywords}
+                                            style={styles.textinput}
+                                            placeholder="Enter keywords"
+                                            placeholderTextColor={theme.textPrimary || '#000'}
+                                        />
+                                        <TextInput
+                                            value={creator}
+                                            onChangeText={setCreator}
+                                            style={styles.textinput}
+                                            placeholder="Enter creator"
+                                            placeholderTextColor={theme.textPrimary || '#000'}
+                                        />
+                                        <TextInput
+                                            value={producer}
+                                            onChangeText={setProducer}
+                                            style={styles.textinput}
+                                            placeholder="Enter producer"
+                                            placeholderTextColor={theme.textPrimary || '#000'}
+                                        />
+                                    </View>
+                                }
+
+                                {/* {metadataAction === 'remove' && viewmatadata && (
+                                    <View style={{ gap: 10 }}>
+                                        <Text style={styles.sectionTitle}>Seclect metadata fields to remove:</Text>
+
+
+                                        {Object.entries(viewmatadata).map(([key, value], index) => {
+                                            const isSelected = selectedKeys.includes(key);
+
+                                            return (
+                                                <TouchableOpacity
+                                                    key={index}
+                                                    onPress={() => toggleSelect(key)}
+                                                    style={{
+                                                        flex: 1,
+                                                        padding: 10,
+                                                        alignItems: 'center',
+                                                        borderRadius: 10,
+                                                        marginBottom: 5,
+                                                        backgroundColor: isSelected ? '#ff5555' : theme.toolCard,
+                                                    }}
+                                                >
+                                                    <Text style={{ color: isSelected ? '#fff' : theme.textPrimary }}>
+                                                        {key}: {String(value ?? '—')}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            );
+                                        })}
+
+                                    </View>
+                                )} */}
+                                <ClearButton onPress={clearAllFiles} />
+                            </View>
+                        </>
+                    }
+
+                    {files.length === 0 && (
+                        <View style={styles.placeholder}>
+                            <Icon name="file-pdf" size={80} color={theme.textSecondary} />
+                            <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
+                            <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
+                        </View>
+                    )}
+
+                </ScrollView>
             </View>
         </SafeAreaView>
     )

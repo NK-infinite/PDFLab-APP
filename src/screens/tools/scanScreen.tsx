@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTheme } from "../../utils/themeManager";
 import { Styles } from "../../styles/toolsstyle/scanstyle";
 import Header from "../../components/header";
@@ -24,17 +24,18 @@ type PDFImageFile = {
 const scanScreen = ({ navigation }: any) => {
 
   const { theme } = useTheme();
-  const [styles, setStyles] = useState(Styles(theme));
+   const styles = useMemo(() => Styles(theme), [theme]);
+  //const [styles, setStyles] = useState(Styles(theme));
   const [scannedImage, setScannedImage] = useState<string[]>([]);
   const [isimage2pdf, setIsimage2pdf] = useState(false);
   const [pdfFilePath, setPdfFilePath] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (__DEV__) {
-      const interval = setInterval(() => setStyles(Styles(theme)), 200);
-      return () => clearInterval(interval);
-    }
-  }, [theme]);
+  // useEffect(() => {
+  //   if (__DEV__) {
+  //     const interval = setInterval(() => setStyles(Styles(theme)), 200);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [theme]);
 
 
   const image2pdf = async () => {

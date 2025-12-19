@@ -11,7 +11,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const styles = useMemo(() => Styles(theme), [theme]);
 
   return (
-
+  
     <View style={styles.container}>
 
       <View style={[styles.header]}>

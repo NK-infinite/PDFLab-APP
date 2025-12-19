@@ -64,6 +64,7 @@ const protect_pdf = ({ navigation }: any) => {
     return (
         <SafeAreaView style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
             <Header title="Protect PDF" onPress={() => navigation.goBack()} />
+                
             <ScrollView
                 contentContainerStyle={{
                     flexGrow: 1,
@@ -73,6 +74,7 @@ const protect_pdf = ({ navigation }: any) => {
                 keyboardShouldPersistTaps="handled"
                 keyboardDismissMode="interactive">
                 <View style={style.container}>
+
                     <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
                         <Animated.View entering={BounceInLeft.duration(1000)}>
                             <SelectPDFButton
@@ -93,6 +95,7 @@ const protect_pdf = ({ navigation }: any) => {
                                 }} />
                         </Animated.View>
                     </View>
+
                     {(Files.length > 0) && (
                         <>
                             <View style={[style.content, { marginTop: 30 }]} >
@@ -111,11 +114,13 @@ const protect_pdf = ({ navigation }: any) => {
                                 )}
 
                             </View>
+
                             {confirmpassword.length > 0 && password !== confirmpassword && (
                                 <Text style={{ color: 'red', marginVertical: 8 }}>
                                     Passwords do not match
                                 </Text>
                             )}
+
                             <View style={style.inputWrapper}>
                                 <View style={style.input}>
                                     <TextInput
@@ -165,6 +170,7 @@ const protect_pdf = ({ navigation }: any) => {
                             <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
                         </View>
                     )}
+
                 </View>
             </ScrollView>
         </SafeAreaView>
