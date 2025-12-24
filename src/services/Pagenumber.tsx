@@ -14,7 +14,7 @@ export type PageNumberOptions = {
     'bottom-left' |
     'bottom-center' |
     'bottom-right';
-    pageMode?: 'single' | 'facing';
+ //   pageMode?: 'single' | 'facing';
     margin?: 'small' | 'medium' | 'large';
 };
 
@@ -23,6 +23,9 @@ export const addNumbersToPDF = async (
     options: PageNumberOptions
 ): Promise<string | null> => {
     try {
+        if (!options) {
+            Alert.alert('Error', 'all filds are required.');
+        }
         const { fromPage, toPage, firstNumber, position } = options;
 
         // Read PDF as base64

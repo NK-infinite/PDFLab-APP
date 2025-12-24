@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 import { ThemeType } from "../../utils/themeManager";
-export  const Styles = (theme: ThemeType) => {
-  return  StyleSheet.create({
-      container:{
-        flex:1,
-        padding: 20,
-        backgroundColor:theme.background
-      },
-      buttonRow: {
+export const Styles = (theme: ThemeType) => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: theme.background
+    },
+    buttonRow: {
       flexDirection: "row",
       justifyContent: "space-evenly",
       marginTop: 20,
@@ -45,15 +45,15 @@ export  const Styles = (theme: ThemeType) => {
       marginTop: 16,
     },
     placeholder: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-placeholderText: {
-  fontSize: 16,
-  color: theme.textSecondary,
-  textAlign: 'center',
-  opacity: 0.7,
-},
-    });
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    placeholderText: {
+      fontSize: 16,
+      color: theme.textSecondary,
+      textAlign: 'center',
+      opacity: 0.7,
+    },
+  });
 }

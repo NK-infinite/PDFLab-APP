@@ -1,6 +1,6 @@
-import { Easing, Text, useColorScheme, View } from 'react-native'
+import {  InteractionManager, Text,  View } from 'react-native'
 import React, { useEffect, useMemo } from 'react'
-import Animated, { BounceInDown, BounceInUp, } from 'react-native-reanimated'
+import Animated, {  FadeInDown, FadeInUp, } from 'react-native-reanimated'
 import { Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useTheme } from '../../utils/themeManager'
@@ -21,16 +21,33 @@ useEffect(() => {
       } else {
         navigation.replace('Drawer');
       }
-    }, 2500);
+    }, 3000);
+
+     InteractionManager.runAfterInteractions(() => {
+    preloadScreens();
+  });
   };
 
   checkFirstLaunch();
 }, []);
+
+const preloadScreens = () => {
+  import('../tools/MergeScreen');
+  import('../tools/SplitScreen');
+  import('../tools/compressScreen');
+  import('../tools/scanScreen');
+  import('../tools/image_pdfScreen');
+  import('../tools/protect_pdfScreen');
+  import('../tools/pagenum');
+  import('../tools/MataDataScreen');
+  import('../tools/AddPage_pdf');
+};
+
   return (
     <View style={style.container}>
 
       <Animated.View
-        entering={BounceInUp.duration(1000)}
+        entering={FadeInUp.duration(1100)}
       //  exiting={BounceOutDown.duration(1000)}
       //  style={[Animationstyle]}
       >
@@ -40,15 +57,15 @@ useEffect(() => {
       </Animated.View>
 
       <Animated.View
-        entering={BounceInDown.duration(1000)}
-      //   exiting={BounceOutUp.duration(1000)}
+        entering={FadeInDown.duration(1100)}
+      //  exiting={BounceOutUp.duration(1000)}
       //  style={[Animationstyle]}
       >
         <Text style={style.text}>Welcome To</Text>
       </Animated.View>
 
       <Animated.View
-        entering={BounceInDown.delay(600).duration(1000)}
+        entering={FadeInDown.delay(650).duration(1100)}
       // exiting={BounceOutUp.duration(1000)}
       //  style={[Animationstyle]}
       >

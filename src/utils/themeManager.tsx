@@ -6,27 +6,31 @@ export const COLORS = {
   light: {
     background: 'white',
     header: '#f4f4f4ff',
-    quickCard: '#ffcccc', 
+    quickCard: '#ffcccc',
     quickCardBorder: '#ffcccc',      // light pink
-    toolCard: '#cce5ff',    
+    toolCard: '#cce5ff',
     toolCardBorder: '#cce5ff',       // blue
     recentCard: '#b6f3c4ff',      // light green
-   recentCardBorder: '#d4edda',
+    recentCardBorder: '#d4edda',
+    drawerCard: '#89fdf3ff',
+    drawerCardBorder: '#89fdf3ff',
     textPrimary: '#333333',
     textSecondary: '#555555',
     sectionTitle: '#1a73e8',    // blue
-   fileCardBg: '#f4f4f4ff',
-   shadowColor: '#000000',
+    fileCardBg: '#f4f4f4ff',
+    shadowColor: '#000000',
   },
   dark: {
     background: '#121212',
     header: '#3a3a3aff',
     quickCard: '#5c3333ff',    // red
-    quickCardBorder: '#ff0000',   
-    toolCard: '#314860ff', 
+    quickCardBorder: '#ff0000',
+    toolCard: '#314860ff',
     toolCardBorder: '#0000ff',       // blue
     recentCard: '#4a8a60ff',      // green
-   recentCardBorder: '#00ff00ff',
+    recentCardBorder: '#00ff00ff',
+    drawerCard: '#2c5551ff',
+    drawerCardBorder: '#00ffeaff',
     textPrimary: '#ffffff',
     textSecondary: '#cccccc',
     sectionTitle: '#ffcc00',    // yellow
@@ -41,8 +45,10 @@ export type ThemeType = {
   quickCard: string;
   quickCardBorder: string;
   toolCard: string;
-  toolCardBorder: string,      
+  toolCardBorder: string,
   recentCard: string;
+  drawerCard: string;
+  drawerCardBorder: string;
   recentCardBorder: string;
   textPrimary: string;
   textSecondary: string;

@@ -2,15 +2,15 @@ import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'reac
 import React, { useEffect, useMemo, useState } from 'react'
 import { Styles } from '../../styles/toolsstyle/protect_pdfstyle'
 import { useTheme } from './../../utils/themeManager';
-import SelectPDFButton from '../../components/SelectPDF';
-import ActionButton from '../../components/ActionButton';
-import Header from '../../components/header';
+import SelectPDFButton from '../../components/button/SelectPDF';
+import ActionButton from '../../components/button/ActionButton';
+import Header from '../../components/headers/header';
 import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import PDFCard, { PDFFile } from '../../components/PDFCard';
+import PDFCard, { PDFFile } from '../../components/card/PDFCard';
 import { openPDF } from '../../utils/open_pdf';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import ClearButton from '../../components/Clear_all';
+import ClearButton from '../../components/button/Clear_all';
 import { protectPDFFile } from '../../services/protectPdf';
 
 const protect_pdf = ({ navigation }: any) => {
@@ -21,6 +21,8 @@ const protect_pdf = ({ navigation }: any) => {
     const [showPassword2, setShowPassword2] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmpassword, setconfirmpassword] = useState('');
+    const [isloading, setIsLoading] = useState(false);
+    
     //const [style, setStyles] = useState(Styles(theme));
 
     // useEffect(() => {
@@ -35,28 +37,34 @@ const protect_pdf = ({ navigation }: any) => {
     }
 
     const Prtectpdf = async () => {
+        setIsLoading(true);
         if (Files.length === 0) {
             Alert.alert('Error', 'Please select a PDF file');
+            setIsLoading(false);
             return;
         }
 
         else if (!password || !confirmpassword) {
             Alert.alert('Error', 'Please enter and confirm password');
+            setIsLoading(false);
             return;
         }
 
         else if (password !== confirmpassword) {
             Alert.alert('Error', 'Passwords do not match');
+            setIsLoading(false);
             return;
         }
 
         else if (password.length < 4) {
             Alert.alert('Weak Password', 'Password must be at least 4 characters');
+            setIsLoading(false);
             return;
         }
 
         const protectedPath = await protectPDFFile(Files[0].uri, password);
         if (protectedPath) {
+            setIsLoading(false);
             Alert.alert('Success', `1PDF Protected! Saved to:\n${protectedPath}`);
         }
     }
@@ -76,7 +84,6 @@ const protect_pdf = ({ navigation }: any) => {
                 <View style={style.container}>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-                        <Animated.View entering={BounceInLeft.duration(1000)}>
                             <SelectPDFButton
                                 onFilesSelected={handleFileSelect}
                                 buttonText="Select PDF"
@@ -84,16 +91,14 @@ const protect_pdf = ({ navigation }: any) => {
                                     backgroundColor: theme.toolCard,
                                     borderColor: theme.toolCardBorder
                                 }} />
-                        </Animated.View>
-
-                        <Animated.View entering={BounceInRight.duration(1000)}>
+                     
                             <ActionButton title="Protect PDF"
                                 onPress={Prtectpdf}
+                                loading={isloading}
                                 style={{
                                     backgroundColor: theme.toolCard,
                                     borderColor: theme.toolCardBorder
                                 }} />
-                        </Animated.View>
                     </View>
 
                     {(Files.length > 0) && (

@@ -11,7 +11,6 @@ export const Styles = (theme:ThemeType) =>
   },
 
   header: {
-
     padding: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -52,10 +51,10 @@ export const Styles = (theme:ThemeType) =>
     alignItems: 'center',
     minWidth: 110,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 7,
   },
   quickLabel: {
     marginTop: 8,
@@ -81,7 +80,7 @@ export const Styles = (theme:ThemeType) =>
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 7,
   },
   toolLabel: {
     marginTop: 10,
@@ -100,14 +99,15 @@ export const Styles = (theme:ThemeType) =>
     borderWidth: 2,
     borderColor: theme.recentCardBorder,
     marginRight: 12,
-    elevation: 3,
     padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.25,
     shadowRadius: 2,
+    elevation: 7,
+   
   },
   recentTitle: { 
     fontSize: 14,

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { useTheme } from '../utils/themeManager';
+import { useTheme } from '../../utils/themeManager';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 export interface ImageFile {

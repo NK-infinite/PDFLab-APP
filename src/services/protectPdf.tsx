@@ -19,7 +19,7 @@ function uint8ArrayToBase64(uint8Array: Uint8Array) {
   }
   return btoa(binary);
 }
-// fileUri is something like file:///storage/emulated/0/Download/myfile.pdf
+
 export const protectPDFFile = async (fileUri: string, password: string) => {
   try {
     // 1. Read PDF as base64

@@ -2,14 +2,13 @@ import { Alert, Text, View } from 'react-native'
 import React, { useState, useMemo } from 'react'
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/toolsstyle/compresstyle';
-import Header from '../../components/header';
+import Header from '../../components/headers/header';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
-import SelectPDFButton from '../../components/SelectPDF';
-import ActionButton from '../../components/ActionButton';
-import PDFCard from '../../components/PDFCard';
+import SelectPDFButton from '../../components/button/SelectPDF';
+import ActionButton from '../../components/button/ActionButton';
+import PDFCard from '../../components/card/PDFCard';
 import { openPDF } from '../../utils/open_pdf';
-import ClearButton from '../../components/Clear_all';
+import ClearButton from '../../components/button/Clear_all';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { compressPDF } from '../../services/pdfCompressService';
 
@@ -73,22 +72,18 @@ const CompressScreen = ({ navigation }: CompressScreenProps) => {
         <Header title="Compress PDFs" onPress={() => navigation.goBack()} />
 
         <View style={styles.buttonRow}>
-          <Animated.View entering={BounceInLeft.delay(300).duration(1100)}>
 
             <SelectPDFButton
               onFilesSelected={handleFileSelect}
               buttonText="Select PDF"
             />
-          </Animated.View>
 
-          <Animated.View entering={BounceInRight.delay(300).duration(1100)}>
             <ActionButton
               title="Compress PDF"
               loading={isCompressing}
               onPress={handleCompress}
             // disabled={files.length === 0}
             />
-          </Animated.View>
         </View>
 
         {(files.length > 0 || compressedFile) && (

@@ -1,7 +1,7 @@
 // src/components/ClearButton.tsx
 import React from 'react';
 import { TouchableOpacity, Text, StyleProp, ViewStyle, TextStyle } from 'react-native';
-import { useTheme } from '../utils/themeManager';
+import { useTheme } from '../../utils/themeManager';
 
 interface ClearButtonProps {
   onPress: () => void;

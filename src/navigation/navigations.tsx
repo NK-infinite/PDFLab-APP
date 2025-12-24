@@ -1,41 +1,67 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Splashscreen from '../screens/IntroScreens/Splashscreen';
+import { ActivityIndicator, View } from 'react-native';
+
+// Non-lazy screens
+import SplashScreen from '../screens/IntroScreens/Splashscreen';
 import IntroScreen from '../screens/IntroScreens/introscreen';
+import { useTheme } from '../utils/themeManager';
 import drawernavigations from './drawernavigations';
-import MergeScreen from '../screens/tools/MergeScreen';
-import SplitScreen from '../screens/tools/SplitScreen';
-import compressScreen from '../screens/tools/compressScreen';
-import scanScreen from '../screens/tools/scanScreen';
-import image_pdfScreen from '../screens/tools/image_pdfScreen';
-import protect_pdf from '../screens/tools/protect_pdfScreen';
-import pagenum from '../screens/tools/pagenum';
-import MataData from '../screens/tools/MataDataScreen';
-import AddPage_pdf from '../screens/tools/AddPage_pdf';
+
+// Lazy-loaded screens (uppercase names)
+const MergeScreen = React.lazy(() => import('../screens/tools/MergeScreen'));
+const SplitScreen = React.lazy(() => import('../screens/tools/SplitScreen'));
+const CompressScreen = React.lazy(() => import('../screens/tools/compressScreen'));
+const ScanScreen = React.lazy(() => import('../screens/tools/scanScreen'));
+const ImagePdfScreen = React.lazy(() => import('../screens/tools/image_pdfScreen'));
+const ProtectPdfScreen = React.lazy(() => import('../screens/tools/protect_pdfScreen'));
+const PageNumScreen = React.lazy(() => import('../screens/tools/pagenum'));
+const MetaDataScreen = React.lazy(() => import('../screens/tools/MataDataScreen'));
+const AddPagePdfScreen = React.lazy(() => import('../screens/tools/AddPage_pdf'));
+
 
 const Pagenavigations = () => {
   const Stack = createNativeStackNavigator();
+  const { theme } = useTheme();
+
+
+  // Helper fallback component
+  const Loader = () => (
+
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background }}>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>
+  );
+
+  // Wrapper function to pass props correctly
+  const withSuspense = (Component: React.ComponentType<any>) => (props: any) => (
+    <Suspense fallback={<Loader />}>
+      <Component {...props} />
+    </Suspense>
+  );
+
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="SplashScreen" component={Splashscreen} />
+      <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}>
+        {/* Non-lazy screens */}
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="IntroScreen" component={IntroScreen} />
-
         <Stack.Screen name="Drawer" component={drawernavigations} />
-        <Stack.Screen name="merge" component={MergeScreen} />
-        <Stack.Screen name="split" component={SplitScreen} />
-        <Stack.Screen name="compress" component={compressScreen} />
-        <Stack.Screen name="images2pdf" component={image_pdfScreen} />
-        <Stack.Screen name="scan" component={scanScreen} />
-        <Stack.Screen name="protect" component={protect_pdf} />
-        <Stack.Screen name="pagenum" component={pagenum} />
-        <Stack.Screen name="metadata" component={MataData} />
-        <Stack.Screen name="addpage" component={AddPage_pdf} />
+
+        {/* Lazy-loaded screens with Suspense */}
+        <Stack.Screen name="Merge" component={withSuspense(MergeScreen)} />
+        <Stack.Screen name="Split" component={withSuspense(SplitScreen)} />
+        <Stack.Screen name="Compress" component={withSuspense(CompressScreen)} />
+        <Stack.Screen name="Images2PDF" component={withSuspense(ImagePdfScreen)} />
+        <Stack.Screen name="Scan" component={withSuspense(ScanScreen)} />
+        <Stack.Screen name="Protect" component={withSuspense(ProtectPdfScreen)} />
+        <Stack.Screen name="PageNum" component={withSuspense(PageNumScreen)} />
+        <Stack.Screen name="MetaData" component={withSuspense(MetaDataScreen)} />
+        <Stack.Screen name="AddPage" component={withSuspense(AddPagePdfScreen)} />
       </Stack.Navigator>
-
     </NavigationContainer>
-  )
-}
+  );
+};
 
-export default Pagenavigations
+export default Pagenavigations;

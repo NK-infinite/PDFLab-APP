@@ -1,18 +1,18 @@
-import { Alert, Text, View } from 'react-native'
+import { Alert, Text, TextInput, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/toolsstyle/Addpagestyle';
-import Header from '../../components/header';
+import Header from '../../components/headers/header';
 import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
-import SelectPDFButton from '../../components/SelectPDF';
-import ActionButton from '../../components/ActionButton';
-import PDFCard, { PDFFile } from '../../components/PDFCard';
+import SelectPDFButton from '../../components/button/SelectPDF';
+import ActionButton from '../../components/button/ActionButton';
+import PDFCard, { PDFFile } from '../../components/card/PDFCard';
 import { openPDF } from '../../utils/open_pdf';
-import { Buffer } from 'buffer';
-import { PDFDocument } from 'pdf-lib';
+import { addPageToPDF } from '../../services/AddPage';
 import RNFS from 'react-native-fs';
-
+import { PDFDocument } from 'pdf-lib';
+import ClearButton from '../../components/button/Clear_all';
 const AddPage_pdf = ({ navigation }: any) => {
 
   const { theme } = useTheme();
@@ -20,52 +20,66 @@ const AddPage_pdf = ({ navigation }: any) => {
   const [files, setFiles] = useState<PDFFile[]>([]);
   const [styles, setStyles] = useState(Styles(theme));
   const [pageType, setPageType] = useState<'blank' | 'existing'>('blank');
+  const [pageNumber, setPageNumber] = useState('1');
+  const [totalPages, setTotalPages] = useState(0);
+  const [isadding, setIsadding] = useState(false);
 
-  useEffect(() => {
-    // Development-only interval to refresh styles
-    if (__DEV__) {
-      const interval = setInterval(() => {
-        setStyles(Styles(theme));
-      }, 200); // 200ms, adjust if needed
-      return () => clearInterval(interval);
-    }
-  }, [theme]);
+  // useEffect(() => {
+  //   // Development-only interval to refresh styles
+  //   if (__DEV__) {
+  //     const interval = setInterval(() => {
+  //       setStyles(Styles(theme));
+  //     }, 200); // 200ms, adjust if needed
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [theme]);
 
-  const handleFileSelect = (selectedFiles: PDFFile[]) => {
+  const handleFileSelect = async (selectedFiles: PDFFile[]) => {
     setFiles(selectedFiles);
-  }
+
+    try {
+      const base64 = await RNFS.readFile(selectedFiles[0].uri, 'base64');
+      const pdfDoc = await PDFDocument.load(base64);
+      setTotalPages(pdfDoc.getPageCount());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
 
   const addpage = async () => {
-    
+    setIsadding(true);
     if (!files || files.length === 0) {
       Alert.alert('No PDF selected', 'Please select a PDF first');
       return;
     }
+    const pageIndex =
+      pageType === 'existing'
+        ? Number(pageNumber) - 1
+        : undefined;
 
-    try {
-      const fileUri = files[0].uri;
-      const pdfBase64 = await RNFS.readFile(fileUri, 'base64');
-      const pdfDoc = await PDFDocument.load(pdfBase64);
+    const resultPath = await addPageToPDF(
+      files[0].uri,
+      files[0].name,
+      pageType, // 'blank' | 'existing'
+      pageIndex
+    );
 
-      if (pageType === 'blank') {
-        pdfDoc.addPage(); // Add blank page
-      } else if (pageType === 'existing') {
-        // For example, take the first page of the same PDF and add it again
-        const [existingPage] = await pdfDoc.getPages();
-        pdfDoc.addPage(existingPage);
-      }
-
-      const pdfBytes = await pdfDoc.save();
-      const pdfBase64Out = Buffer.from(pdfBytes).toString('base64');
-      const outputpdf = RNFS.DownloadDirectoryPath + `/Addpage${files[0].name}' + Date.now() + '.pdf`;
-      // Overwrite existing file
-      await RNFS.writeFile(fileUri, pdfBase64Out, 'base64');
-      Alert.alert('Success', 'Page added successfully!');
-    } catch (err) {
-      console.error('Add Page Error:', err);
-      Alert.alert('Error', 'Failed to add page');
+    if (resultPath) {
+      setIsadding(false);
+      Alert.alert(
+        'Success',
+        `Page added successfully!\nSaved to:\n${resultPath}`
+      );
     }
   };
+
+  const Clearall = () => {
+    setFiles([]);
+    setPageType('blank');
+    setPageNumber('1');
+    setTotalPages(0);
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
@@ -73,25 +87,22 @@ const AddPage_pdf = ({ navigation }: any) => {
         <Header title='Add Page' onPress={() => navigation.goBack()} />
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-          <Animated.View entering={BounceInLeft.duration(1000)}>
             <SelectPDFButton
               onFilesSelected={handleFileSelect}
               buttonText="Select PDF"
               style={{
                 backgroundColor: theme.toolCard,
                 borderColor: theme.toolCardBorder
-              }}/>
-          </Animated.View>
-
-          <Animated.View entering={BounceInRight.duration(1000)}>
+              }} />
+       
             <ActionButton
               title='Add Page'
+              loading={isadding}
               onPress={addpage}
               style={{
                 backgroundColor: theme.toolCard,
                 borderColor: theme.toolCardBorder
               }} />
-          </Animated.View>
         </View>
 
         {files && files.length > 0 &&
@@ -105,7 +116,92 @@ const AddPage_pdf = ({ navigation }: any) => {
                     onPress={() => openPDF(files[0].uri)}
                   />
                 </View>
+
+
+                <View style={{ marginTop: 20 }}>
+                  <Text style={styles.sectionTitle}>Page Type</Text>
+
+                  <View style={{ flexDirection: 'row', gap: 15, marginTop: 10 }}>
+                    {/* Blank Page */}
+                    <Text
+                      onPress={() => setPageType('blank')}
+                      style={{
+                        paddingVertical: 10,
+                        paddingHorizontal: 20,
+                        borderRadius: 8,
+                        borderWidth: 1,
+                        borderColor:
+                          pageType === 'blank'
+                            ? theme.textSecondary
+                            : theme.toolCardBorder,
+                        backgroundColor:
+                          pageType === 'blank'
+                            ? theme.textSecondary
+                            : theme.toolCard,
+                        color:
+                          pageType === 'blank'
+                            ? '#fff'
+                            : theme.textSecondary,
+                        overflow: 'hidden'
+                      }}
+                    >
+                      Blank Page
+                    </Text>
+
+                    {/* Existing Page */}
+                    <Text
+                      onPress={() => setPageType('existing')}
+                      style={{
+                        paddingVertical: 10,
+                        paddingHorizontal: 20,
+                        borderRadius: 8,
+                        borderWidth: 1,
+                        borderColor:
+                          pageType === 'existing'
+                            ? theme.textSecondary
+                            : theme.toolCardBorder,
+                        backgroundColor:
+                          pageType === 'existing'
+                            ? theme.textSecondary
+                            : theme.toolCard,
+                        color:
+                          pageType === 'existing'
+                            ? '#fff'
+                            : theme.textSecondary,
+                        overflow: 'hidden'
+                      }}
+                    >
+                      Copy Existing
+                    </Text>
+                  </View>
+                </View>
+
+
+                {pageType === 'existing' && totalPages > 0 && (
+                  <View style={{ marginTop: 20 }}>
+                    <Text style={styles.sectionTitle}>
+                      Page number to copy (1 - {totalPages})
+                    </Text>
+
+                    <TextInput
+                      value={pageNumber}
+                      onChangeText={setPageNumber}
+                      keyboardType="number-pad"
+                      placeholder="Enter page number"
+                      style={{
+                        borderWidth: 1,
+                        borderColor: theme.toolCardBorder,
+                        borderRadius: 8,
+                        padding: 10,
+                        color: theme.textSecondary,
+                        backgroundColor: theme.toolCard,
+                        marginTop: 8
+                      }}
+                    />
+                  </View>
+                )}
               </View>
+               <ClearButton onPress={Clearall} />
             </View>
           </>
         }

@@ -2,16 +2,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTheme } from "../../utils/themeManager";
 import { Styles } from "../../styles/toolsstyle/scanstyle";
-import Header from "../../components/header";
+import Header from "../../components/headers/header";
 import DocumentScanner from "react-native-document-scanner-plugin";
-import { Alert, FlatList, PermissionsAndroid, Platform, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, PermissionsAndroid, Platform, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-gesture-handler";
 import { captureImage } from "../../services/cameraService";
-import ImageCard, { ImageFile } from "../../components/ImageCard";
+import ImageCard, { ImageFile } from "../../components/card/ImageCard";
 import { imagesToPDF } from "../../services/imageToPdfService";
-import ClearButton from "../../components/Clear_all";
-import Animated, { BounceIn, BounceInLeft, BounceInRight, BounceInUp } from "react-native-reanimated";
-import PDFCard from "../../components/PDFCard";
+import ClearButton from "../../components/button/Clear_all";
+import Animated, { BounceIn, BounceInLeft, BounceInRight, BounceInUp, FadeInLeft, FadeInRight } from "react-native-reanimated";
+import PDFCard from "../../components/card/PDFCard";
 import { openPDF } from "../../utils/open_pdf";
 
 
@@ -25,11 +25,13 @@ const scanScreen = ({ navigation }: any) => {
 
   const { theme } = useTheme();
    const styles = useMemo(() => Styles(theme), [theme]);
-  //const [styles, setStyles] = useState(Styles(theme));
-  const [scannedImage, setScannedImage] = useState<string[]>([]);
-  const [isimage2pdf, setIsimage2pdf] = useState(false);
-  const [pdfFilePath, setPdfFilePath] = useState<string | null>(null);
-
+   const [scannedImage, setScannedImage] = useState<string[]>([]);
+   const [isimage2pdf, setIsimage2pdf] = useState(false);
+   const [pdfFilePath, setPdfFilePath] = useState<string | null>(null);
+   const [loading, setLoading] = useState(false);
+   
+   //const [styles, setStyles] = useState(Styles(theme));
+   
   // useEffect(() => {
   //   if (__DEV__) {
   //     const interval = setInterval(() => setStyles(Styles(theme)), 200);
@@ -39,14 +41,15 @@ const scanScreen = ({ navigation }: any) => {
 
 
   const image2pdf = async () => {
-
+ setLoading(true);
     if (scannedImage.length === 0) {
       Alert.alert('No images selected');
+      setLoading(false);
       return;
     }
 
     try {
-
+         
       setIsimage2pdf(true);
       const imageFiles: PDFImageFile[] = scannedImage.map(file => ({
         uri: file,
@@ -58,9 +61,11 @@ const scanScreen = ({ navigation }: any) => {
       setPdfFilePath(pdfPath);
       setIsimage2pdf(true);
       Alert.alert(`PDF Created at: ${pdfPath}`);
+      setLoading(false);
 
     } catch (error: any) {
       console.error(error);
+      setLoading(false);
       Alert.alert('Error', error.message || 'Something went wrong');
     }
   }
@@ -109,15 +114,20 @@ const scanScreen = ({ navigation }: any) => {
         {/* Buttons */}
 
         <View style={styles.buttonRow}>
-          <Animated.View entering={BounceInLeft.duration(1000)}>
+          <Animated.View entering={FadeInLeft.duration(1000)}>
             <TouchableOpacity onPress={handleScan} style={styles.button}>
               <Text style={styles.buttonText}>Scan</Text>
             </TouchableOpacity>
           </Animated.View>
 
-          <Animated.View entering={BounceInRight.duration(1000)}>
-            <TouchableOpacity onPress={image2pdf} style={styles.button}>
-              <Text style={styles.buttonText}>PDF</Text>
+          <Animated.View entering={FadeInRight.duration(1000)}>
+            <TouchableOpacity onPress={image2pdf}  style={styles.button}>
+              { loading ? (
+               <ActivityIndicator size={15} color={theme.textPrimary} /> 
+              ):(
+                <Text style={styles.buttonText}>PDF</Text>
+              )
+              }
             </TouchableOpacity>
           </Animated.View>
         </View>

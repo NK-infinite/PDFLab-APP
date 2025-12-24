@@ -13,15 +13,15 @@ import { useTheme } from '../../utils/themeManager';
 import Animated, { BounceInLeft, BounceInRight, } from 'react-native-reanimated';
 import { Styles } from '../../styles/toolsstyle/splitstyle';
 import { PDFFile } from '../../services/pdfPickerService';
-import SelectPDFButton from '../../components/SelectPDF';
+import SelectPDFButton from '../../components/button/SelectPDF';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import ClearButton from '../../components/Clear_all';
+import ClearButton from '../../components/button/Clear_all';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SCREEN_WIDTH } from '../../utils/hightwidth';
 import { splitPDFsService } from "../../services/pdfSplitService";
-import PDFCard from '../../components/PDFCard';
-import ActionButton from '../../components/ActionButton';
-import Header from '../../components/header';
+import PDFCard from '../../components/card/PDFCard';
+import ActionButton from '../../components/button/ActionButton';
+import Header from '../../components/headers/header';
 import { openPDF } from '../../utils/open_pdf';
 
 const SplitScreen = ({ navigation, route }: any) => {
@@ -96,35 +96,31 @@ const SplitScreen = ({ navigation, route }: any) => {
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 20}>
 
 
-                    <View style={styles.container}>
-                        {/* Header Section */}
-                        <Header title={`Split PDFs`} onPress={() => navigation.goBack()} />
-                <ScrollView
-                    contentContainerStyle={{
-                        flexGrow: 1,
-                        paddingBottom: 20,
-                    }}
-                    showsVerticalScrollIndicator={false}
-                    keyboardShouldPersistTaps="handled"
-                    keyboardDismissMode="interactive">
+                <View style={styles.container}>
+                    {/* Header Section */}
+                    <Header title={`Split PDFs`} onPress={() => navigation.goBack()} />
+                    <ScrollView
+                        contentContainerStyle={{
+                            flexGrow: 1,
+                            paddingBottom: 20,
+                        }}
+                        showsVerticalScrollIndicator={false}
+                        keyboardShouldPersistTaps="handled"
+                        keyboardDismissMode="interactive">
 
                         {/* Action Buttons */}
                         <View style={styles.actionButtonsContainer}>
-                            <Animated.View entering={BounceInLeft.delay(300).duration(1100)}>
                                 <SelectPDFButton
                                     onFilesSelected={(selected) => setFiles(selected)}
                                     buttonText={`Select PDF`}
                                 />
-                            </Animated.View>
-
-                            <Animated.View entering={BounceInRight.delay(300).duration(1100)}>
+                     
                                 <ActionButton
                                     title="Split PDF"
                                     onPress={splitPDFs}
                                     loading={isspliting}
                                 />
 
-                            </Animated.View>
                         </View>
 
                         {outputFiles.length > 0 && (
@@ -286,8 +282,8 @@ const SplitScreen = ({ navigation, route }: any) => {
                                 <Text style={styles.emptyStateSubtitle}>Select at least 1 PDF to split</Text>
                             </View>
                         )}
-                </ScrollView>
-                    </View>
+                    </ScrollView>
+                </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
     );

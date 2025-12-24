@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { useTheme } from '../utils/themeManager';
+import { useTheme } from '../../utils/themeManager';
 
 interface HeaderProps {
   title: string;
@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title, onPress, style }) => {
     <View style={[styles.container, style]}>
       {onPress && (
         <TouchableOpacity onPress={onPress}>
-          <Icon name="arrow-left" size={20} color={theme.textPrimary} />
+          <Icon name="arrow-left" size={23} color={theme.textPrimary} />
         </TouchableOpacity>
       )}
       <Text style={styles.title}>{title}</Text>

@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native';
-import { useTheme } from '../utils/themeManager';
+import { useTheme } from '../../utils/themeManager';
 import Animated, { SlideInUp, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 export interface PDFFile {
   name: string;
   uri: string;
+  size?: number; 
 }
 
 interface PDFCardProps {
   file: PDFFile;
   onPress?: () => void;
 }
-
 
 const BounceUp = SlideInUp
   .springify()
@@ -23,8 +23,6 @@ const BounceUp = SlideInUp
 const PDFCard: React.FC<PDFCardProps> = ({ file, onPress }) => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
-
-
 
   const translateY = useSharedValue(40);
   const opacity = useSharedValue(0);
@@ -50,7 +48,7 @@ const PDFCard: React.FC<PDFCardProps> = ({ file, onPress }) => {
       <TouchableOpacity onPress={onPress ?? (() => { })}>
         <View style={[styles.card]}>
           <Image
-            source={require('../assets/Image/PDFLab.png')}
+            source={require('../../assets/Image/PDFLab.png')}
             style={styles.thumbnail}
           />
           <Text

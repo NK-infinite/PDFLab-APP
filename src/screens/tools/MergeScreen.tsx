@@ -3,14 +3,13 @@ import { View, Text, FlatList, } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/toolsstyle/mergestyle';
-import Animated, { BounceInLeft, BounceInRight, } from 'react-native-reanimated';
 import { mergePDFs, openPDF } from '../../services/pdfMergeService';
-import SelectPDFButton from '../../components/SelectPDF';
-import ClearButton from '../../components/Clear_all';
+import SelectPDFButton from '../../components/button/SelectPDF';
+import ClearButton from '../../components/button/Clear_all';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import PDFCard from '../../components/PDFCard';
-import ActionButton from '../../components/ActionButton';
-import Header from '../../components/header';
+import PDFCard from '../../components/card/PDFCard';
+import ActionButton from '../../components/button/ActionButton';
+import Header from '../../components/headers/header';
 
 interface PDFFile {
   name: string;
@@ -55,32 +54,26 @@ const MergeScreen = ({ navigation }: any) => {
           onPress={() => navigation.goBack()}
         />
 
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 20 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly", marginTop: 20, gap: 10 }}>
 
-          <Animated.View
-            entering={BounceInLeft.delay(300).duration(1100)}>
 
-            <SelectPDFButton
-              onFilesSelected={(selected) => setFiles(prev => [...prev, ...selected])}
-              buttonText={`Select PDFs`} />
-          </Animated.View>
+          <SelectPDFButton
+            onFilesSelected={(selected) => setFiles(prev => [...prev, ...selected])}
+            buttonText={`Select PDFs`} />
 
-          <Animated.View
-            entering={BounceInRight.delay(300).duration(1100)}>
-            <ActionButton
-              title={`Merge ${files.length} PDFs`}
-              onPress={async () => {
-                setIsMerging(true);
-                const merged = await mergePDFs(files);
-                if (merged) {
-                  setFiles([merged]);
-                  await openPDF(merged.uri);
-                }
-                setIsMerging(false);
-              }}
-              loading={isMerging}
-            />
-          </Animated.View>
+          <ActionButton
+            title={`Merge ${files.length} PDFs`}
+            onPress={async () => {
+              setIsMerging(true);
+              const merged = await mergePDFs(files);
+              if (merged) {
+                setFiles([merged]);
+                await openPDF(merged.uri);
+              }
+              setIsMerging(false);
+            }}
+            loading={isMerging}
+          />
         </View>
 
         {files.length > 0 && (

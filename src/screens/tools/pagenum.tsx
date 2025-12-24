@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/toolsstyle/pagenumstyle';
-import Header from '../../components/header';
+import Header from '../../components/headers/header';
 import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
-import SelectPDFButton from '../../components/SelectPDF';
-import ActionButton from '../../components/ActionButton';
-import PDFCard, { PDFFile } from '../../components/PDFCard';
+import SelectPDFButton from '../../components/button/SelectPDF';
+import ActionButton from '../../components/button/ActionButton';
+import PDFCard, { PDFFile } from '../../components/card/PDFCard';
 import { openPDF } from '../../utils/open_pdf';
-import ClearButton from '../../components/Clear_all';
+import ClearButton from '../../components/button/Clear_all';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { addNumbersToPDF, PageNumberOptions } from '../../services/Pagenumber';
 
@@ -30,7 +30,9 @@ const pagenum = ({ navigation }: any) => {
   const [margin, setMargin] = useState<'small' | 'medium' | 'large'>('small');
   const [fromPage, setFromPage] = useState<any>();
   const [toPage, setToPage] = useState<any>();
+  const [isloading, setIsLoading] = useState(false);
   const [firstNumber, setFirstNumber] = useState<any>();
+  
   //const [styles, setStyles] = useState(Styles(theme));
 
   // useEffect(() => {
@@ -41,7 +43,9 @@ const pagenum = ({ navigation }: any) => {
   // }, [theme]);
 
   const addnumber = async () => {
+    setIsLoading(true);
     if (files.length === 0) {
+      setIsLoading(false);
       Alert.alert('Error', 'Please select a PDF first');
       return;
     }
@@ -56,8 +60,10 @@ const pagenum = ({ navigation }: any) => {
     const output = await addNumbersToPDF(files[0].uri, options);
 
     if (output) {
+      setIsLoading(false);
       Alert.alert('Success', `Page numbers added!\nSaved to:\n${output}`);
     } else {
+      setIsLoading(false);
       Alert.alert('Error', 'Failed to add page numbers');
     }
   };
@@ -93,7 +99,6 @@ const pagenum = ({ navigation }: any) => {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive">
           <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-            <Animated.View entering={BounceInLeft.duration(1000)}>
               <SelectPDFButton
                 onFilesSelected={handleFileSelect}
                 buttonText="Select PDF"
@@ -101,16 +106,14 @@ const pagenum = ({ navigation }: any) => {
                   backgroundColor: theme.toolCard,
                   borderColor: theme.toolCardBorder
                 }} />
-            </Animated.View>
-
-            <Animated.View entering={BounceInRight.duration(1000)}>
+          
               <ActionButton title="Add Numer to PDF"
                 onPress={addnumber}
+                loading={isloading}
                 style={{
                   backgroundColor: theme.toolCard,
                   borderColor: theme.toolCardBorder
                 }} />
-            </Animated.View>
           </View>
 
           {/* Selected PDF Preview */}
@@ -128,7 +131,7 @@ const pagenum = ({ navigation }: any) => {
                 </View>
 
                 <View style={{ flex: 1, justifyContent: 'space-around' }}>
-                  <View>
+                  {/* <View>
                     <Text style={styles.label}>Page Mode</Text>
                     <View style={{ flexDirection: 'row', gap: 10, marginVertical: 8 }}>
                       {['Single', 'Facing'].map((mode) => (
@@ -149,7 +152,7 @@ const pagenum = ({ navigation }: any) => {
                         </TouchableOpacity>
                       ))}
                     </View>
-                  </View>
+                  </View> */}
 
                   <View>
                     <Text style={styles.label}>Position</Text>

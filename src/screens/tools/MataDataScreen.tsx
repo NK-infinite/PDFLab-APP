@@ -1,21 +1,19 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { use, useEffect, useState } from 'react'
+import { Alert, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/toolsstyle/MataDataStyle';
-import Header from '../../components/header';
-import SelectPDFButton from '../../components/SelectPDF';
-import ActionButton from '../../components/ActionButton';
-import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
+import Header from '../../components/headers/header';
+import SelectPDFButton from '../../components/button/SelectPDF';
+import ActionButton from '../../components/button/ActionButton';
 import { PDFFile } from '../../services/pdfPickerService';
-import PDFCard from '../../components/PDFCard';
+import PDFCard from '../../components/card/PDFCard';
 import { openPDF } from '../../utils/open_pdf';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import ClearButton from '../../components/Clear_all';
+import ClearButton from '../../components/button/Clear_all';
 import { editPDFMetadata, removePDFMetadata, viewPDFMetadata } from '../../services/MataDateServies';
 import { TextInput } from 'react-native';
 import { ScrollView } from 'react-native';
-import { SCREEN_HEIGHT } from '../../utils/hightwidth';
 
 const MataData = ({ navigation }: any) => {
     const { theme } = useTheme()
@@ -30,17 +28,20 @@ const MataData = ({ navigation }: any) => {
     const [subject, setSubject] = useState('');
     const [keywords, setKeywords] = useState('');
     const [producer, setProducer] = useState('');
- //   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+    const [isloading, setIsLoading] = useState(false);
+    
+    //   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
-    useEffect(() => {
-        // Development-only interval to refresh styles
-        if (__DEV__) {
-            const interval = setInterval(() => {
-                setStyles(Styles(theme));
-            }, 200); // 200ms, adjust if needed
-            return () => clearInterval(interval);
-        }
-    }, [theme]);
+    // useEffect(() => {
+
+    //     // Development-only interval to refresh styles
+    //     if (__DEV__) {
+    //         const interval = setInterval(() => {
+    //             setStyles(Styles(theme));
+    //         }, 200); // 200ms, adjust if needed
+    //         return () => clearInterval(interval);
+    //     }
+    // }, [theme]);
 
     const formatDate = (date: any) => {
         if (!date) return 'No data';
@@ -72,8 +73,10 @@ const MataData = ({ navigation }: any) => {
     }
 
     const matadata = async () => {
+        setIsLoading(true);
         if (files.length === 0) {
             Alert.alert('Error', 'Please select a PDF first');
+            setIsLoading(false);
             return;
         }
 
@@ -84,8 +87,10 @@ const MataData = ({ navigation }: any) => {
                 const data = await viewPDFMetadata(fileUri);
                 setviewmatadata(data)
                 if (isEmptyMetadata(data)) {
+                    setIsLoading(false);
                     Alert.alert('PDF has Alredy No Metadata');
                 }
+                setIsLoading(false)
                 break;
 
             case 'edit':
@@ -97,10 +102,13 @@ const MataData = ({ navigation }: any) => {
                     keywords: keywords,
                     producer: producer
                 });
+
+                setIsLoading(false);
                 Alert.alert('Success', `Metadata updated!\nSaved to:\n${editedPath}`);
                 break;
             case 'remove':
                 const cleanPath = await removePDFMetadata(fileUri,);
+                setIsLoading(false)
                 Alert.alert('Success', `Selected metadata removed!\nSaved to:\n${cleanPath}`);
                 break;
         }
@@ -132,7 +140,6 @@ const MataData = ({ navigation }: any) => {
                     keyboardDismissMode="interactive">
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-                        <Animated.View entering={BounceInLeft.duration(1000)}>
                             <SelectPDFButton
                                 onFilesSelected={handleFileSelect}
                                 buttonText="Select PDF"
@@ -140,9 +147,7 @@ const MataData = ({ navigation }: any) => {
                                     backgroundColor: theme.toolCard,
                                     borderColor: theme.toolCardBorder
                                 }} />
-                        </Animated.View>
-
-                        <Animated.View entering={BounceInRight.duration(1000)}>
+                     
                             <ActionButton
                                 title={metadataAction === 'view'
                                     ? 'View Metadata'
@@ -150,11 +155,11 @@ const MataData = ({ navigation }: any) => {
                                         ? 'Edit Metadata'
                                         : 'Remove Metadata'}
                                 onPress={matadata}
+                                loading={isloading}
                                 style={{
                                     backgroundColor: theme.toolCard,
                                     borderColor: theme.toolCardBorder
                                 }} />
-                        </Animated.View>
                     </View>
 
                     {files && files.length > 0 &&
@@ -213,42 +218,42 @@ const MataData = ({ navigation }: any) => {
                                 {metadataAction === 'edit' &&
                                     <View style={{ flexDirection: 'column', marginTop: 20, justifyContent: 'flex-start', gap: 10 }}>
                                         <TextInput
-                                            value={title}
+                                            value={viewmatadata?.title}
                                             onChangeText={setTitle}
                                             style={styles.textinput}
                                             placeholder="Enter title"
                                             placeholderTextColor={theme.textPrimary || '#000'}
                                         />
                                         <TextInput
-                                            value={author}
+                                            value={viewmatadata?.author}
                                             onChangeText={setAuthor}
                                             style={styles.textinput}
                                             placeholder="Enter author"
                                             placeholderTextColor={theme.textPrimary || '#000'}
                                         />
                                         <TextInput
-                                            value={subject}
+                                            value={viewmatadata?.subject}
                                             onChangeText={setSubject}
                                             style={styles.textinput}
                                             placeholder="Enter subject"
                                             placeholderTextColor={theme.textPrimary || '#000'}
                                         />
                                         <TextInput
-                                            value={keywords}
+                                            value={viewmatadata?.keywords}
                                             onChangeText={setKeywords}
                                             style={styles.textinput}
                                             placeholder="Enter keywords"
                                             placeholderTextColor={theme.textPrimary || '#000'}
                                         />
                                         <TextInput
-                                            value={creator}
+                                            value={viewmatadata?.creator}
                                             onChangeText={setCreator}
                                             style={styles.textinput}
                                             placeholder="Enter creator"
                                             placeholderTextColor={theme.textPrimary || '#000'}
                                         />
                                         <TextInput
-                                            value={producer}
+                                            value={viewmatadata?.producer}
                                             onChangeText={setProducer}
                                             style={styles.textinput}
                                             placeholder="Enter producer"

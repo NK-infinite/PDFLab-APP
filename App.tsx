@@ -16,7 +16,6 @@ function App() {
         barStyle={isDark ? 'light-content' : 'dark-content'} 
         backgroundColor={isDark ? '#121212' : '#FFFFFF'}
         />
-    
        <Pagenavigations />
     </SafeAreaProvider>
   );

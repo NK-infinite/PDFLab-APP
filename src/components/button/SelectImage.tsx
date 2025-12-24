@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { TouchableOpacity, Text, ActivityIndicator, Alert } from 'react-native';
-import { useTheme } from '../utils/themeManager';
-import { ImageFile, selectImages } from '../services/imagePickerService';
-import { captureImage } from '../services/cameraService';
+import { useTheme } from '../../utils/themeManager';
+import { ImageFile, selectImages } from '../../services/imagePickerService';
+import { captureImage } from '../../services/cameraService';
+import Animated, { FadeInLeft, useAnimatedStyle, useSharedValue, withTiming, } from 'react-native-reanimated';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface SelectImageButtonProps {
     onImagesSelected: (files: ImageFile[]) => void;
@@ -14,6 +16,7 @@ interface SelectImageButtonProps {
 const SelectImageButton = ({ onImagesSelected, buttonText = 'Select Images', style, textStyle }: SelectImageButtonProps) => {
     const { theme } = useTheme();
     const [isPicking, setIsPicking] = useState(false);
+    const progress = useSharedValue(0);
 
     const handlePress = async () => {
         if (isPicking) return;
@@ -65,26 +68,47 @@ const SelectImageButton = ({ onImagesSelected, buttonText = 'Select Images', sty
         }
     };
 
+
+
+
+    useFocusEffect(
+        useCallback(() => {
+            progress.value = 0;
+            progress.value = withTiming(1, { duration: 600 });
+        }, [])
+    );
+
+    const animStyle = useAnimatedStyle(() => ({
+        opacity: progress.value,
+        transform: [
+            { translateX: (1 - progress.value) * -30 }
+        ],
+    }));
+
     return (
-        <TouchableOpacity
-            style={[{
-                backgroundColor: theme.quickCard,
-                borderColor: theme.quickCardBorder,
-                borderWidth: 2,
-                padding: 14,
-                borderRadius: 10,
-                alignItems: 'center',
-            }, style]}
-            onPress={handlePress}
+        <Animated.View
+            style={animStyle}
         >
-            {isPicking ? (
-                <ActivityIndicator size="small" color={theme.textPrimary} />
-            ) : (
-                <Text style={[{ color: theme.textPrimary, fontWeight: '600' }, textStyle]}>
-                    {buttonText}
-                </Text>
-            )}
-        </TouchableOpacity>
+            <TouchableOpacity
+                style={[{
+                    backgroundColor: theme.quickCard,
+                    borderColor: theme.quickCardBorder,
+                    borderWidth: 2,
+                    padding: 14,
+                    borderRadius: 10,
+                    alignItems: 'center',
+                }, style]}
+                onPress={handlePress}
+            >
+                {isPicking ? (
+                    <ActivityIndicator size="small" color={theme.textPrimary} />
+                ) : (
+                    <Text style={[{ color: theme.textPrimary, fontWeight: '600' }, textStyle]}>
+                        {buttonText}
+                    </Text>
+                )}
+            </TouchableOpacity>
+        </Animated.View>
     );
 };
 

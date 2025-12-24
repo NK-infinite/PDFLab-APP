@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/introstyle/introstyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Animated, { BounceInDown, BounceInLeft, BounceInRight } from 'react-native-reanimated';
+import Animated, { BounceInDown, BounceInLeft, BounceInRight, FadeInDown, FadeInLeft, FadeInRight } from 'react-native-reanimated';
 
 const IntroScreen = ({ navigation }: any) => {
   const { theme } = useTheme();
@@ -17,7 +17,7 @@ const IntroScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Animated.View
-        entering={BounceInRight.duration(1000)}>
+        entering={FadeInRight.duration(1000)}>
 
         <Image
           source={require('../../assets/Image/PDFLab.png')}
@@ -28,7 +28,7 @@ const IntroScreen = ({ navigation }: any) => {
 
       <Animated.View
         style={{ alignItems: 'center', justifyContent: 'center' }}
-        entering={BounceInLeft.duration(1000)}>
+        entering={FadeInLeft.duration(1000)}>
         <Text style={styles.title}>Welcome to PDFLab</Text>
         <Text style={styles.subtitle}>
           The easiest way to create, edit, and manage PDFs on your device.
@@ -36,7 +36,7 @@ const IntroScreen = ({ navigation }: any) => {
       </Animated.View>
 
       <Animated.View
-        entering={BounceInDown.duration(1000)}>
+        entering={FadeInDown.duration(1000)}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => handleGetStarted()}>

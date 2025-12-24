@@ -1,33 +1,33 @@
 import { StyleSheet } from "react-native"
 import { ThemeType } from '../../utils/themeManager';
 
-export const Styles = (theme:ThemeType)=>{
+export const Styles = (theme: ThemeType) => {
   return StyleSheet.create({
-  container:{
-    flex: 1,
-    justifyContent:'space-between',
-    backgroundColor:theme.background,
-    padding:20,
-  },
-  buttonRow: {
+    container: {
+      flex: 1,
+      justifyContent: 'space-between',
+      backgroundColor: theme.background,
+      padding: 20,
+    },
+    buttonRow: {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-evenly",
       marginTop: 20,
       marginBottom: 20,
     },
-     button: {
-            backgroundColor: theme.quickCard,
-            borderColor: theme.quickCardBorder,
-            borderWidth: 2,
-            padding: 14,
-            borderRadius: 10,
-            alignItems: 'center',
-        },
-        buttonText: {
-            color: theme.textPrimary,
-            fontWeight: '600',
-        },
+    button: {
+      backgroundColor: theme.quickCard,
+      borderColor: theme.quickCardBorder,
+      borderWidth: 2,
+      padding: 14,
+      borderRadius: 10,
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: theme.textPrimary,
+      fontWeight: '600',
+    },
     content: {
       flex: 1,
       marginTop: 20,
@@ -59,16 +59,16 @@ export const Styles = (theme:ThemeType)=>{
       marginTop: 16,
     },
     placeholder: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-placeholderText: {
-  fontSize: 16,
-  color: theme.textSecondary,
-  textAlign: 'center',
-  opacity: 0.7,
-},
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    placeholderText: {
+      fontSize: 16,
+      color: theme.textSecondary,
+      textAlign: 'center',
+      opacity: 0.7,
+    },
 
   })
 }

@@ -1,14 +1,17 @@
 // src/components/SelectPDFButton.tsx
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import { useTheme } from '../utils/themeManager';
-import { PDFFile, selectPDFs } from '../services/pdfPickerService';
+import { useTheme } from '../../utils/themeManager';
+import { PDFFile, selectPDFs } from '../../services/pdfPickerService';
+import Animated, { FadeInLeft, useAnimatedStyle, useSharedValue, withTiming,  } from 'react-native-reanimated';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface SelectPDFButtonProps {
   onFilesSelected: (files: PDFFile[]) => void;
   buttonText?: string;
   style?: any;
   textStyle?: any;
+  animationtime?: number
 }
 
 const SelectPDFButton = ({
@@ -33,7 +36,26 @@ const SelectPDFButton = ({
     setIsPicking(false);
   };
 
+  const progress = useSharedValue(0);
+
+useFocusEffect(
+  useCallback(() => {
+    progress.value = 0;
+    progress.value = withTiming(1, { duration: 600 });
+  }, [])
+);
+
+const animStyle = useAnimatedStyle(() => ({
+  opacity: progress.value,
+  transform: [
+    { translateX: (1 - progress.value) * -30 }
+  ],
+}));
+
+
   return (
+    <Animated.View
+    style={animStyle}>
     <TouchableOpacity
       style={[
         {
@@ -56,6 +78,7 @@ const SelectPDFButton = ({
         </Text>
       )}
     </TouchableOpacity>
+      </Animated.View>
   );
 };
 
