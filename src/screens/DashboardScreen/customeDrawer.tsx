@@ -38,13 +38,10 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   // 🔹 shared animation trigger
   const progress = useSharedValue(0);
 
-  useEffect(() => {
-    if (isDrawerOpen) {
-      setDrawerKey(k => k + 1);
-      progress.value = 0;
-      progress.value = withTiming(1, { duration: 400 });
-    }
-  }, [isDrawerOpen]);
+ useEffect(() => {
+  progress.value = withTiming(isDrawerOpen ? 1 : 0, { duration: 400 });
+}, [isDrawerOpen]);
+
 
   // ===== HEADER (FadeInUp replacement)
   const headerStyle = useAnimatedStyle(() => ({
