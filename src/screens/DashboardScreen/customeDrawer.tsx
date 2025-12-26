@@ -8,7 +8,7 @@ import { DrawerItem } from '../../components/drawers/drawer';
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/dashboard/customDrawerstyle';
 import { useEffect, useMemo, useState } from 'react';
-import Animated, {FadeInLeft, FadeInUp, useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+import Animated, {  useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const { theme } = useTheme();
@@ -28,7 +28,6 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   //   }
   // }, [theme]);
 
-
   useEffect(() => {
     if (isDrawerOpen) {
       setDrawerKey(prev => prev + 1);
@@ -38,17 +37,16 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   // 🔹 shared animation trigger
   const progress = useSharedValue(0);
 
- useEffect(() => {
-  progress.value = withTiming(isDrawerOpen ? 1 : 0, { duration: 400 });
-}, [isDrawerOpen]);
-
+  useEffect(() => {
+    progress.value = withTiming(isDrawerOpen ? 1 : 0, { duration: 400 });
+  }, [isDrawerOpen]);
 
   // ===== HEADER (FadeInUp replacement)
   const headerStyle = useAnimatedStyle(() => ({
     opacity: progress.value,
     transform: [
       {
-        translateY: (1 - progress.value) * 20,
+        translateX: -(1 - progress.value) * 20,
       },
     ],
   }));
@@ -57,7 +55,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const itemStyle = (index: number) =>
     useAnimatedStyle(() => ({
       opacity: withDelay(
-        index * 80,
+        index * 100,
         withTiming(progress.value, { duration: 300 }),
       ),
       transform: [
@@ -72,9 +70,8 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
 
   return (
     <View style={styles.container}>
-
-      <Animated.View 
-       style={headerStyle}>
+      <Animated.View
+        style={headerStyle}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
             <Icon name="arrow-left" size={22} color={theme.textPrimary} />
@@ -102,7 +99,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </Animated.View>
 
         <Animated.View
-        style={itemStyle(2)}>
+          style={itemStyle(2)}>
           <DrawerItem
             iconName="stamp"
             label="Watermark"
@@ -111,18 +108,18 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </Animated.View>
 
         <Animated.View
-        style={itemStyle(3)}
+          style={itemStyle(3)}
         >
           <DrawerItem
             iconName="highlighter"
             label="Highlight"
             onPress={() => props.navigation.navigate('Highlight')}
-            
+
           />
         </Animated.View>
 
         <Animated.View
-        style={itemStyle(4)}
+          style={itemStyle(4)}
         >
           <DrawerItem
             iconName="trash"
@@ -132,7 +129,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </Animated.View>
 
         <Animated.View
-         style={itemStyle(5)}>
+          style={itemStyle(5)}>
           <DrawerItem
             iconName="eye"
             label="OCR (Offline)"
@@ -141,7 +138,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </Animated.View>
 
         <Animated.View
-        style={itemStyle(6)}>
+          style={itemStyle(6)}>
           <DrawerItem
             iconName="file-text"
             label="Text File to PDF"
@@ -156,7 +153,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         <Text style={styles.sectionTitle}>SETTINGS</Text>
 
         <Animated.View
-        style={itemStyle(7)}>
+          style={itemStyle(8)}>
           <DrawerItem
             iconName="folder"
             label="My Files"
@@ -171,7 +168,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           /> */}
 
         <Animated.View
-        style={itemStyle(8)}
+          style={itemStyle(9)}
         >
           <DrawerItem
             iconName="circle-info"
@@ -181,7 +178,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </Animated.View>
 
         <Animated.View
-        style={itemStyle(9)}
+          style={itemStyle(10)}
         >
           <DrawerItem
             iconName="share-nodes"

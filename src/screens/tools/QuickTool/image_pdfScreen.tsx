@@ -1,18 +1,18 @@
 import { Alert, FlatList, Text, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useTheme } from '../../utils/themeManager';
-import { Styles } from '../../styles/toolsstyle/image_pdf_style';
-import { PDFFile } from '../../components/card/PDFCard';
+import { useTheme } from '../../../utils/themeManager';
+import { Styles } from '../../../styles/toolsstyle/QuickTool/image_pdf_style';
+import { PDFFile } from '../../../components/card/PDFCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '../../components/headers/header';
+import Header from '../../../components/headers/header';
 import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
-import ActionButton from '../../components/button/ActionButton';
-import SelectImageButton from '../../components/button/SelectImage';
-import ClearButton from '../../components/button/Clear_all';
-import ImageCard from '../../components/card/ImageCard';
+import ActionButton from '../../../components/button/ActionButton';
+import SelectImageButton from '../../../components/button/SelectImage';
+import ClearButton from '../../../components/button/Clear_all';
+import ImageCard from '../../../components/card/ImageCard';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { imagesToPDF } from '../../services/imageToPdfService';
-import { ImageFile } from '../../services/imagePickerService';
+import { imagesToPDF } from '../../../services/image_Services/imageToPdfService';
+import { ImageFile } from '../../../services/image_Services/imagePickerService';
 
 
 interface image_pdfScreenProps {
@@ -26,7 +26,7 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
   const [isImage, setImage] = useState<PDFFile[]>([]);
   const [isimage2pdf, setIsimage2pdf] = useState(false);
   const styles = useMemo(() => Styles(theme), [theme]);
-  
+
   // useEffect(() => { 
   //   // Development-only interval to refresh styles
   //   if (__DEV__) {
@@ -75,6 +75,8 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
 
   const clearAllFiles = () => {
     setImage([]);
+    setIsimage2pdf(false);
+ 
   }
 
   return (
@@ -83,17 +85,17 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
         <Header title="Image to PDF" onPress={() => navigation.goBack()} />
 
         <View style={styles.buttonRow}>
-      
-            <SelectImageButton
-              onImagesSelected={(selectedFiles: PDFFile[]) => setImage(prev => [...prev, ...selectedFiles])}
-              buttonText="Select Images"
-            />
-      
-            <ActionButton
-              title="Convert to PDF"
-              loading={isimage2pdf}
-              onPress={image2pdf}
-            />
+
+          <SelectImageButton
+            onImagesSelected={(selectedFiles: PDFFile[]) => setImage(prev => [...prev, ...selectedFiles])}
+            buttonText="Select Images"
+          />
+
+          <ActionButton
+            title="Convert to PDF"
+            loading={isimage2pdf}
+            onPress={image2pdf}
+          />
         </View>
 
         <View style={styles.cardContainer}>

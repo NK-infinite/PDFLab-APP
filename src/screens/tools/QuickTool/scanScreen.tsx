@@ -1,18 +1,18 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useMemo, useState } from "react";
-import { useTheme } from "../../utils/themeManager";
-import { Styles } from "../../styles/toolsstyle/scanstyle";
-import Header from "../../components/headers/header";
+import { useTheme } from "../../../utils/themeManager";
+import { Styles } from "../../../styles/toolsstyle/QuickTool/scanstyle";
+import Header from "../../../components/headers/header";
 import DocumentScanner from "react-native-document-scanner-plugin";
 import { ActivityIndicator, Alert, FlatList, PermissionsAndroid, Platform, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-gesture-handler";
-import { captureImage } from "../../services/cameraService";
-import ImageCard, { ImageFile } from "../../components/card/ImageCard";
-import { imagesToPDF } from "../../services/imageToPdfService";
-import ClearButton from "../../components/button/Clear_all";
+import { captureImage } from "../../../services/image_Services/cameraService";
+import ImageCard, { ImageFile } from "../../../components/card/ImageCard";
+import { imagesToPDF } from "../../../services/image_Services/imageToPdfService";
+import ClearButton from "../../../components/button/Clear_all";
 import Animated, { BounceIn, BounceInLeft, BounceInRight, BounceInUp, FadeInLeft, FadeInRight } from "react-native-reanimated";
-import PDFCard from "../../components/card/PDFCard";
-import { openPDF } from "../../utils/open_pdf";
+import PDFCard from "../../../components/card/PDFCard";
+import { openPDF } from "../../../utils/open_pdf";
 
 
 type PDFImageFile = {

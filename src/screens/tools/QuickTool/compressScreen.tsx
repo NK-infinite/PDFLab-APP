@@ -1,16 +1,16 @@
 import { Alert, Text, View } from 'react-native'
 import React, { useState, useMemo } from 'react'
-import { useTheme } from '../../utils/themeManager';
-import { Styles } from '../../styles/toolsstyle/compresstyle';
-import Header from '../../components/headers/header';
+import { useTheme } from '../../../utils/themeManager';
+import { Styles } from '../../../styles/toolsstyle/QuickTool/compresstyle';
+import Header from '../../../components/headers/header';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SelectPDFButton from '../../components/button/SelectPDF';
-import ActionButton from '../../components/button/ActionButton';
-import PDFCard from '../../components/card/PDFCard';
-import { openPDF } from '../../utils/open_pdf';
-import ClearButton from '../../components/button/Clear_all';
+import SelectPDFButton from '../../../components/button/SelectPDF';
+import ActionButton from '../../../components/button/ActionButton';
+import PDFCard from '../../../components/card/PDFCard';
+import { openPDF } from '../../../utils/open_pdf';
+import ClearButton from '../../../components/button/Clear_all';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { compressPDF } from '../../services/pdfCompressService';
+import { compressPDF } from '../../../services/pdf_Services/pdfCompressService';
 
 interface PDFFile {
   name: string;

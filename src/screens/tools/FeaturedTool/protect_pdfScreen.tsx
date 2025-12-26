@@ -1,17 +1,17 @@
 import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Styles } from '../../styles/toolsstyle/protect_pdfstyle'
-import { useTheme } from './../../utils/themeManager';
-import SelectPDFButton from '../../components/button/SelectPDF';
-import ActionButton from '../../components/button/ActionButton';
-import Header from '../../components/headers/header';
+import { Styles } from '../../../styles/toolsstyle/FeaturedTool/protect_pdfstyle'
+import { useTheme } from '../../../utils/themeManager';
+import SelectPDFButton from '../../../components/button/SelectPDF';
+import ActionButton from '../../../components/button/ActionButton';
+import Header from '../../../components/headers/header';
 import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import PDFCard, { PDFFile } from '../../components/card/PDFCard';
-import { openPDF } from '../../utils/open_pdf';
+import PDFCard, { PDFFile } from '../../../components/card/PDFCard';
+import { openPDF } from '../../../utils/open_pdf';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import ClearButton from '../../components/button/Clear_all';
-import { protectPDFFile } from '../../services/protectPdf';
+import ClearButton from '../../../components/button/Clear_all';
+import { protectPDFFile } from '../../../services/pdf_Services/protectPdf';
 
 const protect_pdf = ({ navigation }: any) => {
     const { theme } = useTheme();

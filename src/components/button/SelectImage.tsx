@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { TouchableOpacity, Text, ActivityIndicator, Alert } from 'react-native';
 import { useTheme } from '../../utils/themeManager';
-import { ImageFile, selectImages } from '../../services/imagePickerService';
-import { captureImage } from '../../services/cameraService';
+import { ImageFile, selectImages } from '../../services/image_Services/imagePickerService';
+import { captureImage } from '../../services/image_Services/cameraService';
 import Animated, { FadeInLeft, useAnimatedStyle, useSharedValue, withTiming, } from 'react-native-reanimated';
 import { useFocusEffect } from '@react-navigation/native';
 

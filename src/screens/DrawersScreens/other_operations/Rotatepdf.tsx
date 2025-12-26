@@ -1,40 +1,42 @@
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useMemo, useState } from 'react'
-import Headers from '../../components/headers/header'
+import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import React, { Suspense, useEffect, useMemo, useState } from 'react'
+import Headers from '../../../components/headers/header'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Styles } from '../../styles/Drawers_Screens_style/RotatePdfStyle'
-import { useTheme } from '../../utils/themeManager'
-import SelectPDFButton from '../../components/button/SelectPDF'
-import ActionButton from '../../components/button/ActionButton'
-import PDFCard, { PDFFile } from '../../components/card/PDFCard'
-import { openPDF } from '../../utils/open_pdf'
-import ClearButton from '../../components/button/Clear_all'
-import ImageCard from '../../components/card/ImageCard'
+import { Styles } from '../../../styles/Drawers_Screens_style/other_operations_style/RotatePdfStyle'
+import { useTheme } from '../../../utils/themeManager'
+import { openPDF } from '../../../utils/open_pdf'
+import ClearButton from '../../../components/button/Clear_all'
 import RNFS from 'react-native-fs';
 import { degrees, PDFDocument, } from 'pdf-lib';
 import { Buffer } from 'buffer';
+import { Loader } from '../../../components/loading/Loader'
+import SelectPDFButton from '../../../components/button/SelectPDF'
+import ActionButton from '../../../components/button/ActionButton'
+import PDFCard, { PDFFile } from '../../../components/card/PDFCard'
+import ImageCard from '../../../components/card/ImageCard'
 
 const Rotatepdf = ({ navigation }: any) => {
+
   const { theme } = useTheme();
-  const styles = useMemo(() => Styles(theme), [theme]);
-  // const [styles, setStyles] = useState(Styles(theme));
+  // const styles = useMemo(() => Styles(theme), [theme]);
+  const [styles, setStyles] = useState(Styles(theme));
   const [isloading, setIsloading] = useState(false);
   const [Files, setFiles] = useState<PDFFile[]>([]);
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
- // const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
   const [pageList, setPageList] = useState<number[]>([]);
 
-  // useEffect(() => {
-  //   // Development-only interval to refresh styles
-  //   if (__DEV__) {
-  //     const interval = setInterval(() => {
-  //       setStyles(Styles(theme));
-  //     }200); // 200ms, adjust if needed
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [])
-  
+  useEffect(() => {
+    // Development-only interval to refresh styles
+    if (__DEV__) {
+      const interval = setInterval(() => {
+        setStyles(Styles(theme));
+      }, 500); // 200ms, adjust if needed
+      return () => clearInterval(interval);
+    }
+  }, [])
+
   const handleFileSelect = async (selectedFiles: PDFFile[]) => {
     setFiles(selectedFiles);
     setSelectedPages([]);
@@ -66,7 +68,6 @@ const Rotatepdf = ({ navigation }: any) => {
       setIsLoading2(false);
       return;
     }
-
 
     try {
       setIsLoading2(true);
@@ -100,7 +101,6 @@ const Rotatepdf = ({ navigation }: any) => {
     }
   };
 
-
   const Clearfile = () => {
     setIsloading(false);
     setIsLoading2(false);
@@ -109,7 +109,7 @@ const Rotatepdf = ({ navigation }: any) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <View style={styles.container}>
-        <Headers title="Rotate PDF" onPress={() => navigation.goBack()} />
+        <Headers title="Rotate PDF" onPress={() => { navigation.goBack() }} />
         <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
 
           <View>
@@ -133,20 +133,22 @@ const Rotatepdf = ({ navigation }: any) => {
                 backgroundColor: theme.drawerCard,
                 borderColor: theme.drawerCardBorder
               }} />
+
           </View>
-
         </View>
-
         {Files && Files.length > 0 &&
           <>
+
             <View style={{ flex: 1, paddingTop: 15, justifyContent: 'space-between' }}>
               <View>
                 <Text style={styles.sectionTitle}>Selected PDF</Text>
                 <View style={styles.pdfPreviewContainer}>
-                  <PDFCard
-                    file={Files[0]}
-                    onPress={() => openPDF(Files[0].uri)}
-                  />
+                  <Suspense fallback={<Loader />}>
+                    <PDFCard
+                      file={Files[0]}
+                      onPress={() => openPDF(Files[0].uri)}
+                    />
+                  </Suspense>
                 </View>
 
                 <View style={{ marginTop: 20 }} >
@@ -311,7 +313,9 @@ const Rotatepdf = ({ navigation }: any) => {
                     PDF Preview
                   </Text>
                   <View style={styles.imageCardWrapper}>
-                    <ImageCard file={Files[0]} />
+                    <Suspense fallback={<Loader />}>
+                      <ImageCard file={Files[0]} />
+                    </Suspense>
                   </View>
                 </View>
               )}

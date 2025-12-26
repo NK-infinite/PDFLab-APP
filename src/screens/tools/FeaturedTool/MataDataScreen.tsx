@@ -1,17 +1,17 @@
 import { Alert, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useTheme } from '../../utils/themeManager';
-import { Styles } from '../../styles/toolsstyle/MataDataStyle';
-import Header from '../../components/headers/header';
-import SelectPDFButton from '../../components/button/SelectPDF';
-import ActionButton from '../../components/button/ActionButton';
-import { PDFFile } from '../../services/pdfPickerService';
-import PDFCard from '../../components/card/PDFCard';
-import { openPDF } from '../../utils/open_pdf';
+import { useTheme } from '../../../utils/themeManager';
+import { Styles } from '../../../styles/toolsstyle/FeaturedTool/MataDataStyle';
+import Header from '../../../components/headers/header';
+import SelectPDFButton from '../../../components/button/SelectPDF';
+import ActionButton from '../../../components/button/ActionButton';
+import { PDFFile } from '../../../services/pdf_Services/pdfPickerService';
+import PDFCard from '../../../components/card/PDFCard';
+import { openPDF } from '../../../utils/open_pdf';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import ClearButton from '../../components/button/Clear_all';
-import { editPDFMetadata, removePDFMetadata, viewPDFMetadata } from '../../services/MataDateServies';
+import ClearButton from '../../../components/button/Clear_all';
+import { editPDFMetadata, removePDFMetadata, viewPDFMetadata } from '../../../services/pdf_Services/MataDateServies';
 import { TextInput } from 'react-native';
 import { ScrollView } from 'react-native';
 

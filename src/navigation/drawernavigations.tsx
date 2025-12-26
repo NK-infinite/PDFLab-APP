@@ -2,8 +2,8 @@ import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../screens/DashboardScreen/HomeScreen';
 import CustomDrawerContent from '../screens/DashboardScreen/customeDrawer';
-import AboutAndTermsScreen from '../screens/DashboardScreen/AboutAndTermsScreen';
-import Rotatepdf from '../screens/DrawersScreens/Rotatepdf';
+import AboutAndTermsScreen from '../screens/DrawersScreens/settings/AboutAndTermsScreen';
+import Rotatepdf from '../screens/DrawersScreens/other_operations/Rotatepdf';
 
 const Drawer = createDrawerNavigator();
 

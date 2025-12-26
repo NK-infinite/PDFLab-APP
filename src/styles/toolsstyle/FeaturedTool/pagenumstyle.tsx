@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { ThemeType } from "../../utils/themeManager";
-import { SCREEN_WIDTH } from "../../utils/hightwidth";
+import { ThemeType } from "../../../utils/themeManager";
+import { SCREEN_WIDTH } from "../../../utils/hightwidth";
 
 export const Styles = (theme: ThemeType) => {
     return StyleSheet.create({

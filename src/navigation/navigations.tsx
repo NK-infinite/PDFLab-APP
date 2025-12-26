@@ -1,24 +1,25 @@
 import React, { Suspense } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ActivityIndicator, View } from 'react-native';
 
 // Non-lazy screens
 import SplashScreen from '../screens/IntroScreens/Splashscreen';
 import IntroScreen from '../screens/IntroScreens/introscreen';
 import { useTheme } from '../utils/themeManager';
 import drawernavigations from './drawernavigations';
+import { Loader } from '../components/loading/Loader';
+
 
 // Lazy-loaded screens (uppercase names)
-const MergeScreen = React.lazy(() => import('../screens/tools/MergeScreen'));
-const SplitScreen = React.lazy(() => import('../screens/tools/SplitScreen'));
-const CompressScreen = React.lazy(() => import('../screens/tools/compressScreen'));
-const ScanScreen = React.lazy(() => import('../screens/tools/scanScreen'));
-const ImagePdfScreen = React.lazy(() => import('../screens/tools/image_pdfScreen'));
-const ProtectPdfScreen = React.lazy(() => import('../screens/tools/protect_pdfScreen'));
-const PageNumScreen = React.lazy(() => import('../screens/tools/pagenum'));
-const MetaDataScreen = React.lazy(() => import('../screens/tools/MataDataScreen'));
-const AddPagePdfScreen = React.lazy(() => import('../screens/tools/AddPage_pdf'));
+const MergeScreen = React.lazy(() => import('../screens/tools/QuickTool/MergeScreen'));
+const SplitScreen = React.lazy(() => import('../screens/tools/QuickTool/SplitScreen'));
+const CompressScreen = React.lazy(() => import('../screens/tools/QuickTool/compressScreen'));
+const ScanScreen = React.lazy(() => import('../screens/tools/QuickTool/scanScreen'));
+const ImagePdfScreen = React.lazy(() => import('../screens/tools/QuickTool/image_pdfScreen'));
+const ProtectPdfScreen = React.lazy(() => import('../screens/tools/FeaturedTool/protect_pdfScreen'));
+const PageNumScreen = React.lazy(() => import('../screens/tools/FeaturedTool/pagenum'));
+const MetaDataScreen = React.lazy(() => import('../screens/tools/FeaturedTool/MataDataScreen'));
+const AddPagePdfScreen = React.lazy(() => import('../screens/tools/FeaturedTool/AddPage_pdf'));
 
 
 const Pagenavigations = () => {
@@ -27,12 +28,7 @@ const Pagenavigations = () => {
 
 
   // Helper fallback component
-  const Loader = () => (
 
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background }}>
-      <ActivityIndicator size="large" color="#0000ff" />
-    </View>
-  );
 
   // Wrapper function to pass props correctly
   const withSuspense = (Component: React.ComponentType<any>) => (props: any) => (

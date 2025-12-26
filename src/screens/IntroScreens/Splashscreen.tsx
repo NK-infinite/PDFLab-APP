@@ -32,15 +32,15 @@ useEffect(() => {
 }, []);
 
 const preloadScreens = () => {
-  import('../tools/MergeScreen');
-  import('../tools/SplitScreen');
-  import('../tools/compressScreen');
-  import('../tools/scanScreen');
-  import('../tools/image_pdfScreen');
-  import('../tools/protect_pdfScreen');
-  import('../tools/pagenum');
-  import('../tools/MataDataScreen');
-  import('../tools/AddPage_pdf');
+  import('../tools/QuickTool/MergeScreen');
+  import('../tools/QuickTool/SplitScreen');
+  import('../tools/QuickTool/compressScreen');
+  import('../tools/QuickTool/scanScreen');
+  import('../tools/QuickTool/image_pdfScreen');
+  import('../tools/FeaturedTool/protect_pdfScreen');
+  import('../tools/FeaturedTool/pagenum');
+  import('../tools/FeaturedTool/MataDataScreen');
+  import('../tools/FeaturedTool/AddPage_pdf');
 };
 
   return (

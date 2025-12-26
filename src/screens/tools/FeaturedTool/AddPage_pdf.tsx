@@ -1,18 +1,18 @@
 import { Alert, Text, TextInput, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useTheme } from '../../utils/themeManager';
-import { Styles } from '../../styles/toolsstyle/Addpagestyle';
-import Header from '../../components/headers/header';
+import { useTheme } from '../../../utils/themeManager';
+import { Styles } from '../../../styles/toolsstyle/FeaturedTool/Addpagestyle';
+import Header from '../../../components/headers/header';
 import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
-import SelectPDFButton from '../../components/button/SelectPDF';
-import ActionButton from '../../components/button/ActionButton';
-import PDFCard, { PDFFile } from '../../components/card/PDFCard';
-import { openPDF } from '../../utils/open_pdf';
-import { addPageToPDF } from '../../services/AddPage';
+import SelectPDFButton from '../../../components/button/SelectPDF';
+import ActionButton from '../../../components/button/ActionButton';
+import PDFCard, { PDFFile } from '../../../components/card/PDFCard';
+import { openPDF } from '../../../utils/open_pdf';
+import { addPageToPDF } from '../../../services/pdf_Services/AddPage';
 import RNFS from 'react-native-fs';
 import { PDFDocument } from 'pdf-lib';
-import ClearButton from '../../components/button/Clear_all';
+import ClearButton from '../../../components/button/Clear_all';
 const AddPage_pdf = ({ navigation }: any) => {
 
   const { theme } = useTheme();

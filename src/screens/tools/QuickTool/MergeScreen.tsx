@@ -1,15 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, FlatList, } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { useTheme } from '../../utils/themeManager';
-import { Styles } from '../../styles/toolsstyle/mergestyle';
-import { mergePDFs, openPDF } from '../../services/pdfMergeService';
-import SelectPDFButton from '../../components/button/SelectPDF';
-import ClearButton from '../../components/button/Clear_all';
+import { useTheme } from '../../../utils/themeManager';
+import { Styles } from '../../../styles/toolsstyle/QuickTool/mergestyle';
+import { mergePDFs, openPDF } from '../../../services/pdf_Services/pdfMergeService';
+import SelectPDFButton from '../../../components/button/SelectPDF';
+import ClearButton from '../../../components/button/Clear_all';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import PDFCard from '../../components/card/PDFCard';
-import ActionButton from '../../components/button/ActionButton';
-import Header from '../../components/headers/header';
+import PDFCard from '../../../components/card/PDFCard';
+import ActionButton from '../../../components/button/ActionButton';
+import Header from '../../../components/headers/header';
 
 interface PDFFile {
   name: string;

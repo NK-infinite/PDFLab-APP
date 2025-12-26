@@ -21,8 +21,8 @@ export const COLORS = {
     shadowColor: '#000000',
   },
   dark: {
-    background: '#121212',
-    header: '#3a3a3aff',
+    background: '#3a3a3aff',
+    header: '#121212',//
     quickCard: '#5c3333ff',    // red
     quickCardBorder: '#ff0000',
     toolCard: '#314860ff',
@@ -34,7 +34,7 @@ export const COLORS = {
     textPrimary: '#ffffff',
     textSecondary: '#cccccc',
     sectionTitle: '#ffcc00',    // yellow
-    fileCardBg: '#474747ff',
+    fileCardBg: '#121212',
     shadowColor: '#ffffffff',
   }
 };

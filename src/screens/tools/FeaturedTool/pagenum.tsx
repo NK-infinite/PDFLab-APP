@@ -1,17 +1,17 @@
 import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useTheme } from '../../utils/themeManager';
-import { Styles } from '../../styles/toolsstyle/pagenumstyle';
-import Header from '../../components/headers/header';
+import { useTheme } from '../../../utils/themeManager';
+import { Styles } from '../../../styles/toolsstyle/FeaturedTool/pagenumstyle';
+import Header from '../../../components/headers/header';
 import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
-import SelectPDFButton from '../../components/button/SelectPDF';
-import ActionButton from '../../components/button/ActionButton';
-import PDFCard, { PDFFile } from '../../components/card/PDFCard';
-import { openPDF } from '../../utils/open_pdf';
-import ClearButton from '../../components/button/Clear_all';
+import SelectPDFButton from '../../../components/button/SelectPDF';
+import ActionButton from '../../../components/button/ActionButton';
+import PDFCard, { PDFFile } from '../../../components/card/PDFCard';
+import { openPDF } from '../../../utils/open_pdf';
+import ClearButton from '../../../components/button/Clear_all';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { addNumbersToPDF, PageNumberOptions } from '../../services/Pagenumber';
+import { addNumbersToPDF, PageNumberOptions } from '../../../services/pdf_Services/Pagenumber';
 
 const pagenum = ({ navigation }: any) => {
   const { theme } = useTheme();

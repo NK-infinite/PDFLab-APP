@@ -1,6 +1,6 @@
 import { PDFDocument } from 'pdf-lib';
 import RNFS from 'react-native-fs';
-import { ImageFile } from './imagePickerService';
+import { ImageFile } from '../image_Services/imagePickerService';
 import { Buffer } from 'buffer';
 
 export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.pdf'): Promise<string> => {

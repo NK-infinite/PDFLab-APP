@@ -9,20 +9,20 @@ import {
     ScrollView,
 } from 'react-native';
 import React, { useMemo, useState } from 'react';
-import { useTheme } from '../../utils/themeManager';
+import { useTheme } from '../../../utils/themeManager';
 import Animated, { BounceInLeft, BounceInRight, } from 'react-native-reanimated';
-import { Styles } from '../../styles/toolsstyle/splitstyle';
-import { PDFFile } from '../../services/pdfPickerService';
-import SelectPDFButton from '../../components/button/SelectPDF';
+import { Styles } from '../../../styles/toolsstyle/QuickTool/splitstyle';
+import { PDFFile } from '../../../services/pdf_Services/pdfPickerService';
+import SelectPDFButton from '../../../components/button/SelectPDF';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import ClearButton from '../../components/button/Clear_all';
+import ClearButton from '../../../components/button/Clear_all';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SCREEN_WIDTH } from '../../utils/hightwidth';
-import { splitPDFsService } from "../../services/pdfSplitService";
-import PDFCard from '../../components/card/PDFCard';
-import ActionButton from '../../components/button/ActionButton';
-import Header from '../../components/headers/header';
-import { openPDF } from '../../utils/open_pdf';
+import { SCREEN_WIDTH } from '../../../utils/hightwidth';
+import { splitPDFsService } from "../../../services/pdf_Services/pdfSplitService";
+import PDFCard from '../../../components/card/PDFCard';
+import ActionButton from '../../../components/button/ActionButton';
+import Header from '../../../components/headers/header';
+import { openPDF } from '../../../utils/open_pdf';
 
 const SplitScreen = ({ navigation, route }: any) => {
 
