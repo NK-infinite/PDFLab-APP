@@ -6,9 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from '../screens/IntroScreens/Splashscreen';
 import IntroScreen from '../screens/IntroScreens/introscreen';
 import { useTheme } from '../utils/themeManager';
-import drawernavigations from './drawernavigations';
 import { Loader } from '../components/loading/Loader';
-
+import drawernavigations from './drawernavigations';
 
 // Lazy-loaded screens (uppercase names)
 const MergeScreen = React.lazy(() => import('../screens/tools/QuickTool/MergeScreen'));
@@ -21,13 +20,9 @@ const PageNumScreen = React.lazy(() => import('../screens/tools/FeaturedTool/pag
 const MetaDataScreen = React.lazy(() => import('../screens/tools/FeaturedTool/MataDataScreen'));
 const AddPagePdfScreen = React.lazy(() => import('../screens/tools/FeaturedTool/AddPage_pdf'));
 
-
 const Pagenavigations = () => {
   const Stack = createNativeStackNavigator();
   const { theme } = useTheme();
-
-
-  // Helper fallback component
 
 
   // Wrapper function to pass props correctly

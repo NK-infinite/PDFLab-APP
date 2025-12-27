@@ -1,11 +1,10 @@
-import { Alert, FlatList, Text, View } from 'react-native'
+import { Alert, FlatList, PermissionsAndroid, Platform, Text, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/QuickTool/image_pdf_style';
 import { PDFFile } from '../../../components/card/PDFCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../../components/headers/header';
-import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
 import ActionButton from '../../../components/button/ActionButton';
 import SelectImageButton from '../../../components/button/SelectImage';
 import ClearButton from '../../../components/button/Clear_all';
@@ -76,7 +75,7 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
   const clearAllFiles = () => {
     setImage([]);
     setIsimage2pdf(false);
- 
+
   }
 
   return (

@@ -8,7 +8,9 @@ import { DrawerItem } from '../../components/drawers/drawer';
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/dashboard/customDrawerstyle';
 import { useEffect, useMemo, useState } from 'react';
-import Animated, {  useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+import Share from 'react-native-share';
+import { Platform } from 'react-native';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const { theme } = useTheme();
@@ -67,6 +69,35 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         },
       ],
     }));
+
+
+  const shareApp = async () => {
+    try {
+      let shareOptions = {};
+
+      if (Platform.OS === 'android') {
+        // Android: share APK ya Play Store link
+        shareOptions = {
+          title: 'Check out this app!',
+          message: 'Hey, download this app:',
+          url: 'https://dev-store-by-nikhil.netlify.app/projects', // replace with your Play Store link
+          failOnCancel: false,
+        };
+      } else if (Platform.OS === 'ios') {
+        // iOS: share App Store link
+        shareOptions = {
+          title: 'Check out this app!',
+          message: 'Hey, download this app:',
+          url: 'https://dev-store-by-nikhil.netlify.app/projects', // replace with App Store link
+          failOnCancel: false,
+        };
+      }
+
+      await Share.open(shareOptions);
+    } catch (error) {
+      console.log('Error sharing app:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -183,7 +214,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <DrawerItem
             iconName="share-nodes"
             label="Share App"
-            onPress={() => { }}
+            onPress={() => { shareApp(); }}
           />
         </Animated.View>
 

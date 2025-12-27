@@ -132,16 +132,16 @@ const AddPage_pdf = ({ navigation }: any) => {
                         borderWidth: 1,
                         borderColor:
                           pageType === 'blank'
-                            ? theme.textSecondary
-                            : theme.toolCardBorder,
+                            ? theme.toolCardBorder
+                            : theme.textSecondary,
                         backgroundColor:
                           pageType === 'blank'
-                            ? theme.textSecondary
-                            : theme.toolCard,
+                            ? theme.toolCard
+                            : theme.textSecondary,
                         color:
                           pageType === 'blank'
-                            ? '#fff'
-                            : theme.textSecondary,
+                            ? theme.textSecondary
+                            : '#fff',
                         overflow: 'hidden'
                       }}
                     >
@@ -158,16 +158,16 @@ const AddPage_pdf = ({ navigation }: any) => {
                         borderWidth: 1,
                         borderColor:
                           pageType === 'existing'
-                            ? theme.textSecondary
-                            : theme.toolCardBorder,
+                            ? theme.toolCardBorder
+                            : theme.textSecondary,
                         backgroundColor:
                           pageType === 'existing'
-                            ? theme.textSecondary
-                            : theme.toolCard,
+                            ? theme.toolCard
+                            : theme.textSecondary,
                         color:
                           pageType === 'existing'
-                            ? '#fff'
-                            : theme.textSecondary,
+                            ? theme.textSecondary
+                            : '#fff',
                         overflow: 'hidden'
                       }}
                     >

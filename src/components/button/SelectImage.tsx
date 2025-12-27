@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { TouchableOpacity, Text, ActivityIndicator, Alert } from 'react-native';
+import { TouchableOpacity, Text, ActivityIndicator, Alert, Platform, PermissionsAndroid } from 'react-native';
 import { useTheme } from '../../utils/themeManager';
 import { ImageFile, selectImages } from '../../services/image_Services/imagePickerService';
 import { captureImage } from '../../services/image_Services/cameraService';
@@ -19,6 +19,12 @@ const SelectImageButton = ({ onImagesSelected, buttonText = 'Select Images', sty
     const progress = useSharedValue(0);
 
     const handlePress = async () => {
+        if (Platform.OS === 'android' && await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA
+        ) !== PermissionsAndroid.RESULTS.GRANTED) {
+            Alert.alert('Error', 'User must grant camera permissions to use document scanner.')
+            return
+        }
         if (isPicking) return;
         setIsPicking(true);
 

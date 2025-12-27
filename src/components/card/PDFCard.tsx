@@ -45,8 +45,10 @@ const PDFCard: React.FC<PDFCardProps> = ({ file, onPress }) => {
 
   return (
     <Animated.View style={animatedStyle}>
-      <TouchableOpacity onPress={onPress ?? (() => { })}>
-        <View style={[styles.card]}>
+      <TouchableOpacity
+      style={[styles.card]}
+       onPress={onPress ?? (() => { })}>
+        
           <Image
             source={require('../../assets/Image/PDFLab.png')}
             style={styles.thumbnail}
@@ -56,9 +58,9 @@ const PDFCard: React.FC<PDFCardProps> = ({ file, onPress }) => {
             ellipsizeMode="tail"
             style={styles.text}
           >
-            {file.name}
+            {file?.name}
           </Text>
-        </View>
+        
       </TouchableOpacity>
     </Animated.View>
   );
@@ -85,14 +87,14 @@ const createStyles = (theme: any) =>
     },
 
     thumbnail: {
-      width: 40,
-      height: 40,
+      width: 37,
+      height: 37,
       marginRight: 8,
       resizeMode: 'contain',
     },
     text: {
       flex: 1,
-      fontSize: 17,
+      fontSize: 16,
       color: theme.textPrimary,
       flexWrap: 'wrap',
     },

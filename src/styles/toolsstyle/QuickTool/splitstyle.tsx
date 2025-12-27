@@ -120,12 +120,12 @@ export const Styles = (theme: ThemeType) => {
         textInput: {
             width: SCREEN_WIDTH / 3,
             borderWidth: 1,
-            borderColor: '#ccc',
+            borderColor: theme.quickCardBorder,
             borderRadius: 10,
             padding: 14,
             fontSize: 16,
             color: '#000000ff',
-            backgroundColor: '#fff',
+            backgroundColor: theme.quickCard,
         },
 
         rangeSeparator: {
@@ -143,12 +143,12 @@ export const Styles = (theme: ThemeType) => {
         sizeInput: {
             flex: 1,
             borderWidth: 1,
-            borderColor: '#ccc',
+            borderColor: theme.quickCardBorder,
             borderRadius: 10,
             padding: 14,
             fontSize: 16,
             color: theme.textPrimary,
-            backgroundColor: '#fff',
+            backgroundColor: theme.quickCard,
         },
 
         // Split Mode

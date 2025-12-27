@@ -165,7 +165,7 @@ const SplitScreen = ({ navigation, route }: any) => {
                                                 <TextInput
                                                     value={startsplit}
                                                     placeholder={'Start Page'}
-                                                    placeholderTextColor='#000000ff'
+                                                    placeholderTextColor={theme.textSecondary}
                                                     keyboardType="numeric"
                                                     style={styles.textInput}
                                                     onChangeText={setstartsplit}
@@ -180,7 +180,7 @@ const SplitScreen = ({ navigation, route }: any) => {
                                                 <TextInput
                                                     value={endsplit}
                                                     placeholder={'End Page'}
-                                                    placeholderTextColor='#000000ff'
+                                                    placeholderTextColor={theme.textSecondary}
                                                     keyboardType="numeric"
                                                     style={styles.textInput}
                                                     onChangeText={setendsplit}
@@ -207,7 +207,7 @@ const SplitScreen = ({ navigation, route }: any) => {
                                         <TextInput
                                             value={splitSize}
                                             placeholder="Enter maximum size per PDF"
-                                            placeholderTextColor='#000000ff'
+                                            placeholderTextColor={theme.textSecondary}
                                             keyboardType="numeric"
                                             style={styles.sizeInput}
                                             onChangeText={setSplitSize}
@@ -229,10 +229,10 @@ const SplitScreen = ({ navigation, route }: any) => {
                                                 {
                                                     backgroundColor: splitMode === 'separate'
                                                         ? theme.quickCard
-                                                        : theme.background,
+                                                        : theme.header,
                                                     borderColor: splitMode === 'separate'
                                                         ? theme.textPrimary
-                                                        : theme.quickCardBorder
+                                                        : theme.header
                                                 }
                                             ]}>
 
@@ -252,10 +252,10 @@ const SplitScreen = ({ navigation, route }: any) => {
                                                 {
                                                     backgroundColor: splitMode === 'single'
                                                         ? theme.quickCard
-                                                        : theme.background,
+                                                        : theme.header,
                                                     borderColor: splitMode === 'single'
                                                         ? theme.textPrimary
-                                                        : theme.quickCardBorder
+                                                        : theme.header
                                                 }
                                             ]}>
 

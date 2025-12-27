@@ -125,7 +125,7 @@ export const Styles = (theme:ThemeType) =>
     color: theme.textPrimary,
   },
 
-  section: {
+    section: {
     paddingTop: 15,
   },
 

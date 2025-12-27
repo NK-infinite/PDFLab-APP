@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title, onPress, style }) => {
     <View style={[styles.container, style]}>
       {onPress && (
         <TouchableOpacity onPress={onPress}>
-          <Icon name="arrow-left" size={23} color={theme.textPrimary} />
+          <Icon name="arrow-left" size={20} color={theme.textPrimary} />
         </TouchableOpacity>
       )}
       <Text style={styles.title}>{title}</Text>
@@ -37,7 +37,7 @@ const createStyles = (theme: any) =>
     title: {
       flex: 1,
       textAlign: 'center',
-      fontSize: 28,
+      fontSize: 20,
       fontWeight: 'bold',
       color: theme.textPrimary,
       marginLeft: 10, // space from back button

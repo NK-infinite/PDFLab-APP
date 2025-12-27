@@ -19,7 +19,10 @@ export const Styles = (theme: ThemeType) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: 0
+            marginTop: 0,
+
+            borderColor: theme.toolCardBorder,
+          //  backgroundColor: theme.toolCard
         },
         positionGrid: {
             flexDirection: 'row',
@@ -42,11 +45,12 @@ export const Styles = (theme: ThemeType) => {
             justifyContent: 'space-between',
             borderWidth: 2,
             width: SCREEN_WIDTH / 4,
-            borderColor: '#ccc',
+            borderColor: theme.toolCardBorder,
             flexDirection: 'row',
             alignItems: 'center',
             borderRadius: 10,
-            backgroundColor: '#fff',
+            backgroundColor: theme.toolCard,
+
         },
         sectionTitle: {
             fontSize: 18,

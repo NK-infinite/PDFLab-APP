@@ -1,7 +1,8 @@
-import { Text, View, TouchableOpacity, useColorScheme } from "react-native";
+import { Text, View, TouchableOpacity, useColorScheme,  } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import { StyleSheet } from "react-native";
 import { useTheme } from "../../utils/themeManager";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 
 interface DrawerItemProps {
     iconName: string;
@@ -10,28 +11,22 @@ interface DrawerItemProps {
 }
 
 export const DrawerItem = ({ iconName, label, onPress }: DrawerItemProps) => {
-
     const isDarkMode = useColorScheme() === 'dark';
     const { theme } = useTheme();
 
     return (
-        <TouchableOpacity style={styles.item} onPress={onPress}>
-            <View style={[styles.card, { backgroundColor: theme.drawerCard, borderColor: theme.drawerCardBorder }]}  >
-                <Icon name={iconName} size={24} color={isDarkMode ? '#00ffeaff' : '#000'} />
-                <Text style={[styles.itemLabel, { color: theme.textPrimary }]}>{label}</Text>
-            </View>
+        <TouchableOpacity style={[styles.card, { backgroundColor: theme.drawerCard, borderColor: theme.drawerCardBorder, marginBottom: 16 }]} onPress={onPress}>
+            <Animated.View entering={FadeInLeft.springify().damping(30).mass(1).stiffness(10).duration(1000)}>
+            <Icon name={iconName} size={24} color={isDarkMode ? '#00ffeaff' : '#000'} />
+            </Animated.View>
+            <Text style={[styles.itemLabel, { color: theme.textPrimary }]}>{label}</Text>
         </TouchableOpacity>
     )
 }
 
-
 const styles = StyleSheet.create({
-    item: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-    },
     card: {
+        position: 'relative',
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',

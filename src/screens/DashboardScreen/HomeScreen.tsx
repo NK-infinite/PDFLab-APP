@@ -1,5 +1,5 @@
-import { FlatList, Image, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useEffect, useMemo, useState, } from 'react'
+import { FlatList, Image, InteractionManager, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
+import React, { Suspense, useEffect, useMemo, useState, } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {
@@ -15,6 +15,7 @@ import { Styles } from '../../styles/dashboard/homestyle';
 import { useTheme } from '../../utils/themeManager';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
+import { Loader } from '../../components/loading/Loader';
 
 
 const HomeScreen = () => {
@@ -25,6 +26,7 @@ const HomeScreen = () => {
     const navigation = useNavigation<any>();
     const isFocused = useIsFocused();
     const drawerStatus = useDrawerStatus();
+
     // const [styles, setStyles] = useState(Styles(theme));
     const styles = useMemo(() => Styles(theme), [theme]);
 
@@ -93,7 +95,7 @@ const HomeScreen = () => {
                 style={styles.quickCard}
                 onPress={() => navigation.navigate(item.key)}>
 
-                <Icon name={item.icon} size={26} color={isDarkMode ? '#fff' : '#000'} />
+                <Icon name={item.icon} size={22} color={isDarkMode ? '#fff' : '#000'} />
                 <Text style={styles.quickLabel}>{item.label}</Text>
             </TouchableOpacity>
         </Animated.View>
@@ -106,7 +108,7 @@ const HomeScreen = () => {
             <TouchableOpacity
                 style={styles.toolCard}
                 onPress={() => navigation.navigate(item.key)}>
-                <Icon name={item.icon} size={35} color={isDarkMode ? '#fff' : '#000'} />
+                <Icon name={item.icon} size={32} color={isDarkMode ? '#fff' : '#000'} />
                 <Text style={styles.toolLabel}>{item.label}</Text>
             </TouchableOpacity>
         </Animated.View>
@@ -134,100 +136,102 @@ const HomeScreen = () => {
     return (
         <SafeAreaView
             style={{ flex: 1, backgroundColor: theme.background }}>
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Animated.View
-                        entering={FadeInLeft.springify().damping(damping).stiffness(stiffness).duration(1000)}
-                        style={[{ flexDirection: 'row', alignItems: 'center', }]}>
-                        <Icon name='file-pdf' size={30} color={'blue'} />
-                        <Text style={[styles.title, { marginLeft: 10, marginRight: 5, color: isDarkMode ? '#1789f9' : '#78bbfeff' }]} >PDF
-                        </Text>
-                        <Text style={[styles.title, { marginTop: 7, fontSize: 17, color: isDarkMode ? '#ff8508' : '#faa045ff' }]}>
-                            Lab
-                        </Text>
-                    </Animated.View>
+            <Suspense fallback={<Loader />}>
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Animated.View
+                            entering={FadeInLeft.springify().damping(damping).stiffness(stiffness).duration(1000)}
+                            style={[{ flexDirection: 'row', alignItems: 'center', }]}>
+                            <Icon name='file-pdf' size={30} color={'blue'} />
+                            <Text style={[styles.title, { marginLeft: 10, marginRight: 5, color: isDarkMode ? '#1789f9' : '#78bbfeff' }]} >PDF
+                            </Text>
+                            <Text style={[styles.title, { marginTop: 7, fontSize: 17, color: isDarkMode ? '#ff8508' : '#faa045ff' }]}>
+                                Lab
+                            </Text>
+                        </Animated.View>
 
-                    <Animated.View
-                        entering={FadeInRight.springify().damping(damping).stiffness(stiffness).duration(1000)}
-                        style={[gearstyle, { justifyContent: 'center', alignItems: 'center' }]}>
+                        <Animated.View
+                            entering={FadeInRight.springify().damping(damping).stiffness(stiffness).duration(1000)}
+                            style={[gearstyle, { justifyContent: 'center', alignItems: 'center' }]}>
 
-                        <TouchableOpacity onPress={() => {
-                            if (drawerStatus === 'open') {
-                                navigation.closeDrawer();
-                            } else {
-                                navigation.openDrawer();
-                            }
-                        }}>
-                            {
-                                bar ?
-                                    <Icon
-                                        name="xmark" size={30} color={isDarkMode ? '#fff' : '#000'} />
-                                    :
-                                    <Icon
-                                        name="bars" size={30} color={isDarkMode ? '#fff' : '#000'} />
-                            }
-                        </TouchableOpacity>
-                    </Animated.View>
-                </View>
-                <ScrollView
-                    // style={styles.container}
-                    showsVerticalScrollIndicator={false}>
-
-                    {/* Quick Actions */}
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Quick Actions</Text>
-                        <FlatList
-                            data={QUICK_ACTIONS}
-                            key={isFocused ? 'focused1' : 'unfocused1'}
-                            keyExtractor={item => item.key}
-                            horizontal
-                            showsVerticalScrollIndicator={false}
-                            showsHorizontalScrollIndicator={false}
-                            renderItem={renderQuick}
-                            contentContainerStyle={{ paddingLeft: 16, padding: 16 }}
-                        />
+                            <TouchableOpacity onPress={() => {
+                                if (drawerStatus === 'open') {
+                                    navigation.closeDrawer();
+                                } else {
+                                    navigation.openDrawer();
+                                }
+                            }}>
+                                {
+                                    bar ?
+                                        <Icon
+                                            name="xmark" size={30} color={isDarkMode ? '#fff' : '#000'} />
+                                        :
+                                        <Icon
+                                            name="bars" size={30} color={isDarkMode ? '#fff' : '#000'} />
+                                }
+                            </TouchableOpacity>
+                        </Animated.View>
                     </View>
+                    <ScrollView
+                        // style={styles.container}
+                        showsVerticalScrollIndicator={false}>
+
+                        {/* Quick Actions */}
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>Quick Actions</Text>
+                            <FlatList
+                                data={QUICK_ACTIONS}
+                                key={isFocused ? 'focused1' : 'unfocused1'}
+                                keyExtractor={item => item.key}
+                                horizontal
+                                showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}
+                                renderItem={renderQuick}
+                                contentContainerStyle={{ paddingLeft: 16, padding: 16 }}
+                            />
+                        </View>
 
 
-                    {/* Featured Tools Grid */}
-                    <View style={[styles.section, { flex: 1, paddingBottom: 8 }]}>
-                        <Text style={styles.sectionTitle}>Featured Tools</Text>
-                        <FlatList
-                            data={FEATURED_TOOLS}
-                            key={isFocused ? 'focused1' : 'unfocused1'}
-                            renderItem={renderTool}
-                            scrollEnabled={false}
-                            keyExtractor={item => item.key}
-                            numColumns={2}
-                            showsHorizontalScrollIndicator={true}
-                            showsVerticalScrollIndicator={false}
-                        />
+                        {/* Featured Tools Grid */}
+                        <View style={[styles.section, { flex: 1, paddingBottom: 8 }]}>
+                            <Text style={styles.sectionTitle}>Featured Tools</Text>
+                            <FlatList
+                                data={FEATURED_TOOLS}
+                                key={isFocused ? 'focused1' : 'unfocused1'}
+                                renderItem={renderTool}
+                                scrollEnabled={false}
+                                keyExtractor={item => item.key}
+                                numColumns={2}
+                                showsHorizontalScrollIndicator={true}
+                                showsVerticalScrollIndicator={false}
+                            />
 
-                        {/* <TouchableOpacity style={styles.viewAllBtn} onPress={() => console.log('View all tools')}>
+                            {/* <TouchableOpacity style={styles.viewAllBtn} onPress={() => console.log('View all tools')}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                                 <Text style={styles.viewAllText}>View All Tools </Text>
                                 <Icon name="arrow-right" size={18} style={{ marginTop: 2 }} color="#2b6ef6" />
                             </View>
                         </TouchableOpacity> */}
-                    </View>
+                        </View>
 
 
-                    {/* Recent Files */}
-                    <View style={[styles.section, { flex: 1 }]}>
-                        <Text style={styles.sectionTitle}>Recent Files</Text>
-                        <FlatList
-                            data={RECENT_FILES}
-                            key={isFocused ? 'focused1' : 'unfocused1'}
-                            keyExtractor={item => item.id}
-                            renderItem={renderRecent}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            showsVerticalScrollIndicator={false}
-                            contentContainerStyle={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 26 }}
-                        />
-                    </View>
-                </ScrollView>
-            </View>
+                        {/* Recent Files */}
+                        <View style={[styles.section, { flex: 1 }]}>
+                            <Text style={styles.sectionTitle}>Recent Files</Text>
+                            <FlatList
+                                data={RECENT_FILES}
+                                key={isFocused ? 'focused1' : 'unfocused1'}
+                                keyExtractor={item => item.id}
+                                renderItem={renderRecent}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                showsVerticalScrollIndicator={false}
+                                contentContainerStyle={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 26 }}
+                            />
+                        </View>
+                    </ScrollView>
+                </View>
+            </Suspense>
         </SafeAreaView>
     )
 }

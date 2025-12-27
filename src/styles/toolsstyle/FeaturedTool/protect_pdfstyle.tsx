@@ -26,6 +26,7 @@ export const Styles = (theme: ThemeType) => {
       fontSize: 18,
       fontWeight: "700",
       marginLeft: 16,
+      color: theme.sectionTitle,
     },
     cardContainer: {
       marginTop: 8,

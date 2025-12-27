@@ -27,7 +27,8 @@ export const Styles = (Theme: ThemeType) => {
     metadataBox: {
       padding: 12,
       borderRadius: 8,
-      backgroundColor: '#f4f4f4',
+      backgroundColor: Theme.toolCard,
+      borderColor: Theme.toolCardBorder,
       marginVertical: 10,
     },
 
@@ -35,21 +36,23 @@ export const Styles = (Theme: ThemeType) => {
       fontSize: 16,
       fontWeight: 'bold',
       marginBottom: 8,
+      color: Theme.textPrimary,
     },
 
     metaItem: {
       fontSize: 13,
       marginBottom: 4,
-      color: '#000000ff',
+      color: Theme.textSecondary,
     },
     textinput: {
       paddingHorizontal: 10,
-      height: 40,
+      height: 50,
       color:Theme.textPrimary || '#000',
       borderWidth: 1,
       borderRadius: 15,
-      borderEndColor: '#f80000ff',
-      marginBottom: 20,
+      borderColor: Theme.toolCardBorder,
+      marginBottom: 10,
+      backgroundColor: Theme.toolCard,
 
     }
   })

@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 import { ThemeType } from "../../../utils/themeManager";
+import { Screen } from "react-native-screens";
+import { SCREEN_HEIGHT } from "../../../utils/hightwidth";
 
 export const Styles = (theme: ThemeType) => {
 
@@ -44,7 +46,7 @@ export const Styles = (theme: ThemeType) => {
       alignItems: 'center',
       justifyContent: 'center',
       minWidth: 100,
-      position: 'relative',
+      height: SCREEN_HEIGHT/4,
     },
     pageButtonText: {
       fontSize: 14,
@@ -52,9 +54,9 @@ export const Styles = (theme: ThemeType) => {
     },
     selectedIndicator: {
       position: 'absolute',
-      top: -5,
-      right: -5,
-      backgroundColor: '#4CAF50',
+      top: -2,
+      right: -1,
+      backgroundColor: '#57c25aff',
       width: 20,
       height: 20,
       borderRadius: 10,

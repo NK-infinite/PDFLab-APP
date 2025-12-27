@@ -1,5 +1,5 @@
 import { Alert, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/FeaturedTool/MataDataStyle';
@@ -32,16 +32,16 @@ const MataData = ({ navigation }: any) => {
     
     //   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     // Development-only interval to refresh styles
-    //     if (__DEV__) {
-    //         const interval = setInterval(() => {
-    //             setStyles(Styles(theme));
-    //         }, 200); // 200ms, adjust if needed
-    //         return () => clearInterval(interval);
-    //     }
-    // }, [theme]);
+        // Development-only interval to refresh styles
+        if (__DEV__) {
+            const interval = setInterval(() => {
+                setStyles(Styles(theme));
+            }, 200); // 200ms, adjust if needed
+            return () => clearInterval(interval);
+        }
+    }, [theme]);
 
     const formatDate = (date: any) => {
         if (!date) return 'No data';

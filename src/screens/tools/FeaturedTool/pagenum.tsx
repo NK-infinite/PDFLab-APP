@@ -175,8 +175,8 @@ const pagenum = ({ navigation }: any) => {
                             'bottom-right')}
                           style={
                             [styles.positionButton, {
-                              borderColor: position === pos.toLowerCase() ? theme.toolCardBorder : '#cce5ff',
-                              backgroundColor: position === pos.toLowerCase() ? theme.toolCard : '#fff',
+                              borderColor: position === pos.toLowerCase() ? theme.toolCardBorder : theme.header,
+                              backgroundColor: position === pos.toLowerCase() ? theme.toolCard : theme.header,
                             }]}
                         >
                           <Text style={{ color: position === pos.toLowerCase() ? theme.textPrimary : theme.textSecondary }}>{pos}</Text>
@@ -197,9 +197,9 @@ const pagenum = ({ navigation }: any) => {
                             alignItems: 'center',
                             padding: 6,
                             borderWidth: 1,
-                            borderColor: margin === marg.toLowerCase() ? theme.toolCardBorder : '#cce5ff',
+                            borderColor: margin === marg.toLowerCase() ? theme.toolCardBorder : theme.header,
                             borderRadius: 5,
-                            backgroundColor: margin === marg.toLowerCase() ? theme.toolCard : '#fff',
+                            backgroundColor: margin === marg.toLowerCase() ? theme.toolCard :theme.header,
                           }}
                         >
                           <Text style={{ color: margin === marg.toLowerCase() ? theme.textPrimary : theme.textSecondary }}>{marg}</Text>
@@ -219,7 +219,8 @@ const pagenum = ({ navigation }: any) => {
                           value={fromPage}
                           onChangeText={setFromPage}
                           placeholder="From"
-                          placeholderTextColor={theme.textSecondary}
+                          
+                          placeholderTextColor={theme.textPrimary}
                         />
                       </View>
 
@@ -230,7 +231,7 @@ const pagenum = ({ navigation }: any) => {
                           value={toPage}
                           onChangeText={setToPage}
                           placeholder="To"
-                          placeholderTextColor={theme.textSecondary}
+                          placeholderTextColor={theme.textPrimary}
                         />
                       </View>
 
@@ -241,7 +242,7 @@ const pagenum = ({ navigation }: any) => {
                           value={firstNumber}
                           onChangeText={setFirstNumber}
                           placeholder="Start No."
-                          placeholderTextColor={theme.textSecondary}
+                          placeholderTextColor={theme.textPrimary}
                         />
                       </View>
                     </View>
