@@ -7,7 +7,7 @@ const Rotatepdf = React.lazy(() => import('../screens/DrawersScreens/other_opera
 const CustomDrawerContent = React.lazy(() => import('../screens/DashboardScreen/customeDrawer'));
 const AboutAndTermsScreen = React.lazy(() => import('../screens/DrawersScreens/settings/AboutAndTermsScreen'));
 const Watermark = React.lazy(() => import('../screens/DrawersScreens/other_operations/Watermark'));
-
+const QRCodeGenerator = React.lazy(() => import('../screens/DrawersScreens/other_operations/QRCodeGenerator'));
 
 const drawernavigations = () => {
 const Drawer = createDrawerNavigator();
@@ -32,6 +32,7 @@ const Drawer = createDrawerNavigator();
       <Drawer.Screen name="Rotate"  component={withSuspense(Rotatepdf)}/>
       <Drawer.Screen name="About" component={withSuspense(AboutAndTermsScreen)} />
       <Drawer.Screen name="Watermark" component={withSuspense(Watermark)} />
+      <Drawer.Screen name="QRCode" component={withSuspense(QRCodeGenerator)} />
       
     </Drawer.Navigator>
  

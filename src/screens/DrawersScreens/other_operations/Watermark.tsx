@@ -12,16 +12,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import ClearButton from '../../../components/button/Clear_all';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib'
-import RNFS from 'react-native-fs';
 import { Alert } from 'react-native';
+import { Watermarkpdf } from '../../../services/pdf_Services/WaterMarkpdf';
 
 const Watermark = ({ navigation }: any) => {
 
     const { theme } = useTheme();
-    //const style = useMemo(() => Style(theme), [theme]);
+    const style = useMemo(() => Style(theme), [theme]);
     const [SelectedFiles, setSelectedFiles] = useState<PDFFile[]>([]);
-    const [style, setStyles] = useState(Style(theme));
+    //const [style, setStyles] = useState(Style(theme));
     const [isloading, setIsLoading] = useState(false);
 
     // Watermark options
@@ -34,107 +33,57 @@ const Watermark = ({ navigation }: any) => {
     const [fontSize, setFontSize] = useState<number>(20); // default 20
     const [fontColor, setFontColor] = useState<string>('black'); // default 20
 
-    useEffect(() => {
-        // Development-only interval to refresh styles
-        if (__DEV__) {
-            const interval = setInterval(() => {
-                setStyles(Style(theme));
-            }, 200); // 200ms, adjust if needed
-            return () => clearInterval(interval);
-        }
-    }, [theme]);
+    // useEffect(() => {
+    //     // Development-only interval to refresh styles
+    //     if (__DEV__) {
+    //         const interval = setInterval(() => {
+    //             setStyles(Style(theme));
+    //         }, 200); // 200ms, adjust if needed
+    //         return () => clearInterval(interval);
+    //     }
+    // }, [theme]);
 
 
     const handelSelect = (selectedFiles: PDFFile[]) => {
         setSelectedFiles(selectedFiles);
     }
 
-    const WaterMark = async () => {
-        if (SelectedFiles.length === 0) {
-            Alert.alert('No PDF selected');
-            return;
-        }
+   const WaterMark = async () => {
+  if (SelectedFiles.length === 0) {
+    Alert.alert('No PDF selected');
+    return;
+  }
 
-        setIsLoading(true);
-const getRGB = (color: string) => {
-    switch(color.toLowerCase()) {
-        case 'red': return rgb(1,0,0);
-        case 'blue': return rgb(0,0,1);
-        case 'black': return rgb(0,0,0);
-        case 'grey': return rgb(0.5,0.5,0.5);
-        case 'white': return rgb(1,1,1);
-        default: return rgb(0,0,0); // fallback black
-    }
-}
+  setIsLoading(true);
 
-        try {
-            const inputPath = SelectedFiles[0].uri.replace('file://', '');
-            const existingPdfBytes = await RNFS.readFile(inputPath, 'base64');
+  try {
+    const result = await Watermarkpdf(SelectedFiles[0].uri, {
+      watermarkText: watermarkText,
+      position,
+      transparency,
+      rotation,
+      fontSize,
+      fontColor,
+    });
 
-            // Load existing PDF
-            const pdfDoc = await PDFDocument.load(existingPdfBytes, { ignoreEncryption: true });
-            const pages = pdfDoc.getPages();
+    setGenretdPDf({
+      uri: result.uri,
+      name: SelectedFiles[0].name,
+    });
 
-            for (const page of pages) {
-                const { width, height } = page.getSize();
+    Alert.alert('Success', 'Watermark applied successfully!');
+  } catch (error) {
+    Alert.alert('Error', 'Failed to apply watermark');
+  }
 
-                // Calculate watermark position
-                let x = width / 2;
-                let y = height / 2;
+  setIsLoading(false);
+};
 
-                switch (position) {
-                    case 'top-left':
-                        x = 50;
-                        y = height - 50;
-                        break;
-                    case 'center':
-                        x = width / 2;
-                        y = height / 2;
-                        break;
-                    case 'bottom-right':
-                        x = width - 150;
-                        y = 50;
-                        break;
-                }
-
-                // Watermark font size
-                const size = fontSize; // use selected fontSize
-
-                // Color with opacity
-                const color = getRGB(fontColor);
-                const opacity = transparency;   // From UI options
-
-                // Draw watermark
-                page.drawText(watermarkText, {
-                    x,
-                    y,
-                    size,
-                    font: await pdfDoc.embedFont(StandardFonts.Helvetica),
-                    color,
-                    rotate: degrees(rotation),
-                    opacity,
-                });
-            }
-
-            // Save new PDF
-            const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: false });
-            const outputPath = `${RNFS.DownloadDirectoryPath}/Watermarked_${Date.now()}.pdf`;
-            await RNFS.writeFile(outputPath, pdfBytes, 'base64');
-            setGenretdPDf({ uri: outputPath, name: SelectedFiles[0].name });
-            Alert.alert('Success', `Watermark applied!\nSaved at: ${outputPath}`);
-
-
-        } catch (error) {
-            console.error('Watermark Error:', error);
-            Alert.alert('Error', 'Failed to apply watermark');
-        }
-        setIsLoading(false);
-    }
 
     useFocusEffect(
         useCallback(() => {
             return () => {
-            ClearFile();
+                ClearFile();
             };
         }, [])
     );
@@ -176,6 +125,9 @@ const getRGB = (color: string) => {
         setLayer('over');
         setTransparency(0.5);
         setRotation(45);
+        setFontSize(20);
+        setFontColor('black');
+        setGenretdPDf(null);
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -331,5 +283,3 @@ const getRGB = (color: string) => {
 }
 
 export default Watermark
-
-const styles = StyleSheet.create({})

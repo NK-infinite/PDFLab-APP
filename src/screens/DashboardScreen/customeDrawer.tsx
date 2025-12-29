@@ -104,11 +104,16 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       <Animated.View
         style={headerStyle}>
         <View style={styles.header}>
+          <View style={{ flexDirection: 'row' ,alignItems:'center'}}>
+
+          <Text style={[styles.title , {color:'#ff0000'}]}>Me</Text>
+          <Text style={[styles.title , {color:'#0051ffff'}]}>nu</Text>
+          </View>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
-            <Icon name="arrow-left" size={22} color={theme.textPrimary} />
-          </TouchableOpacity>
-          <Text style={styles.title}>Menu</Text>
-          <Icon name="house" size={20} color={theme.textPrimary} onPress={() => props.navigation.navigate('Home')} />
+           
+              <Icon name="arrow-left" size={22} style={{transform: [ isDrawerOpen ? {rotate: '0deg' }: {rotate: '180deg'}   ]}} color={theme.textPrimary} />
+             </TouchableOpacity>
+          {/* <Icon name="house" size={20} color={theme.textPrimary} onPress={() => props.navigation.navigate('Home')} /> */}
         </View>
       </Animated.View>
 
@@ -174,6 +179,15 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             iconName="file-text"
             label="Text File to PDF"
             onPress={() => props.navigation.navigate('OCR')}
+          />
+        </Animated.View>
+
+        <Animated.View
+          style={itemStyle(7)}>
+          <DrawerItem
+            iconName="qrcode"
+            label="QR Code Generator"
+            onPress={() => props.navigation.navigate('QRCode')}
           />
         </Animated.View>
 

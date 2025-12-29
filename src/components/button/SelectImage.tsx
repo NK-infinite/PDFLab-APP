@@ -99,7 +99,7 @@ const SelectImageButton = ({ onImagesSelected, buttonText = 'Select Images', sty
                 style={[{
                     backgroundColor: theme.quickCard,
                     borderColor: theme.quickCardBorder,
-                    borderWidth: 2,
+                    borderWidth: 1.5,
                     padding: 14,
                     borderRadius: 10,
                     alignItems: 'center',
