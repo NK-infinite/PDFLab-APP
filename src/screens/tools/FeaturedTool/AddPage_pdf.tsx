@@ -13,6 +13,7 @@ import { addPageToPDF } from '../../../services/pdf_Services/AddPage';
 import RNFS from 'react-native-fs';
 import { PDFDocument } from 'pdf-lib';
 import ClearButton from '../../../components/button/Clear_all';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 const AddPage_pdf = ({ navigation }: any) => {
 
   const { theme } = useTheme();
@@ -64,6 +65,7 @@ const AddPage_pdf = ({ navigation }: any) => {
       pageType, // 'blank' | 'existing'
       pageIndex
     );
+    
 
     if (resultPath) {
       setIsadding(false);
@@ -87,22 +89,22 @@ const AddPage_pdf = ({ navigation }: any) => {
         <Header title='Add Page' onPress={() => navigation.goBack()} />
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-            <SelectPDFButton
-              onFilesSelected={handleFileSelect}
-              buttonText="Select PDF"
-              style={{
-                backgroundColor: theme.toolCard,
-                borderColor: theme.toolCardBorder
-              }} />
-       
-            <ActionButton
-              title='Add Page'
-              loading={isadding}
-              onPress={addpage}
-              style={{
-                backgroundColor: theme.toolCard,
-                borderColor: theme.toolCardBorder
-              }} />
+          <SelectPDFButton
+            onFilesSelected={handleFileSelect}
+            buttonText="Select PDF"
+            style={{
+              backgroundColor: theme.toolCard,
+              borderColor: theme.toolCardBorder
+            }} />
+
+          <ActionButton
+            title='Add Page'
+            loading={isadding}
+            onPress={addpage}
+            style={{
+              backgroundColor: theme.toolCard,
+              borderColor: theme.toolCardBorder
+            }} />
         </View>
 
         {files && files.length > 0 &&
@@ -201,10 +203,17 @@ const AddPage_pdf = ({ navigation }: any) => {
                   </View>
                 )}
               </View>
-               <ClearButton onPress={Clearall} />
+              <ClearButton onPress={Clearall} />
             </View>
           </>
         }
+        {files.length === 0 && (
+          <EmptyPlaceholder
+            icon="file-pdf"
+            title="No PDFs selected yet"
+            subtitle="Select at least 1 PDF"
+          />
+        )}
       </View>
     </SafeAreaView>
   )

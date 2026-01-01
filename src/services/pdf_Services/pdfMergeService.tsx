@@ -4,6 +4,7 @@ import { PDFDocument } from 'pdf-lib';
 import { Buffer } from 'buffer';
 import FileViewer from 'react-native-file-viewer';
 import { PDFFile } from './pdfPickerService';
+import { addmyMetadata } from '../defultServices/myMeta';
 
 export const openPDF = async (uri: string) => {
   try {
@@ -42,6 +43,18 @@ export const mergePDFs = async (files: PDFFile[]): Promise<PDFFile | null> => {
     const savePath = `${RNFS.DownloadDirectoryPath}/merged_${date}.pdf`;
 
     await RNFS.writeFile(savePath, mergedPdfBase64, 'base64');
+    //my metadata 
+    const result = await addmyMetadata(
+      mergedPdf,
+      `NumberedPDF_${Date.now()}.pdf`,
+      'edit',
+      'page Numbere add by PDFLab',
+      ['merge', 'edit']
+    );
+    if (!result) throw new Error("Metadata failed");
+
+    await RNFS.writeFile(savePath, result.base64, 'base64');
+
     Alert.alert(`Merged PDF saved at: ${savePath}`);
 
     return { name: 'merged.pdf', uri: savePath };

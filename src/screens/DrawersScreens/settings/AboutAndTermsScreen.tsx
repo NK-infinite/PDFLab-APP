@@ -3,15 +3,14 @@ import {
   View, 
   Text, 
   ScrollView, 
-  StyleSheet, 
   Linking, 
-  TouchableOpacity 
+  TouchableOpacity, 
+  Image
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useTheme } from '../../../utils/themeManager';
 import { styles } from '../../../styles/Drawers_Screens_style/setting_Screens_style/About&Term_Style';
-
 const AboutAndTermsScreen = () => {
   const { theme } = useTheme();
 
@@ -57,7 +56,11 @@ const AboutAndTermsScreen = () => {
         {/* ===== BRAND HEADER ===== */}
         <View style={styles.brandHeader}>
           <View style={[styles.logoContainer, { backgroundColor: theme.textPrimary }]}>
-            <Icon name="file-pdf" size={46} color={theme.background} />
+           <Image 
+           source={require('../../../assets/Image/PDFLAb2.png')}
+           resizeMode='contain'
+           style={{width:'80%', height:'80%'}}
+           />
           </View>
           
           <Text style={[styles.appName, { color: theme.textPrimary }]}>

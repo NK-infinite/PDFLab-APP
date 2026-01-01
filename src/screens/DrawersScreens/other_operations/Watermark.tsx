@@ -14,6 +14,7 @@ import ClearButton from '../../../components/button/Clear_all';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { Alert } from 'react-native';
 import { Watermarkpdf } from '../../../services/pdf_Services/WaterMarkpdf';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 const Watermark = ({ navigation }: any) => {
 
@@ -48,36 +49,36 @@ const Watermark = ({ navigation }: any) => {
         setSelectedFiles(selectedFiles);
     }
 
-   const WaterMark = async () => {
-  if (SelectedFiles.length === 0) {
-    Alert.alert('No PDF selected');
-    return;
-  }
+    const WaterMark = async () => {
+        if (SelectedFiles.length === 0) {
+            Alert.alert('No PDF selected');
+            return;
+        }
 
-  setIsLoading(true);
+        setIsLoading(true);
 
-  try {
-    const result = await Watermarkpdf(SelectedFiles[0].uri, {
-      watermarkText: watermarkText,
-      position,
-      transparency,
-      rotation,
-      fontSize,
-      fontColor,
-    });
+        try {
+            const result = await Watermarkpdf(SelectedFiles[0].uri, {
+                watermarkText: watermarkText,
+                position,
+                transparency,
+                rotation,
+                fontSize,
+                fontColor,
+            });
 
-    setGenretdPDf({
-      uri: result.uri,
-      name: SelectedFiles[0].name,
-    });
+            setGenretdPDf({
+                uri: result.uri,
+                name: SelectedFiles[0].name,
+            });
 
-    Alert.alert('Success', 'Watermark applied successfully!');
-  } catch (error) {
-    Alert.alert('Error', 'Failed to apply watermark');
-  }
+            Alert.alert('Success', 'Watermark applied successfully!');
+        } catch (error) {
+            Alert.alert('Error', 'Failed to apply watermark');
+        }
 
-  setIsLoading(false);
-};
+        setIsLoading(false);
+    };
 
 
     useFocusEffect(
@@ -276,6 +277,14 @@ const Watermark = ({ navigation }: any) => {
 
 
                     </>
+                )}
+
+                {SelectedFiles.length === 0  && (
+                    <EmptyPlaceholder
+                        icon="file-pdf"
+                        title="No PDFs selected yet"
+                        subtitle="Select at least 1 PDF"
+                    />
                 )}
             </View>
         </SafeAreaView>

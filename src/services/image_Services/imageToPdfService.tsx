@@ -2,6 +2,7 @@ import { PDFDocument } from 'pdf-lib';
 import RNFS from 'react-native-fs';
 import { ImageFile } from '../image_Services/imagePickerService';
 import { Buffer } from 'buffer';
+import { addmyMetadata } from '../defultServices/myMeta';
 
 export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.pdf'): Promise<string> => {
   if (images.length === 0) throw new Error('No images selected');
@@ -22,33 +23,42 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
     }
 
     const page = pdfDoc.addPage([595, 842]); // A4 size
-  
+
 
     const pageWidth = 595; // A4 width in points
     const pageHeight = 842; // A4 height in points
-    
+
     // Calculate scale to fit the page
     const scale = Math.min(pageWidth / embeddedImage.width, pageHeight / embeddedImage.height);
-      
+
     const width = embeddedImage.width * scale;
     const height = embeddedImage.height * scale;
-      
+
     // Center the image on page
     const x = (pageWidth - width) / 2;
     const y = (pageHeight - height) / 2;
-      
+
     page.drawImage(embeddedImage, { x, y, width, height });
   }
-  
+
 
   // Save PDF as bytes
-  const pdfBytes: any  = await pdfDoc.save();
+  const pdfBytes: any = await pdfDoc.save();
 
   // Write to file system
   const pdfBase64 = Buffer.from(pdfBytes).toString('base64');
   const pdfPath = `${RNFS.DownloadDirectoryPath}/${outputFileName}`;
   RNFS.writeFile(pdfPath, pdfBase64, 'base64');
+  const result = await addmyMetadata(
+    pdfDoc,
+    `NumberedPDF_${Date.now()}.pdf`,
+    'edit',
+    'Image to PDf Converter',
+    ['imagetopdf', 'edit', ]
+  );
+  if (!result) throw new Error("Metadata failed");
 
+  await RNFS.writeFile(pdfPath, result.base64, 'base64');
 
   return pdfPath; // return PDF file path
 };

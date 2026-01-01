@@ -49,7 +49,6 @@ const scanScreen = ({ navigation }: any) => {
     }
 
     try {
-         
       setIsimage2pdf(true);
       const imageFiles: PDFImageFile[] = scannedImage.map(file => ({
         uri: file,
@@ -125,7 +124,7 @@ const scanScreen = ({ navigation }: any) => {
               { loading ? (
                <ActivityIndicator size={15} color={theme.textPrimary} /> 
               ):(
-                <Text style={styles.buttonText}>PDF</Text>
+                <Text style={styles.buttonText}>Make PDF</Text>
               )
               }
             </TouchableOpacity>

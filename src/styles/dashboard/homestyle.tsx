@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utils/hightwidth'
-import { useTheme } from '../../utils/themeManager';
 import { ThemeType } from '../../utils/themeManager';
 export const Styles = (theme: ThemeType) =>
 
@@ -65,8 +64,8 @@ export const Styles = (theme: ThemeType) =>
 
     // Featured Tools
     toolCard: {
-      width: SCREEN_WIDTH / 2 - 18,
-      height: SCREEN_WIDTH / 2.3,
+      width: SCREEN_WIDTH > 600 ? 200 : SCREEN_WIDTH / 2 - 18,
+      height: SCREEN_WIDTH > 600 ? 200 : SCREEN_WIDTH / 2.3,
       backgroundColor: theme.toolCard,
       margin: 8,
       borderRadius: 14,

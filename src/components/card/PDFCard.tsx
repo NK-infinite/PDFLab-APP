@@ -6,7 +6,7 @@ import Animated, { SlideInUp, useAnimatedStyle, useSharedValue, withSpring } fro
 export interface PDFFile {
   name: string;
   uri: string;
-  size?: number; 
+  size?: number;
 }
 
 interface PDFCardProps {
@@ -46,21 +46,21 @@ const PDFCard: React.FC<PDFCardProps> = ({ file, onPress }) => {
   return (
     <Animated.View style={animatedStyle}>
       <TouchableOpacity
-      style={[styles.card]}
-       onPress={onPress ?? (() => { })}>
-        
-          <Image
-            source={require('../../assets/Image/PDFLab.png')}
-            style={styles.thumbnail}
-          />
-          <Text
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={styles.text}
-          >
-            {file?.name}
-          </Text>
-        
+        style={[styles.card]}
+        onPress={onPress ?? (() => { })}>
+
+        <Image
+          source={require('../../assets/Image/PDFLab.png')}
+          style={styles.thumbnail}
+        />
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={styles.text}
+        >
+          {file?.name}
+        </Text>
+
       </TouchableOpacity>
     </Animated.View>
   );

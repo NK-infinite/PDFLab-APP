@@ -1,4 +1,4 @@
-import React , {Suspense} from 'react'
+import React, { Suspense } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Loader } from '../components/loading/Loader';
 import HomeScreen from '../screens/DashboardScreen/HomeScreen';
@@ -8,34 +8,36 @@ const CustomDrawerContent = React.lazy(() => import('../screens/DashboardScreen/
 const AboutAndTermsScreen = React.lazy(() => import('../screens/DrawersScreens/settings/AboutAndTermsScreen'));
 const Watermark = React.lazy(() => import('../screens/DrawersScreens/other_operations/Watermark'));
 const QRCodeGenerator = React.lazy(() => import('../screens/DrawersScreens/other_operations/QRCodeGenerator'));
+const TextToPdf = React.lazy(() => import('../screens/DrawersScreens/other_operations/TextToPdf'));
+// const ScaneQRcode = React.lazy(() => import('../screens/DrawersScreens/other_operations/ScaneQRcode'));
 
 const drawernavigations = () => {
-const Drawer = createDrawerNavigator();
-  
-  const withSuspense = (Component: React.ComponentType<any>) => (props: any) => (
-      <Suspense fallback={<Loader />}>
-        <Component {...props} />
-      </Suspense>
-    );
-  
-  return(
+  const Drawer = createDrawerNavigator();
 
+  const withSuspense = (Component: React.ComponentType<any>) => (props: any) => (
+    <Suspense fallback={<Loader />}>
+      <Component {...props} />
+    </Suspense>
+  );
+
+  return (
     <Drawer.Navigator
       screenOptions={{
         drawerPosition: 'left',
-        headerShown: false
+        headerShown: false,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
 
       {/* React.lazy */}
       <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Rotate"  component={withSuspense(Rotatepdf)}/>
+      <Drawer.Screen name="Rotate" component={withSuspense(Rotatepdf)} />
       <Drawer.Screen name="About" component={withSuspense(AboutAndTermsScreen)} />
       <Drawer.Screen name="Watermark" component={withSuspense(Watermark)} />
       <Drawer.Screen name="QRCode" component={withSuspense(QRCodeGenerator)} />
-      
+      <Drawer.Screen name="TextToPdf" component={withSuspense(TextToPdf)} />
+      {/* <Drawer.Screen name="QrScan" component={withSuspense(ScaneQRcode)} />
+       */}
     </Drawer.Navigator>
- 
   )
 }
 

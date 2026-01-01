@@ -12,6 +12,7 @@ import { openPDF } from '../../../utils/open_pdf';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import ClearButton from '../../../components/button/Clear_all';
 import { protectPDFFile } from '../../../services/pdf_Services/protectPdf';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 const protect_pdf = ({ navigation }: any) => {
     const { theme } = useTheme();
@@ -169,11 +170,11 @@ const protect_pdf = ({ navigation }: any) => {
                     )}
                     
                     {Files.length === 0 && (
-                        <View style={style.placeholder}>
-                            <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-                            <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
-                            <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
-                        </View>
+                      <EmptyPlaceholder
+                        icon="file-pdf"
+                        title="No files selected yet"
+                        subtitle="Please select at least one file"
+                      />
                     )}
 
                 </View>

@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, useColorScheme,  } from "react-native";
+import { Text, View, TouchableOpacity, useColorScheme, } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import { StyleSheet } from "react-native";
 import { useTheme } from "../../utils/themeManager";
@@ -17,7 +17,7 @@ export const DrawerItem = ({ iconName, label, onPress }: DrawerItemProps) => {
     return (
         <TouchableOpacity style={[styles.card, { backgroundColor: theme.drawerCard, borderColor: theme.drawerCardBorder, marginBottom: 16 }]} onPress={onPress}>
             <Animated.View entering={FadeInLeft.springify().damping(30).mass(1).stiffness(10).duration(1000)}>
-            <Icon name={iconName} size={24} color={isDarkMode ? '#00ffeaff' : '#000'} />
+                <Icon name={iconName} size={24} color={isDarkMode ? '#00ffeaff' : '#000'} />
             </Animated.View>
             <Text style={[styles.itemLabel, { color: theme.textPrimary }]}>{label}</Text>
         </TouchableOpacity>

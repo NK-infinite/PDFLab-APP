@@ -3,18 +3,19 @@ import RNFS from 'react-native-fs';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Buffer } from 'buffer';
 import { Alert } from 'react-native';
+import { addmyMetadata } from '../defultServices/myMeta';
 
 export type PageNumberOptions = {
     fromPage: number;
     toPage: number;
     firstNumber: number;
-    position:  'top-left' |
+    position: 'top-left' |
     'top-center' |
     'top-right' |
     'bottom-left' |
     'bottom-center' |
     'bottom-right';
- //   pageMode?: 'single' | 'facing';
+    //   pageMode?: 'single' | 'facing';
     margin?: 'small' | 'medium' | 'large';
 };
 
@@ -89,7 +90,17 @@ export const addNumbersToPDF = async (
         const outputPath = RNFS.DownloadDirectoryPath + '/NumberedPDF_' + Date.now() + '.pdf';
 
         await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
+        const result = await addmyMetadata(
+            pdfDoc,
+            `NumberedPDF_${Date.now()}.pdf`,
+            'edit',
+            'page Numbere add by PDFLab',
+            ['addNumber', 'edit']
+        );
+        if (!result) throw new Error("Metadata failed");
 
+        await RNFS.writeFile(outputPath, result.base64, 'base64');
+        
         return outputPath;
     } catch (err) {
         console.error('Add Page Number Error:', err);

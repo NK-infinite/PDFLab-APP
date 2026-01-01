@@ -6,6 +6,7 @@ import { decode as atob } from "base-64";
 import { PDFFile } from "./pdfPickerService";
 import { Alert } from "react-native";
 import { openPDF } from "./pdfMergeService";
+import { addmyMetadata } from "../defultServices/myMeta";
 
 export interface SplitOptions {
   files: PDFFile[];
@@ -71,6 +72,18 @@ export const splitPDFsService = async ({
 
           const base64Pdf = Buffer.from(pdfBytesNew).toString("base64");
           await writeFile(path, base64Pdf, "base64");
+
+          const result = await addmyMetadata(
+            mergedPdf,
+            `NumberedPDF_${Date.now()}.pdf`,
+            'edit',
+            'split pdf by PDFLab',
+            ['split', 'edit']
+          );
+          if (!result) throw new Error("Metadata failed");
+
+          await RNFS.writeFile(path, result.base64, 'base64');
+
           onResult(path, `${name}_Part.pdf`);
           openPDF(path);
         }
@@ -93,6 +106,17 @@ export const splitPDFsService = async ({
 
             const base64Pdf = Buffer.from(tempBytes).toString("base64");
             await writeFile(path, base64Pdf, "base64");
+
+            const result = await addmyMetadata(
+              pdfDoc,
+              `NumberedPDF_${Date.now()}.pdf`,
+              'edit',
+              'page Numbere add by tool',
+              ['split', 'edit']
+            );
+            if (!result) throw new Error("Metadata failed");
+
+            await RNFS.writeFile(path, result.base64, 'base64');
 
             onResult(path, `${name}_Split${i}.pdf`);
 

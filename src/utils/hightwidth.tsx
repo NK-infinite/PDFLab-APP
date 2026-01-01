@@ -1,6 +1,12 @@
-import { Dimensions } from "react-native";
+import { Dimensions, ScaledSize } from 'react-native';
 
-const { height, width } = Dimensions.get("window");
+let window: ScaledSize = Dimensions.get('window');
 
-export const SCREEN_HEIGHT = height;
-export const SCREEN_WIDTH = width;
+export let SCREEN_WIDTH = window.width;
+export let SCREEN_HEIGHT = window.height;
+
+//  Listen for fold / rotate / resize
+Dimensions.addEventListener('change', ({ window: newWindow }) => {
+  SCREEN_WIDTH = newWindow.width;
+  SCREEN_HEIGHT = newWindow.height;
+});

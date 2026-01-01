@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import PDFCard from '../../../components/card/PDFCard';
 import ActionButton from '../../../components/button/ActionButton';
 import Header from '../../../components/headers/header';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 interface PDFFile {
   name: string;
@@ -96,12 +97,12 @@ const MergeScreen = ({ navigation }: any) => {
         )}
 
         {files.length === 0 && (
-          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-            <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-            <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
-            <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 2 PDFs</Text>
-          </View>
-        )}
+            <EmptyPlaceholder
+              icon="file-pdf"
+              title="No files selected yet"
+              subtitle="Please select at least one file"
+            />          
+            )}
       </View>
     </SafeAreaView>
   );

@@ -15,6 +15,7 @@ import PDFCard, { PDFFile } from '../../../components/card/PDFCard'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import { rotatePdfPages } from '../../../services/pdf_Services/rotatePdfService'
 import { useFocusEffect } from '@react-navigation/native'
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder'
 
 const Rotatepdf = ({ navigation }: any) => {
 
@@ -277,6 +278,14 @@ useFocusEffect(
             </View>
           </>
         }
+        
+{Files.length === 0 && (
+  <EmptyPlaceholder
+    icon="file-pdf"
+    title="No PDFs selected yet"
+    subtitle="Select at least 1 PDF"
+  />
+)}
       </View>
     </SafeAreaView>
   )

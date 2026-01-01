@@ -9,11 +9,11 @@ import ActionButton from '../../../components/button/ActionButton';
 import { PDFFile } from '../../../services/pdf_Services/pdfPickerService';
 import PDFCard from '../../../components/card/PDFCard';
 import { openPDF } from '../../../utils/open_pdf';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import ClearButton from '../../../components/button/Clear_all';
 import { editPDFMetadata, removePDFMetadata, viewPDFMetadata } from '../../../services/pdf_Services/MataDateServies';
 import { TextInput } from 'react-native';
 import { ScrollView } from 'react-native';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 const MataData = ({ navigation }: any) => {
     const { theme } = useTheme()
@@ -29,7 +29,7 @@ const MataData = ({ navigation }: any) => {
     const [keywords, setKeywords] = useState('');
     const [producer, setProducer] = useState('');
     const [isloading, setIsLoading] = useState(false);
-    
+
     //   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
     useEffect(() => {
@@ -81,7 +81,6 @@ const MataData = ({ navigation }: any) => {
         }
 
         const fileUri = files[0].uri;
-
         switch (metadataAction) {
             case 'view':
                 const data = await viewPDFMetadata(fileUri);
@@ -298,12 +297,12 @@ const MataData = ({ navigation }: any) => {
                     }
 
                     {files.length === 0 && (
-                        <View style={styles.placeholder}>
-                            <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-                            <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
-                            <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
-                        </View>
-                    )}
+                       <EmptyPlaceholder
+                       icon="file-pdf"
+                       title="No files selected yet"
+                       subtitle="Please select at least one file"
+                       />
+                       )}
 
                 </ScrollView>
             </View>

@@ -2,6 +2,7 @@
 import RNFS from 'react-native-fs';
 import { PDFDocument, degrees } from 'pdf-lib';
 import { Buffer } from 'buffer';
+import { addmyMetadata } from '../defultServices/myMeta';
 
 export const rotatePdfPages = async (
     file: { uri: string, name: string },
@@ -29,5 +30,15 @@ export const rotatePdfPages = async (
     const outputPath = `${RNFS.DownloadDirectoryPath}/Rotated_${Date.now()}_${file.name}`;
     await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
 
+    const result = await addmyMetadata(
+        pdfDoc,
+        `NumberedPDF_${Date.now()}.pdf`,
+        'edit',
+        'rotate pdf by PDFLab',
+        ['rotate', 'edit']
+    );
+    if (!result) throw new Error("Metadata failed");
+
+    await RNFS.writeFile(outputPath, result.base64, 'base64');
     return { uri: outputPath, name: file.name };
 };

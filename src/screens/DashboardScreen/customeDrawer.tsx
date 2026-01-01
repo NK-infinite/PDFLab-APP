@@ -2,7 +2,7 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image, useColorScheme } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { DrawerItem } from '../../components/drawers/drawer';
 import { useTheme } from '../../utils/themeManager';
@@ -14,21 +14,22 @@ import { Platform } from 'react-native';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const { theme } = useTheme();
-  const styles = useMemo(() => Styles(theme), [theme]);
+ // const styles = useMemo(() => Styles(theme), [theme]);
   const isDrawerOpen = props.state.history?.some(h => h.type === 'drawer');
   const [drawerKey, setDrawerKey] = useState(0);
+  const isDarkMode = useColorScheme() === 'dark';
 
-  //const [styles, setStyles] = useState(Styles(theme));
+  const [styles, setStyles] = useState(Styles(theme));
 
-  // useEffect(() => {
-  //   // Development-only interval to refresh styles
-  //   if (__DEV__) {
-  //     const interval = setInterval(() => {
-  //       setStyles(Styles(theme));
-  //     }, 200); // 200ms, adjust if needed
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [theme]);
+  useEffect(() => {
+    // Development-only interval to refresh styles
+    if (__DEV__) {
+      const interval = setInterval(() => {
+        setStyles(Styles(theme));
+      }, 200); // 200ms, adjust if needed
+      return () => clearInterval(interval);
+    }
+  }, [theme]);
 
   useEffect(() => {
     if (isDrawerOpen) {
@@ -104,16 +105,15 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       <Animated.View
         style={headerStyle}>
         <View style={styles.header}>
-          <View style={{ flexDirection: 'row' ,alignItems:'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
-          <Text style={[styles.title , {color:'#ff0000'}]}>Me</Text>
-          <Text style={[styles.title , {color:'#0051ffff'}]}>nu</Text>
+            <Text style={[styles.title, { color: '#ff0000' }]}>Me</Text>
+            <Text style={[styles.title, { color: '#0051ffff' }]}>nu</Text>
           </View>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
-           
-              <Icon name="arrow-left" size={22} style={{transform: [ isDrawerOpen ? {rotate: '0deg' }: {rotate: '180deg'}   ]}} color={theme.textPrimary} />
-             </TouchableOpacity>
-          {/* <Icon name="house" size={20} color={theme.textPrimary} onPress={() => props.navigation.navigate('Home')} /> */}
+
+            <Icon name="arrow-left" size={22} style={{ transform: [isDrawerOpen ? { rotate: '0deg' } : { rotate: '180deg' }] }} color={theme.textPrimary} />
+          </TouchableOpacity>
         </View>
       </Animated.View>
 
@@ -143,7 +143,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           />
         </Animated.View>
 
-        <Animated.View
+        {/* <Animated.View
           style={itemStyle(3)}
         >
           <DrawerItem
@@ -152,10 +152,10 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             onPress={() => props.navigation.navigate('Highlight')}
 
           />
-        </Animated.View>
+        </Animated.View> */}
 
         <Animated.View
-          style={itemStyle(4)}
+          style={itemStyle(3)}
         >
           <DrawerItem
             iconName="trash"
@@ -164,26 +164,44 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           />
         </Animated.View>
 
-        <Animated.View
-          style={itemStyle(5)}>
-          <DrawerItem
-            iconName="eye"
-            label="OCR (Offline)"
-            onPress={() => props.navigation.navigate('OCR')}
-          />
-        </Animated.View>
+
 
         <Animated.View
-          style={itemStyle(6)}>
+          style={itemStyle(4)}>
           <DrawerItem
             iconName="file-text"
             label="Text File to PDF"
-            onPress={() => props.navigation.navigate('OCR')}
+            onPress={() => props.navigation.navigate('TextToPdf')}
           />
         </Animated.View>
 
+
+        {/* <Animated.View
+          style={[itemStyle(5), { flexDirection: 'row', alignItems: 'center', }]}>
+          <TouchableOpacity
+
+            style={[styles.customcard, { backgroundColor: theme.drawerCard, borderColor: theme.drawerCardBorder, marginBottom: 16 }]}
+            onPress={() => props.navigation.navigate('QrScan')}>
+            {isDarkMode ?
+
+              <Image
+                source={require('../../assets/Icon/qr-code-scan (1).png')}
+                style={{ width: 25, height: 25, }}
+                resizeMode="contain"
+              />
+              :
+              <Image
+                source={require('../../assets/Icon/qr-code-scan.png')}
+                style={{ width: 25, height: 25, }}
+                resizeMode="contain"
+              />
+            }
+            <Text style={[styles.itemLabel, { color: theme.textPrimary }]} >Scan QR</Text>
+          </TouchableOpacity>
+        </Animated.View> */}
+
         <Animated.View
-          style={itemStyle(7)}>
+          style={itemStyle(6)}>
           <DrawerItem
             iconName="qrcode"
             label="QR Code Generator"

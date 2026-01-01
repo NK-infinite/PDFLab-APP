@@ -1,5 +1,6 @@
 import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib';
 import RNFS from 'react-native-fs';
+import { addmyMetadata } from '../defultServices/myMeta';
 
 type WatermarkOptions = {
   watermarkText: string;
@@ -69,6 +70,16 @@ export const Watermarkpdf = async (
 
     await RNFS.writeFile(outputPath, outputBase64, 'base64');
 
+    const result = await addmyMetadata(
+      pdfDoc,
+      `NumberedPDF_${Date.now()}.pdf`,
+      'edit',
+      'Watermark pdf add by PDFLab',
+      ['watermark', 'edit']
+    );
+    if (!result) throw new Error("Metadata failed");
+
+    await RNFS.writeFile(outputPath, result.base64, 'base64');
     return { uri: outputPath };
   } catch (error) {
     console.error('Watermark Service Error:', error);

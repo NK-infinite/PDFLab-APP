@@ -11,6 +11,7 @@ import { openPDF } from '../../../utils/open_pdf';
 import ClearButton from '../../../components/button/Clear_all';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { compressPDF } from '../../../services/pdf_Services/pdfCompressService';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 interface PDFFile {
   name: string;
@@ -73,17 +74,17 @@ const CompressScreen = ({ navigation }: CompressScreenProps) => {
 
         <View style={styles.buttonRow}>
 
-            <SelectPDFButton
-              onFilesSelected={handleFileSelect}
-              buttonText="Select PDF"
-            />
+          <SelectPDFButton
+            onFilesSelected={handleFileSelect}
+            buttonText="Select PDF"
+          />
 
-            <ActionButton
-              title="Compress PDF"
-              loading={isCompressing}
-              onPress={handleCompress}
-            // disabled={files.length === 0}
-            />
+          <ActionButton
+            title="Compress PDF"
+            loading={isCompressing}
+            onPress={handleCompress}
+          // disabled={files.length === 0}
+          />
         </View>
 
         {(files.length > 0 || compressedFile) && (
@@ -119,11 +120,11 @@ const CompressScreen = ({ navigation }: CompressScreenProps) => {
         )}
 
         {files.length === 0 && (
-          <View style={styles.placeholder}>
-            <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-            <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
-            <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
-          </View>
+          <EmptyPlaceholder
+            icon="file-pdf"
+            title="No files selected yet"
+            subtitle="Please select at least one file"
+          />
         )}
       </View>
     </SafeAreaView>

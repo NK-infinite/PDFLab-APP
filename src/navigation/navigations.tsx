@@ -34,7 +34,7 @@ const Pagenavigations = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}>
+      <Stack.Navigator screenOptions={{ headerShown: false,  animation: 'none' }}>
         {/* Non-lazy screens */}
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="IntroScreen" component={IntroScreen} />

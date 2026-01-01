@@ -23,6 +23,7 @@ import PDFCard from '../../../components/card/PDFCard';
 import ActionButton from '../../../components/button/ActionButton';
 import Header from '../../../components/headers/header';
 import { openPDF } from '../../../utils/open_pdf';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 const SplitScreen = ({ navigation, route }: any) => {
 
@@ -55,6 +56,12 @@ const SplitScreen = ({ navigation, route }: any) => {
             Alert.alert("No File", "Please select a PDF file first");
             return;
         };
+        
+        if (!startsplit && !endsplit && !splitSize) {
+            Alert.alert("Error", "Please fill Split Size or Start Page or End Pag");
+        }
+
+        
 
         setIsspliting(true);
 
@@ -276,11 +283,11 @@ const SplitScreen = ({ navigation, route }: any) => {
                                 </View>
                             </View>
                         ) : (
-                            <View style={styles.emptyState}>
-                                <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-                                <Text style={styles.emptyStateTitle}>No PDFs selected yet</Text>
-                                <Text style={styles.emptyStateSubtitle}>Select at least 1 PDF to split</Text>
-                            </View>
+                           <EmptyPlaceholder
+                        icon="file-pdf"
+                        title="No files selected yet"
+                        subtitle="Please select at least one file"
+                      />
                         )}
                     </ScrollView>
                 </View>

@@ -12,6 +12,7 @@ import ImageCard from '../../../components/card/ImageCard';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { imagesToPDF } from '../../../services/image_Services/imageToPdfService';
 import { ImageFile } from '../../../services/image_Services/imagePickerService';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 
 interface image_pdfScreenProps {
@@ -115,12 +116,12 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
             </View>
           )
             :
-            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-              <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-              <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
-              <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 2 PDFs</Text>
-            </View>
-          }
+                 <EmptyPlaceholder
+                icon="file-pdf"
+                title="No files selected yet"
+                subtitle="Please select at least one file"
+              />         
+               }
         </View>
       </View>
 

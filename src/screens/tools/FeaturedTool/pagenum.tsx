@@ -4,14 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/FeaturedTool/pagenumstyle';
 import Header from '../../../components/headers/header';
-import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
 import SelectPDFButton from '../../../components/button/SelectPDF';
 import ActionButton from '../../../components/button/ActionButton';
 import PDFCard, { PDFFile } from '../../../components/card/PDFCard';
 import { openPDF } from '../../../utils/open_pdf';
 import ClearButton from '../../../components/button/Clear_all';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import { addNumbersToPDF, PageNumberOptions } from '../../../services/pdf_Services/Pagenumber';
+import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 const pagenum = ({ navigation }: any) => {
   const { theme } = useTheme();
@@ -32,7 +31,7 @@ const pagenum = ({ navigation }: any) => {
   const [toPage, setToPage] = useState<any>();
   const [isloading, setIsLoading] = useState(false);
   const [firstNumber, setFirstNumber] = useState<any>();
-  
+
   //const [styles, setStyles] = useState(Styles(theme));
 
   // useEffect(() => {
@@ -44,9 +43,15 @@ const pagenum = ({ navigation }: any) => {
 
   const addnumber = async () => {
     setIsLoading(true);
+
     if (files.length === 0) {
       setIsLoading(false);
       Alert.alert('Error', 'Please select a PDF first');
+      return;
+    }
+
+    if (!fromPage || !toPage || !firstNumber) {
+      Alert.alert('Error', 'Please fill the From , to and Start Filed');
       return;
     }
 
@@ -81,7 +86,7 @@ const pagenum = ({ navigation }: any) => {
     setPosition('bottom-center');
     setToPage('');
   }
-  
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }} >
@@ -99,21 +104,21 @@ const pagenum = ({ navigation }: any) => {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive">
           <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-              <SelectPDFButton
-                onFilesSelected={handleFileSelect}
-                buttonText="Select PDF"
-                style={{
-                  backgroundColor: theme.toolCard,
-                  borderColor: theme.toolCardBorder
-                }} />
-          
-              <ActionButton title="Add Numer to PDF"
-                onPress={addnumber}
-                loading={isloading}
-                style={{
-                  backgroundColor: theme.toolCard,
-                  borderColor: theme.toolCardBorder
-                }} />
+            <SelectPDFButton
+              onFilesSelected={handleFileSelect}
+              buttonText="Select PDF"
+              style={{
+                backgroundColor: theme.toolCard,
+                borderColor: theme.toolCardBorder
+              }} />
+
+            <ActionButton title="Add Numer to PDF"
+              onPress={addnumber}
+              loading={isloading}
+              style={{
+                backgroundColor: theme.toolCard,
+                borderColor: theme.toolCardBorder
+              }} />
           </View>
 
           {/* Selected PDF Preview */}
@@ -199,7 +204,7 @@ const pagenum = ({ navigation }: any) => {
                             borderWidth: 1,
                             borderColor: margin === marg.toLowerCase() ? theme.toolCardBorder : theme.header,
                             borderRadius: 5,
-                            backgroundColor: margin === marg.toLowerCase() ? theme.toolCard :theme.header,
+                            backgroundColor: margin === marg.toLowerCase() ? theme.toolCard : theme.header,
                           }}
                         >
                           <Text style={{ color: margin === marg.toLowerCase() ? theme.textPrimary : theme.textSecondary }}>{marg}</Text>
@@ -219,7 +224,7 @@ const pagenum = ({ navigation }: any) => {
                           value={fromPage}
                           onChangeText={setFromPage}
                           placeholder="From"
-                          
+
                           placeholderTextColor={theme.textPrimary}
                         />
                       </View>
@@ -254,12 +259,14 @@ const pagenum = ({ navigation }: any) => {
               </View>
             </>
           }
+
           {files.length === 0 && (
-            <View style={styles.placeholder}>
-              <Icon name="file-pdf" size={80} color={theme.textSecondary} />
-              <Text style={{ color: theme.textSecondary, marginTop: 16 }}>No PDFs selected yet</Text>
-              <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Select at least 1 PDFs</Text>
-            </View>
+            <EmptyPlaceholder
+              icon="file-pdf"
+              title="No PDFs selected yet"
+              subtitle="Select at least 1 PDF"
+            />
+
           )}
         </ScrollView>
       </View>

@@ -53,7 +53,8 @@ export type ThemeType = {
   textPrimary: string;
   textSecondary: string;
   sectionTitle: string;
-  fileCardBg: string
+  fileCardBg: string;
+  shadowColor: string;
 };
 
 

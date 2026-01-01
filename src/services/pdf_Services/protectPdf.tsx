@@ -2,6 +2,7 @@ import RNFS from 'react-native-fs';
 import { encryptPDF } from '@pdfsmaller/pdf-encrypt-lite';
 import { decode as atob } from "base-64";
 import { encode as btoa } from "base-64";
+import { addmyMetadata } from '../defultServices/myMeta';
 function base64ToUint8Array(base64: string) {
   const raw = atob(base64);
   const uint8Array = new Uint8Array(raw.length);
