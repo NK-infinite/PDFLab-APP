@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  ScrollView, 
-  Linking, 
-  TouchableOpacity, 
+import {
+  View,
+  Text,
+  ScrollView,
+  Linking,
+  TouchableOpacity,
   Image
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,10 +27,10 @@ const AboutAndTermsScreen = () => {
 
   const FeatureItem = ({ text }: { text: string }) => (
     <View style={styles.featureItem}>
-      <Icon 
-        name="check-circle" 
-        size={16} 
-        color={theme.sectionTitle} 
+      <Icon
+        name="check-circle"
+        size={16}
+        color={theme.sectionTitle}
         style={styles.featureIcon}
       />
       <Text style={[styles.featureText, { color: theme.textSecondary }]}>
@@ -49,24 +49,24 @@ const AboutAndTermsScreen = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         {/* ===== BRAND HEADER ===== */}
         <View style={styles.brandHeader}>
           <View style={[styles.logoContainer, { backgroundColor: theme.textPrimary }]}>
-           <Image 
-           source={require('../../../assets/Image/PDFLAb2.png')}
-           resizeMode='contain'
-           style={{width:'80%', height:'80%'}}
-           />
+            <Image
+              source={require('../../../assets/Image/PDFLAb2.png')}
+              resizeMode='contain'
+              style={{ width: '80%', height: '80%' }}
+            />
           </View>
-          
+
           <Text style={[styles.appName, { color: theme.textPrimary }]}>
             PDFLAb
           </Text>
-          
+
           <Text style={[styles.appTagline, { color: theme.textSecondary }]}>
             Secure • Private • Offline
           </Text>
@@ -74,7 +74,7 @@ const AboutAndTermsScreen = () => {
 
         {/* ===== ABOUT SECTIONS ===== */}
         <Section title="📱 About the App">
-         PDFLab is a privacy-first document utility designed to perform all PDF operations directly on your device. The app does not upload, store, or analyze your documents on any external servers, ensuring complete data confidentiality and ownership.
+          PDFLab is a privacy-first document utility designed to perform all PDF operations directly on your device. The app does not upload, store, or analyze your documents on any external servers, ensuring complete data confidentiality and ownership.
         </Section>
 
         <Section title="🔒 What Makes It Different">
@@ -165,8 +165,8 @@ const AboutAndTermsScreen = () => {
           <Text style={[styles.contactTitle, { color: theme.textPrimary }]}>
             📞 Contact & Support
           </Text>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={[styles.contactButton, { backgroundColor: theme.fileCardBg }]}
             onPress={openEmail}
           >
@@ -175,8 +175,8 @@ const AboutAndTermsScreen = () => {
               nikhilkeshvala1@gmail.com
             </Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={styles.linkButton}
             onPress={openPrivacyPolicy}
           >
@@ -195,11 +195,11 @@ const AboutAndTermsScreen = () => {
               Version 1.0.0
             </Text>
           </View>
-          
+
           <Text style={[styles.copyrightText, { color: theme.textSecondary }]}>
             © 2025 Offline PDF Tools
           </Text>
-          
+
           <Text style={[styles.rightsText, { color: theme.textSecondary }]}>
             All rights reserved
           </Text>

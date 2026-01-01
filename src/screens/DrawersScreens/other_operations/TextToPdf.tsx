@@ -89,9 +89,6 @@ const TextToPdf = ({ navigation }: any) => {
     }
   };
 
-
-
-
   const ClearAll = () => {
     setFileName('');
     setFilePath('');
@@ -101,7 +98,7 @@ const TextToPdf = ({ navigation }: any) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <View style={styles.container}>
         <Hader title="Text to PDF" onPress={() => navigation.goBack()} />
 

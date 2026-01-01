@@ -45,7 +45,7 @@ export const Styles = (theme: ThemeType) => {
       alignItems: 'center',
       justifyContent: 'center',
       minWidth: 100,
-      height: SCREEN_HEIGHT/4,
+      height: SCREEN_HEIGHT / 4,
     },
     pageButtonText: {
       fontSize: 14,

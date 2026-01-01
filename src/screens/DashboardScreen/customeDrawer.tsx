@@ -17,7 +17,6 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const styles = useMemo(() => Styles(theme), [theme]);
   const isDrawerOpen = props.state.history?.some(h => h.type === 'drawer');
   const [drawerKey, setDrawerKey] = useState(0);
-  const isDarkMode = useColorScheme() === 'dark';
 
   //const [styles, setStyles] = useState(Styles(theme));
 
@@ -83,7 +82,8 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           url: 'https://dev-store-by-nikhil.netlify.app/projects',
           failOnCancel: false,
         };
-      } else if (Platform.OS === 'ios') {
+      }
+       else if (Platform.OS === 'ios') {
         shareOptions = {
           title: 'Check out this app!',
           message: 'Hey, download this app:',

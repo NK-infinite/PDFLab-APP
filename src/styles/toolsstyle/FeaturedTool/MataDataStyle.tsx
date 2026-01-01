@@ -47,7 +47,7 @@ export const Styles = (Theme: ThemeType) => {
     textinput: {
       paddingHorizontal: 10,
       height: 50,
-      color:Theme.textPrimary || '#000',
+      color: Theme.textPrimary || '#000',
       borderWidth: 1,
       borderRadius: 15,
       borderColor: Theme.toolCardBorder,

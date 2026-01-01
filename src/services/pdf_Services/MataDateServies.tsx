@@ -55,10 +55,10 @@ export const editPDFMetadata = async (
 
         const pdfBytes = await pdfDoc.save();
         const pdfBase64Out = Buffer.from(pdfBytes).toString('base64');
-         const outputPath = RNFS.DownloadDirectoryPath + '/EditedPDF_' + Date.now() + '.pdf';
+        const outputPath = RNFS.DownloadDirectoryPath + '/EditedPDF_' + Date.now() + '.pdf';
 
         await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
-        return outputPath; 
+        return outputPath;
     } catch (err) {
         console.error('Edit Metadata Error:', err);
         Alert.alert('Error', 'Failed to edit metadata');

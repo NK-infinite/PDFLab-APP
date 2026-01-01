@@ -15,13 +15,13 @@ export const selectImages = async (): Promise<ImageFile[]> => {
       },
       (response) => {
         if (response.didCancel) {
-          resolve([]); 
+          resolve([]);
         } else if (response.errorCode) {
           reject(new Error(response.errorMessage || 'ImagePicker Error'));
         } else {
           const assets: Asset[] = response.assets || [];
           const files: ImageFile[] = assets
-            .filter(asset => asset.uri) 
+            .filter(asset => asset.uri)
             .map(asset => ({
               uri: asset.uri!,
               name: asset.fileName || 'image.jpg',

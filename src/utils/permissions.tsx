@@ -1,26 +1,26 @@
-import { PermissionsAndroid,} from 'react-native';
+import { PermissionsAndroid, } from 'react-native';
 
 export const requestStoragePermissions = async () => {
-  
-    try {
-        const results = await PermissionsAndroid.requestMultiple([
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      ]);
 
-      const writeResult = results['android.permission.WRITE_EXTERNAL_STORAGE'];
-      const readResult = results['android.permission.READ_EXTERNAL_STORAGE'];
+  try {
+    const results = await PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+    ]);
 
-      const allGranted = writeResult === PermissionsAndroid.RESULTS.GRANTED && readResult === PermissionsAndroid.RESULTS.GRANTED;
+    const writeResult = results['android.permission.WRITE_EXTERNAL_STORAGE'];
+    const readResult = results['android.permission.READ_EXTERNAL_STORAGE'];
 
-      if (allGranted) {
-        return true; // Access granted
-      }
+    const allGranted = writeResult === PermissionsAndroid.RESULTS.GRANTED && readResult === PermissionsAndroid.RESULTS.GRANTED;
 
-  
-    } catch (err) {
-      console.warn('Permission error:', err);
-      return false;
+    if (allGranted) {
+      return true; // Access granted
     }
-  
+
+
+  } catch (err) {
+    console.warn('Permission error:', err);
+    return false;
+  }
+
 };

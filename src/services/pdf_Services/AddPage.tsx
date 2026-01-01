@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import RNFS from 'react-native-fs';
 import { PDFDocument } from 'pdf-lib';
 import { Buffer } from 'buffer';
-import { addmyMetadata } from '../defultServices/myMeta';
+import { addmyMetadata } from '../AppServices/myMeta';
 
 export type PageType = 'blank' | 'existing';
 
@@ -44,22 +44,22 @@ export const addPageToPDF = async (
 
     const outputPath =
       `${RNFS.DownloadDirectoryPath}/AddPage_${Date.now()}_${fileName}`;
-      
-      await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
-      
-     const result = await addmyMetadata(
-      pdfDoc, 
+
+    await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
+
+    const result = await addmyMetadata(
+      pdfDoc,
       `AddPage_${fileName}`,
       'edit',
       outputPath,
       'Added page by PDfLab',
       ['addpage', 'edit']
     );
-      if (!result) throw new Error("Metadata failed");
-   
+    if (!result) throw new Error("Metadata failed");
+
     await RNFS.writeFile(outputPath, result.base64, 'base64');
     return outputPath;
-  
+
   } catch (error) {
     console.error('Add Page Service Error:', error);
     Alert.alert('Error', 'Failed to add page to PDF');

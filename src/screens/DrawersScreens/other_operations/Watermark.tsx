@@ -1,4 +1,4 @@
-import {  Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../../utils/themeManager';
@@ -131,7 +131,7 @@ const Watermark = ({ navigation }: any) => {
         setGenretdPDf(null);
     }
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
 
             <View style={style.container}>
                 <Header title='WaterMark' onPress={() => {
@@ -217,7 +217,6 @@ const Watermark = ({ navigation }: any) => {
                                         { label: '30', value: 30 },
                                         { label: '40', value: 40 },
                                         { label: '50', value: 50 },
-
                                     ],
                                     fontSize,
                                     setFontSize
@@ -279,7 +278,7 @@ const Watermark = ({ navigation }: any) => {
                     </>
                 )}
 
-                {SelectedFiles.length === 0  && (
+                {SelectedFiles.length === 0 && (
                     <EmptyPlaceholder
                         icon="file-pdf"
                         title="No PDFs selected yet"

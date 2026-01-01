@@ -31,7 +31,7 @@ export const Styles = (theme: ThemeType) => {
     cardContainer: {
       marginTop: 8,
     },
-    
+
     inputWrapper: {
       flex: 1,
     },

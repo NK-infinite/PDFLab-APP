@@ -95,12 +95,12 @@ const MergeScreen = ({ navigation }: any) => {
         )}
 
         {files.length === 0 && (
-            <EmptyPlaceholder
-              icon="file-pdf"
-              title="No files selected yet"
-              subtitle="Please select at least one file"
-            />          
-            )}
+          <EmptyPlaceholder
+            icon="file-pdf"
+            title="No files selected yet"
+            subtitle="Please select at least one file"
+          />
+        )}
       </View>
     </SafeAreaView>
   );

@@ -1,6 +1,6 @@
-import {  InteractionManager, Text,  View } from 'react-native'
+import { InteractionManager, Text, View } from 'react-native'
 import React, { useEffect, useMemo } from 'react'
-import Animated, {  FadeInDown, FadeInUp, } from 'react-native-reanimated'
+import Animated, { FadeInDown, FadeInUp, } from 'react-native-reanimated'
 import { Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useTheme } from '../../utils/themeManager'
@@ -9,34 +9,34 @@ import { Style } from '../../styles/introstyle/splashstyle'
 const Splashscreen = ({ navigation }: any) => {
   const { theme } = useTheme();
   const style = useMemo(() => Style(theme), [theme]);
- 
-// Splashscreen.tsx
-useEffect(() => {
-  const checkFirstLaunch = async () => {
-    const hasLaunched = await AsyncStorage.getItem('firtstime');
 
-    setTimeout(async () => {
-      if (!hasLaunched) {
-        navigation.replace('IntroScreen');
-      } else {
-        navigation.replace('Drawer');
-      }
-    }, 3000);
+  // Splashscreen.tsx
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      const hasLaunched = await AsyncStorage.getItem('firtstime');
 
-     InteractionManager.runAfterInteractions(() => {
-    preloadScreens();
-  });
+      setTimeout(async () => {
+        if (!hasLaunched) {
+          navigation.replace('IntroScreen');
+        } else {
+          navigation.replace('Drawer');
+        }
+      }, 3000);
+
+      InteractionManager.runAfterInteractions(() => {
+        preloadScreens();
+      });
+    };
+
+    checkFirstLaunch();
+  }, []);
+
+  const preloadScreens = () => {
+    import('../../navigation/navigations');
+    import('../DashboardScreen/HomeScreen');
+    import('../../navigation/drawernavigations');
+    import('../DashboardScreen/customeDrawer');
   };
-
-  checkFirstLaunch();
-}, []);
-
-const preloadScreens = () => {
-  import('../../navigation/navigations');
-  import('../DashboardScreen/HomeScreen');
-  import('../../navigation/drawernavigations');
-  import('../DashboardScreen/customeDrawer');
-};
 
   return (
     <View style={style.container}>

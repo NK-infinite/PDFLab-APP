@@ -18,7 +18,7 @@ import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 const MataData = ({ navigation }: any) => {
     const { theme } = useTheme()
     const styles = useMemo(() => Styles(theme), [theme]);
-   // const [styles, setStyles] = useState(Styles(theme));
+    // const [styles, setStyles] = useState(Styles(theme));
     const [files, setFiles] = useState<PDFFile[]>([]);
     const [metadataAction, setMetadataAction] = useState<'view' | 'edit' | 'remove'>('view');
     const [viewmatadata, setviewmatadata] = useState<any>()
@@ -104,7 +104,7 @@ const MataData = ({ navigation }: any) => {
 
                 setIsLoading(false);
                 Alert.alert('Success', `Metadata updated!\nSaved to:\n${editedPath}`,
-                    
+
                 );
                 break;
             case 'remove':
@@ -141,26 +141,26 @@ const MataData = ({ navigation }: any) => {
                     keyboardDismissMode="interactive">
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 20 }}>
-                            <SelectPDFButton
-                                onFilesSelected={handleFileSelect}
-                                buttonText="Select PDF"
-                                style={{
-                                    backgroundColor: theme.toolCard,
-                                    borderColor: theme.toolCardBorder
-                                }} />
-                     
-                            <ActionButton
-                                title={metadataAction === 'view'
-                                    ? 'View Metadata'
-                                    : metadataAction === 'edit'
-                                        ? 'Edit Metadata'
-                                        : 'Remove Metadata'}
-                                onPress={matadata}
-                                loading={isloading}
-                                style={{
-                                    backgroundColor: theme.toolCard,
-                                    borderColor: theme.toolCardBorder
-                                }} />
+                        <SelectPDFButton
+                            onFilesSelected={handleFileSelect}
+                            buttonText="Select PDF"
+                            style={{
+                                backgroundColor: theme.toolCard,
+                                borderColor: theme.toolCardBorder
+                            }} />
+
+                        <ActionButton
+                            title={metadataAction === 'view'
+                                ? 'View Metadata'
+                                : metadataAction === 'edit'
+                                    ? 'Edit Metadata'
+                                    : 'Remove Metadata'}
+                            onPress={matadata}
+                            loading={isloading}
+                            style={{
+                                backgroundColor: theme.toolCard,
+                                borderColor: theme.toolCardBorder
+                            }} />
                     </View>
 
                     {files && files.length > 0 &&
@@ -299,12 +299,12 @@ const MataData = ({ navigation }: any) => {
                     }
 
                     {files.length === 0 && (
-                       <EmptyPlaceholder
-                       icon="file-pdf"
-                       title="No files selected yet"
-                       subtitle="Please select at least one file"
-                       />
-                       )}
+                        <EmptyPlaceholder
+                            icon="file-pdf"
+                            title="No files selected yet"
+                            subtitle="Please select at least one file"
+                        />
+                    )}
 
                 </ScrollView>
             </View>

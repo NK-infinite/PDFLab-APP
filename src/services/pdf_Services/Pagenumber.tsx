@@ -3,7 +3,7 @@ import RNFS from 'react-native-fs';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Buffer } from 'buffer';
 import { Alert } from 'react-native';
-import { addmyMetadata } from '../defultServices/myMeta';
+import { addmyMetadata } from '../AppServices/myMeta';
 
 export type PageNumberOptions = {
     fromPage: number;
@@ -101,7 +101,7 @@ export const addNumbersToPDF = async (
         if (!result) throw new Error("Metadata failed");
 
         await RNFS.writeFile(outputPath, result.base64, 'base64');
-        
+
         return outputPath;
     } catch (err) {
         console.error('Add Page Number Error:', err);

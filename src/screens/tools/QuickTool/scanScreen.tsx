@@ -10,7 +10,7 @@ import { captureImage } from "../../../services/image_Services/cameraService";
 import ImageCard, { ImageFile } from "../../../components/card/ImageCard";
 import { imagesToPDF } from "../../../services/image_Services/imageToPdfService";
 import ClearButton from "../../../components/button/Clear_all";
-import Animated, {BounceInUp, FadeInLeft, FadeInRight } from "react-native-reanimated";
+import Animated, { BounceInUp, FadeInLeft, FadeInRight } from "react-native-reanimated";
 import PDFCard from "../../../components/card/PDFCard";
 import { openPDF } from "../../../utils/open_pdf";
 
@@ -24,14 +24,14 @@ type PDFImageFile = {
 const scanScreen = ({ navigation }: any) => {
 
   const { theme } = useTheme();
-   const styles = useMemo(() => Styles(theme), [theme]);
-   const [scannedImage, setScannedImage] = useState<string[]>([]);
-   const [isimage2pdf, setIsimage2pdf] = useState(false);
-   const [pdfFilePath, setPdfFilePath] = useState<string | null>(null);
-   const [loading, setLoading] = useState(false);
-   
-   //const [styles, setStyles] = useState(Styles(theme));
-   
+  const styles = useMemo(() => Styles(theme), [theme]);
+  const [scannedImage, setScannedImage] = useState<string[]>([]);
+  const [isimage2pdf, setIsimage2pdf] = useState(false);
+  const [pdfFilePath, setPdfFilePath] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  //const [styles, setStyles] = useState(Styles(theme));
+
   // useEffect(() => {
   //   if (__DEV__) {
   //     const interval = setInterval(() => setStyles(Styles(theme)), 200);
@@ -41,7 +41,7 @@ const scanScreen = ({ navigation }: any) => {
 
 
   const image2pdf = async () => {
- setLoading(true);
+    setLoading(true);
     if (scannedImage.length === 0) {
       Alert.alert('No images selected');
       setLoading(false);
@@ -120,10 +120,10 @@ const scanScreen = ({ navigation }: any) => {
           </Animated.View>
 
           <Animated.View entering={FadeInRight.duration(1000)}>
-            <TouchableOpacity onPress={image2pdf}  style={styles.button}>
-              { loading ? (
-               <ActivityIndicator size={15} color={theme.textPrimary} /> 
-              ):(
+            <TouchableOpacity onPress={image2pdf} style={styles.button}>
+              {loading ? (
+                <ActivityIndicator size={15} color={theme.textPrimary} />
+              ) : (
                 <Text style={styles.buttonText}>Make PDF</Text>
               )
               }

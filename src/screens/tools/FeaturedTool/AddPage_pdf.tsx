@@ -1,5 +1,5 @@
 import { Alert, Text, TextInput, View } from 'react-native'
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/FeaturedTool/Addpagestyle';
@@ -64,7 +64,7 @@ const AddPage_pdf = ({ navigation }: any) => {
       pageType, // 'blank' | 'existing'
       pageIndex
     );
-    
+
 
     if (resultPath) {
       setIsadding(false);
@@ -72,12 +72,12 @@ const AddPage_pdf = ({ navigation }: any) => {
         'Success',
         `Page added successfully!\nSaved to:\n${resultPath}`,
         [
-                        {
-                            text: 'Open PDF',
-                            onPress: () => openPDF('file://' + resultPath),
-                        },
-                        { text: 'OK' },
-                    ]
+          {
+            text: 'Open PDF',
+            onPress: () => openPDF('file://' + resultPath),
+          },
+          { text: 'OK' },
+        ]
       );
     }
   };

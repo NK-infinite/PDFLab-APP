@@ -101,7 +101,7 @@ const Rotatepdf = ({ navigation }: any) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <View style={styles.container}>
         <Headers title="Rotate PDF" onPress={() => { navigation.goBack() }} />
-        <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 20 }}>
 
           <View>
             <SelectPDFButton
@@ -129,7 +129,7 @@ const Rotatepdf = ({ navigation }: any) => {
         </View>
         {Files && Files.length > 0 &&
           <>
-            <View style={{ flex: 1, paddingTop: 15, justifyContent: 'space-evenly' }}>
+            <View style={{ flex: 1, paddingTop: 15, justifyContent: 'space-between' }}>
               <View>
                 <Text style={styles.sectionTitle}>Selected PDF</Text>
                 <View style={styles.pdfPreviewContainer}>

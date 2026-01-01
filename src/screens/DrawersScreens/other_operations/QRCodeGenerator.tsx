@@ -195,7 +195,7 @@ const QRCodeGenerator = ({ navigation }: any) => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
             <View style={styles.container}>
                 <Header title="QR Code Generator" onPress={() => navigation.goBack()} />
 
@@ -442,7 +442,7 @@ const QRCodeGenerator = ({ navigation }: any) => {
                     {qrType === 'event' && (
                         <>
                             <Text style={styles.sectionTitle}>Event Details</Text>
-                            
+
                             <TextInput
                                 placeholder="Title"
                                 placeholderTextColor={theme.textPrimary}

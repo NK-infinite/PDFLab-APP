@@ -4,7 +4,7 @@ import { PDFDocument } from 'pdf-lib';
 import { Buffer } from 'buffer';
 import FileViewer from 'react-native-file-viewer';
 import { PDFFile } from './pdfPickerService';
-import { addmyMetadata } from '../defultServices/myMeta';
+import { addmyMetadata } from '../AppServices/myMeta';
 
 export const openPDF = async (uri: string) => {
   try {

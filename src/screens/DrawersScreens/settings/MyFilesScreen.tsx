@@ -70,10 +70,9 @@ const MyFilesScreen = ({ navigation }: any) => {
     }, [isFocused]);
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
             <View style={styles.container}>
                 <Header title='My Files' onPress={() => navigation.goBack()} />
-
 
                 <View style={[styles.section, { flex: 1 }]}>
                     <Text style={styles.sectionTitle}>All Files By PDf LAb</Text>

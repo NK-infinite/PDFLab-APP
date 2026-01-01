@@ -1,11 +1,11 @@
 import RNFS from 'react-native-fs';
 import { PDFDocument } from 'pdf-lib';
 import { Buffer } from 'buffer';
-import { addmyMetadata } from '../defultServices/myMeta';
+import { addmyMetadata } from '../AppServices/myMeta';
 
 type DeletePageParams = {
     fileUri: string;
-    selectedPages: number[]; 
+    selectedPages: number[];
     fileName?: string;
 };
 

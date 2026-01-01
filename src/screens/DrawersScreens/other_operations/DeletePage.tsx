@@ -98,8 +98,6 @@ const DeletePage = ({ navigation }: any) => {
         }
     };
 
-
-
     const togglePageSelection = (pageIndex: number) => {
         setSelectedPages(prev =>
             prev.includes(pageIndex) ? prev.filter(p => p !== pageIndex) : [...prev, pageIndex]
@@ -111,8 +109,9 @@ const DeletePage = ({ navigation }: any) => {
         setPageList([]);
         setSelectedPages([]);
     }
+
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
             <View style={styles.container}>
                 <Header title='Delete page' onPress={() => navigation.goBack()} />
 

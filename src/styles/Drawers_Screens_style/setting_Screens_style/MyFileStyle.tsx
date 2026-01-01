@@ -1,15 +1,15 @@
 import { StyleSheet } from "react-native"
 import { ThemeType } from "../../../utils/themeManager";
 import { SCREEN_WIDTH } from "../../../utils/hightwidth";
-export const Style = (theme:ThemeType)=> {
-    return StyleSheet.create({
-        container: {
-            flex: 1,
-            padding: 20,
-            backgroundColor: theme.background
-        },
-         recentCard: {
-      width: SCREEN_WIDTH-60,
+export const Style = (theme: ThemeType) => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: theme.background
+    },
+    recentCard: {
+      width: SCREEN_WIDTH - 60,
       height: 70,
       backgroundColor: theme.drawerCard,
       borderRadius: 12,
@@ -43,7 +43,7 @@ export const Style = (theme:ThemeType)=> {
       fontWeight: '600',
       color: theme.textPrimary
     },
-      sectionTitle: {
+    sectionTitle: {
       fontSize: 16,
       fontWeight: '700',
       marginLeft: 16,
@@ -62,11 +62,11 @@ export const Style = (theme:ThemeType)=> {
     section: {
       paddingTop: 15,
     },
-      recentThumb: {
+    recentThumb: {
       width: 56,
       height: 56,
       borderRadius: 6,
       marginRight: 8
     },
-    })
+  })
 }

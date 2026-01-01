@@ -37,9 +37,9 @@ export const Style = (theme: ThemeType) => {
             alignItems: 'center',
             marginBottom: 30,
         },
-        downloadButton:{
-            flexDirection:'row',
-            justifyContent:'center',
+        downloadButton: {
+            flexDirection: 'row',
+            justifyContent: 'center',
             backgroundColor: theme.drawerCard,
             padding: 14,
             borderRadius: 10,

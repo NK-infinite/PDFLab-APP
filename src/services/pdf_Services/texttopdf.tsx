@@ -1,7 +1,7 @@
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import RNFS from 'react-native-fs';
 import { Buffer } from 'buffer';
-import { addmyMetadata } from '../defultServices/myMeta';
+import { addmyMetadata } from '../AppServices/myMeta';
 
 type CreatePdfParams = {
   text: string;
@@ -50,19 +50,19 @@ export const createPdfFromText = async ({
       Buffer.from(pdfBytes).toString('base64'),
       'base64'
     );
-     const result = await addmyMetadata(
-                pdfDoc,
-                `NumberedPDF_${Date.now()}.pdf`,
-                'edit',
-                path,
-                'Make pdf with text by PDFLab',
-                ['text', 'edit']
-              );
-              if (!result) throw new Error("Metadata failed");
-    
-              await RNFS.writeFile(path, result.base64, 'base64');
+    const result = await addmyMetadata(
+      pdfDoc,
+      `NumberedPDF_${Date.now()}.pdf`,
+      'edit',
+      path,
+      'Make pdf with text by PDFLab',
+      ['text', 'edit']
+    );
+    if (!result) throw new Error("Metadata failed");
 
-    return path; 
+    await RNFS.writeFile(path, result.base64, 'base64');
+
+    return path;
   } catch (error) {
     console.log('PDF Service Error:', error);
     throw error;

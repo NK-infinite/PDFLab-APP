@@ -1,5 +1,5 @@
 import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, {  useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Styles } from '../../../styles/toolsstyle/FeaturedTool/protect_pdfstyle'
 import { useTheme } from '../../../utils/themeManager';
 import SelectPDFButton from '../../../components/button/SelectPDF';

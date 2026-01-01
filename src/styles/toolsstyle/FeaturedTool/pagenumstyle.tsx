@@ -22,7 +22,7 @@ export const Styles = (theme: ThemeType) => {
             marginTop: 0,
 
             borderColor: theme.toolCardBorder,
-          //  backgroundColor: theme.toolCard
+            //  backgroundColor: theme.toolCard
         },
         positionGrid: {
             flexDirection: 'row',

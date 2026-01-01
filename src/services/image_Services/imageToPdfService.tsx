@@ -2,7 +2,7 @@ import { PDFDocument } from 'pdf-lib';
 import RNFS from 'react-native-fs';
 import { ImageFile } from '../image_Services/imagePickerService';
 import { Buffer } from 'buffer';
-import { addmyMetadata } from '../defultServices/myMeta';
+import { addmyMetadata } from '../AppServices/myMeta';
 
 export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.pdf'): Promise<string> => {
   if (images.length === 0) throw new Error('No images selected');
@@ -22,11 +22,11 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
       embeddedImage = await pdfDoc.embedJpg(imgBase64);
     }
 
-    const page = pdfDoc.addPage([595, 842]); 
+    const page = pdfDoc.addPage([595, 842]);
 
 
-    const pageWidth = 595; 
-    const pageHeight = 842; 
+    const pageWidth = 595;
+    const pageHeight = 842;
 
     const scale = Math.min(pageWidth / embeddedImage.width, pageHeight / embeddedImage.height);
 
@@ -59,5 +59,5 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
 
   await RNFS.writeFile(pdfPath, result.base64, 'base64');
 
-  return pdfPath; 
+  return pdfPath;
 };

@@ -45,15 +45,15 @@ export const Styles = (theme: ThemeType) => {
       marginTop: 16,
     },
     placeholder: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-placeholderText: {
-  fontSize: 16,
-  color: theme.textSecondary,
-  textAlign: 'center',
-  opacity: 0.7,
-},
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    placeholderText: {
+      fontSize: 16,
+      color: theme.textSecondary,
+      textAlign: 'center',
+      opacity: 0.7,
+    },
   });
 };

@@ -6,7 +6,7 @@ import { decode as atob } from "base-64";
 import { PDFFile } from "./pdfPickerService";
 import { Alert } from "react-native";
 import { openPDF } from "./pdfMergeService";
-import { addmyMetadata } from "../defultServices/myMeta";
+import { addmyMetadata } from "../AppServices/myMeta";
 
 export interface SplitOptions {
   files: PDFFile[];

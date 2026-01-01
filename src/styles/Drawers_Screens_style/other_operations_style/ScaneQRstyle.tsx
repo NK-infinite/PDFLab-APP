@@ -27,14 +27,15 @@ export const Style = (theme: ThemeType) => {
             color: theme.textPrimary,
             fontWeight: '600',
         },
-        openScanr:{  alignItems: 'center', 
-            justifyContent: 'center' ,
-            borderWidth:1 ,
-             borderColor: theme.drawerCardBorder,
-              backgroundColor: theme.drawerCard ,
-              borderRadius:20 , 
-              width:SCREEN_WIDTH /2 ,
-             height:SCREEN_HEIGHT /5  
-            }
+        openScanr: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderWidth: 1,
+            borderColor: theme.drawerCardBorder,
+            backgroundColor: theme.drawerCard,
+            borderRadius: 20,
+            width: SCREEN_WIDTH / 2,
+            height: SCREEN_HEIGHT / 5
+        }
     })
 }
