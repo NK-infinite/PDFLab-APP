@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, FlatList, } from 'react-native';
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/QuickTool/mergestyle';
-import { mergePDFs, openPDF } from '../../../services/pdf_Services/pdfMergeService';
+import { mergePDFs } from '../../../services/pdf_Services/pdfMergeService';
 import SelectPDFButton from '../../../components/button/SelectPDF';
 import ClearButton from '../../../components/button/Clear_all';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,7 +10,7 @@ import PDFCard from '../../../components/card/PDFCard';
 import ActionButton from '../../../components/button/ActionButton';
 import Header from '../../../components/headers/header';
 import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
-
+import { openPDF } from '../../../utils/open_pdf';
 interface PDFFile {
   name: string;
   uri: string;

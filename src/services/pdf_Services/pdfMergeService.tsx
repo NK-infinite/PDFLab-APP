@@ -2,17 +2,9 @@ import { Alert } from 'react-native';
 import RNFS from 'react-native-fs';
 import { PDFDocument } from 'pdf-lib';
 import { Buffer } from 'buffer';
-import FileViewer from 'react-native-file-viewer';
 import { PDFFile } from './pdfPickerService';
 import { addmyMetadata } from '../AppPersonalServices/myMeta';
 
-export const openPDF = async (uri: string) => {
-  try {
-    await FileViewer.open(uri);
-  } catch (err) {
-    console.log("Error opening PDF:", err);
-  }
-};
 
 export const mergePDFs = async (files: PDFFile[]): Promise<PDFFile | null> => {
   if (files.length < 2) {
