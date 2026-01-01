@@ -2,7 +2,7 @@ import { PDFDocument } from 'pdf-lib';
 import RNFS from 'react-native-fs';
 import { ImageFile } from '../image_Services/imagePickerService';
 import { Buffer } from 'buffer';
-import { addmyMetadata } from '../AppServices/myMeta';
+import { addmyMetadata } from '../AppPersonalServices/myMeta';
 
 export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.pdf'): Promise<string> => {
   if (images.length === 0) throw new Error('No images selected');

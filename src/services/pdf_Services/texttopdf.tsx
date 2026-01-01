@@ -1,7 +1,7 @@
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import RNFS from 'react-native-fs';
 import { Buffer } from 'buffer';
-import { addmyMetadata } from '../AppServices/myMeta';
+import { addmyMetadata } from '../AppPersonalServices/myMeta';
 
 type CreatePdfParams = {
   text: string;

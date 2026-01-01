@@ -1,7 +1,7 @@
 import RNFS from 'react-native-fs';
 import { PDFDocument, degrees } from 'pdf-lib';
 import { Buffer } from 'buffer';
-import { addmyMetadata } from '../AppServices/myMeta';
+import { addmyMetadata } from '../AppPersonalServices/myMeta';
 
 export const rotatePdfPages = async (
     file: { uri: string, name: string },

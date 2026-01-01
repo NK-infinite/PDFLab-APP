@@ -1,6 +1,6 @@
 import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib';
 import RNFS from 'react-native-fs';
-import { addmyMetadata } from '../AppServices/myMeta';
+import { addmyMetadata } from '../AppPersonalServices/myMeta';
 
 type WatermarkOptions = {
   watermarkText: string;

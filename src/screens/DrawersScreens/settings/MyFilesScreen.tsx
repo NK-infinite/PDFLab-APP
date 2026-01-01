@@ -1,4 +1,4 @@
-import { FlatList, Image, Text, TouchableOpacity, useColorScheme, useWindowDimensions, View } from 'react-native'
+import { FlatList, Image, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Style } from '../../../styles/Drawers_Screens_style/setting_Screens_style/MyFileStyle';
@@ -9,15 +9,17 @@ import Animated, { FadeInRight } from 'react-native-reanimated';
 import { openPDF } from '../../../utils/open_pdf';
 import { useIsFocused } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+
 const MyFilesScreen = ({ navigation }: any) => {
 
     const { theme } = useTheme();
     const styles = useMemo(() => Style(theme), [theme]);
-    //const [styles, setStyles] = useState(Style(theme))
     const [recentFiles, setRecentFiles] = useState<any[]>([]);
     const isFocused = useIsFocused();
     const isDarkMode = useColorScheme() === 'dark';
 
+    //const [styles, setStyles] = useState(Style(theme))
+    
     // useEffect(() => {
     //     // Development-only interval to refresh styles
     //     if (__DEV__) {
@@ -46,8 +48,8 @@ const MyFilesScreen = ({ navigation }: any) => {
                 </View>
             </TouchableOpacity>
         </Animated.View>
-
     );
+    
     const formatSizeMB = (bytes: number) => {
         const mb = bytes / (1024 * 1024);
         return `${mb.toFixed(1)} MB`;

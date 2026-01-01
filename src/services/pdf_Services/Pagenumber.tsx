@@ -3,7 +3,7 @@ import RNFS from 'react-native-fs';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Buffer } from 'buffer';
 import { Alert } from 'react-native';
-import { addmyMetadata } from '../AppServices/myMeta';
+import { addmyMetadata } from '../AppPersonalServices/myMeta';
 
 export type PageNumberOptions = {
     fromPage: number;
