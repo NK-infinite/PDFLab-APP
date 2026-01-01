@@ -2,27 +2,27 @@ import { StyleSheet } from "react-native"
 import { ThemeType } from "../../../utils/themeManager"
 import { SCREEN_HEIGHT } from "../../../utils/hightwidth"
 
-export const Styles = (theme:ThemeType)=> {
-return StyleSheet.create({
-     container: {
-            flex: 1,
-            padding: 20,
-            backgroundColor: theme.background,
-        },
+export const Styles = (theme: ThemeType) => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: theme.background,
+    },
 
-        sectionTitle: {
-            fontSize: 16,
-            fontWeight: '700',
-            marginLeft: 16,
-            marginBottom: 12,
-            color: theme.sectionTitle,
-        },
-        pdfPreviewContainer: {
-            marginTop: 8,
-            justifyContent: 'space-between',
-        },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      marginLeft: 16,
+      marginBottom: 12,
+      color: theme.sectionTitle,
+    },
+    pdfPreviewContainer: {
+      marginTop: 8,
+      justifyContent: 'space-between',
+    },
 
- pagesScrollContainer: {
+    pagesScrollContainer: {
       paddingRight: 16,
       paddingBottom: 10,
     },
@@ -35,7 +35,7 @@ return StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       minWidth: 100,
-      height: SCREEN_HEIGHT/4,
+      height: SCREEN_HEIGHT / 4,
     },
     pageButtonText: {
       fontSize: 14,
@@ -82,7 +82,7 @@ return StyleSheet.create({
       marginBottom: 15,
     },
 
-          
+
     selectedInfoTitle: {
       fontSize: 14,
       fontWeight: '600',
@@ -115,5 +115,5 @@ return StyleSheet.create({
       textAlign: 'center',
       lineHeight: 20,
     },
-}) 
+  })
 }

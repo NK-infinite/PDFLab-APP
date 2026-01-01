@@ -27,7 +27,7 @@ const HomeScreen = () => {
     const navigation = useNavigation<any>();
     const isFocused = useIsFocused();
     const drawerStatus = useDrawerStatus();
-    const { width, height } = useWindowDimensions();
+    const { width, } = useWindowDimensions();
     const isFolded = width < 600;
     const [recentFiles, setRecentFiles] = useState<any[]>([]);
 
@@ -56,9 +56,6 @@ const HomeScreen = () => {
         transform: [{ rotate: `${Animation.value}deg` }]
     }));
 
-    const pdfstyle = useAnimatedStyle(() => ({
-        transform: [{ translateX: -Animation2.value * 150 }],
-    }));
 
     // useEffect(() => {
     //     // Development-only interval to refresh styles

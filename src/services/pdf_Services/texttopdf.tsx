@@ -62,7 +62,7 @@ export const createPdfFromText = async ({
     
               await RNFS.writeFile(path, result.base64, 'base64');
 
-    return path; // important
+    return path; 
   } catch (error) {
     console.log('PDF Service Error:', error);
     throw error;

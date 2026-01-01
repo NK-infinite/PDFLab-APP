@@ -59,5 +59,5 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
 
   await RNFS.writeFile(pdfPath, result.base64, 'base64');
 
-  return pdfPath; // return PDF file path
+  return pdfPath; 
 };

@@ -11,7 +11,7 @@ export const captureImage = (): Promise<ImageFile[]> => {
     launchCamera(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled camera');
-        resolve([]); // user ne cancel kiya
+        resolve([]); 
       } else if (response.errorCode) {
         console.log('Camera error: ', response.errorMessage);
         reject(new Error(response.errorMessage || 'Camera error'));

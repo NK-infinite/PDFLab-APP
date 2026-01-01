@@ -22,7 +22,6 @@ const MergeScreen = ({ navigation }: any) => {
   const styles = useMemo(() => Styles(theme), [theme]);
 
   const [files, setFiles] = useState<PDFFile[]>([]);
-  const [isPicking, setIsPicking] = useState(false);
   const [isMerging, setIsMerging] = useState(false);
 
   // const [styles, setStyles] = useState(Styles(theme));

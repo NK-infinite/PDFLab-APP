@@ -1,4 +1,4 @@
-import { FlatList, Image,  Text, TouchableOpacity, useColorScheme, useWindowDimensions, View } from 'react-native'
+import { FlatList, Image, Text, TouchableOpacity, useColorScheme, useWindowDimensions, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Style } from '../../../styles/Drawers_Screens_style/setting_Screens_style/MyFileStyle';
@@ -16,7 +16,6 @@ const MyFilesScreen = ({ navigation }: any) => {
     //const [styles, setStyles] = useState(Style(theme))
     const [recentFiles, setRecentFiles] = useState<any[]>([]);
     const { width, height } = useWindowDimensions();
-    const isFolded = width < 600;
     const isFocused = useIsFocused();
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -31,8 +30,6 @@ const MyFilesScreen = ({ navigation }: any) => {
     // }, [theme]);
 
     const renderRecent = ({ item }: any) => (
-
-
         <Animated.View
             entering={FadeInRight.springify().damping(30).stiffness(10).duration(1000)}>
             <TouchableOpacity

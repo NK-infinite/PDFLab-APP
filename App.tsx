@@ -7,7 +7,7 @@ import { useTheme } from './src/utils/themeManager';
 
 
 function App() {
- const { theme, isDark } = useTheme();  
+ const {  isDark } = useTheme();  
 
  
  return (

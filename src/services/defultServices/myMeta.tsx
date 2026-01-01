@@ -24,7 +24,7 @@ export type PdfItem = {
 };
 
 export const addmyMetadata = async (
-  pdfDoc: PDFDocument, // Path ki jagah object lo
+  pdfDoc: PDFDocument,
   pdfName: string,
   type: 'text' | 'image' | 'edit',
   path: string,
@@ -41,7 +41,7 @@ export const addmyMetadata = async (
     pdfDoc.setSubject(description || '');
     pdfDoc.setModificationDate(new Date());
 
-    // 2. Save karke Bytes aur Base64 nikal lo
+    // 2. 
     const pdfBytes = await pdfDoc.save();
     const pdfBase64 = Buffer.from(pdfBytes).toString('base64');
 
