@@ -14,7 +14,6 @@ import Animated, { BounceInLeft, BounceInRight, } from 'react-native-reanimated'
 import { Styles } from '../../../styles/toolsstyle/QuickTool/splitstyle';
 import { PDFFile } from '../../../services/pdf_Services/pdfPickerService';
 import SelectPDFButton from '../../../components/button/SelectPDF';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import ClearButton from '../../../components/button/Clear_all';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SCREEN_WIDTH } from '../../../utils/hightwidth';
@@ -56,12 +55,12 @@ const SplitScreen = ({ navigation, route }: any) => {
             Alert.alert("No File", "Please select a PDF file first");
             return;
         };
-        
+
         if (!startsplit && !endsplit && !splitSize) {
             Alert.alert("Error", "Please fill Split Size or Start Page or End Pag");
         }
 
-        
+
 
         setIsspliting(true);
 
@@ -117,16 +116,16 @@ const SplitScreen = ({ navigation, route }: any) => {
 
                         {/* Action Buttons */}
                         <View style={styles.actionButtonsContainer}>
-                                <SelectPDFButton
-                                    onFilesSelected={(selected) => setFiles(selected)}
-                                    buttonText={`Select PDF`}
-                                />
-                     
-                                <ActionButton
-                                    title="Split PDF"
-                                    onPress={splitPDFs}
-                                    loading={isspliting}
-                                />
+                            <SelectPDFButton
+                                onFilesSelected={(selected) => setFiles(selected)}
+                                buttonText={`Select PDF`}
+                            />
+
+                            <ActionButton
+                                title="Split PDF"
+                                onPress={splitPDFs}
+                                loading={isspliting}
+                            />
 
                         </View>
 
@@ -283,11 +282,11 @@ const SplitScreen = ({ navigation, route }: any) => {
                                 </View>
                             </View>
                         ) : (
-                           <EmptyPlaceholder
-                        icon="file-pdf"
-                        title="No files selected yet"
-                        subtitle="Please select at least one file"
-                      />
+                            <EmptyPlaceholder
+                                icon="file-pdf"
+                                title="No files selected yet"
+                                subtitle="Please select at least one file"
+                            />
                         )}
                     </ScrollView>
                 </View>

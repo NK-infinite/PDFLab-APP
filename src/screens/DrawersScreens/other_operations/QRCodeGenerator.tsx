@@ -442,6 +442,7 @@ const QRCodeGenerator = ({ navigation }: any) => {
                     {qrType === 'event' && (
                         <>
                             <Text style={styles.sectionTitle}>Event Details</Text>
+                            
                             <TextInput
                                 placeholder="Title"
                                 placeholderTextColor={theme.textPrimary}
@@ -491,7 +492,6 @@ const QRCodeGenerator = ({ navigation }: any) => {
                                 onChangeText={setEventEndTime}
                                 style={styles.inputBox} />
 
-
                             {/* Generate Button */}
                             <TouchableOpacity onPress={generateQR} style={[styles.button, { marginTop: 20 }]}>
                                 <Text style={{ color: theme.textPrimary, fontWeight: '600' }}>Generate QR</Text>
@@ -530,12 +530,6 @@ const QRCodeGenerator = ({ navigation }: any) => {
                             ) : null}
                         </>
                     )}
-
-
-
-
-
-
 
                 </ScrollView>
             </View>

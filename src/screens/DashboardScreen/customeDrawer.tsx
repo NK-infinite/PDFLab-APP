@@ -2,7 +2,7 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity, Image, useColorScheme } from 'react-native';
+import { View, Text, TouchableOpacity,  useColorScheme } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { DrawerItem } from '../../components/drawers/drawer';
 import { useTheme } from '../../utils/themeManager';
@@ -14,22 +14,22 @@ import { Platform } from 'react-native';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const { theme } = useTheme();
- // const styles = useMemo(() => Styles(theme), [theme]);
+  const styles = useMemo(() => Styles(theme), [theme]);
   const isDrawerOpen = props.state.history?.some(h => h.type === 'drawer');
   const [drawerKey, setDrawerKey] = useState(0);
   const isDarkMode = useColorScheme() === 'dark';
 
-  const [styles, setStyles] = useState(Styles(theme));
+  //const [styles, setStyles] = useState(Styles(theme));
 
-  useEffect(() => {
-    // Development-only interval to refresh styles
-    if (__DEV__) {
-      const interval = setInterval(() => {
-        setStyles(Styles(theme));
-      }, 200); // 200ms, adjust if needed
-      return () => clearInterval(interval);
-    }
-  }, [theme]);
+  // useEffect(() => {
+  //   // Development-only interval to refresh styles
+  //   if (__DEV__) {
+  //     const interval = setInterval(() => {
+  //       setStyles(Styles(theme));
+  //     }, 200); // 200ms, adjust if needed
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [theme]);
 
   useEffect(() => {
     if (isDrawerOpen) {
@@ -77,19 +77,17 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       let shareOptions = {};
 
       if (Platform.OS === 'android') {
-        // Android: share APK ya Play Store link
         shareOptions = {
           title: 'Check out this app!',
           message: 'Hey, download this app:',
-          url: 'https://dev-store-by-nikhil.netlify.app/projects', // replace with your Play Store link
+          url: 'https://dev-store-by-nikhil.netlify.app/projects',
           failOnCancel: false,
         };
       } else if (Platform.OS === 'ios') {
-        // iOS: share App Store link
         shareOptions = {
           title: 'Check out this app!',
           message: 'Hey, download this app:',
-          url: 'https://dev-store-by-nikhil.netlify.app/projects', // replace with App Store link
+          url: 'https://dev-store-by-nikhil.netlify.app/projects',
           failOnCancel: false,
         };
       }
@@ -101,7 +99,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container ]}>
       <Animated.View
         style={headerStyle}>
         <View style={styles.header}>
@@ -160,7 +158,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <DrawerItem
             iconName="trash"
             label="Delete Pages"
-            onPress={() => props.navigation.navigate('Comparison')}
+            onPress={() => props.navigation.navigate('DeletePage')}
           />
         </Animated.View>
 

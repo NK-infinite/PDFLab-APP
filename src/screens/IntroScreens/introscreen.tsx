@@ -1,9 +1,9 @@
-import { Text, View, Image, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import { Text, View, Image, TouchableOpacity, } from 'react-native';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../utils/themeManager';
 import { Styles } from '../../styles/introstyle/introstyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Animated, { BounceInDown, BounceInLeft, BounceInRight, FadeInDown, FadeInLeft, FadeInRight } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInLeft, FadeInRight } from 'react-native-reanimated';
 
 const IntroScreen = ({ navigation }: any) => {
   const { theme } = useTheme();

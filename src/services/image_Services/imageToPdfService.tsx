@@ -22,19 +22,17 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
       embeddedImage = await pdfDoc.embedJpg(imgBase64);
     }
 
-    const page = pdfDoc.addPage([595, 842]); // A4 size
+    const page = pdfDoc.addPage([595, 842]); 
 
 
-    const pageWidth = 595; // A4 width in points
-    const pageHeight = 842; // A4 height in points
+    const pageWidth = 595; 
+    const pageHeight = 842; 
 
-    // Calculate scale to fit the page
     const scale = Math.min(pageWidth / embeddedImage.width, pageHeight / embeddedImage.height);
 
     const width = embeddedImage.width * scale;
     const height = embeddedImage.height * scale;
 
-    // Center the image on page
     const x = (pageWidth - width) / 2;
     const y = (pageHeight - height) / 2;
 
@@ -53,8 +51,9 @@ export const imagesToPDF = async (images: ImageFile[], outputFileName = 'output.
     pdfDoc,
     `NumberedPDF_${Date.now()}.pdf`,
     'edit',
+    pdfPath,
     'Image to PDf Converter',
-    ['imagetopdf', 'edit', ]
+    ['imagetopdf', 'edit',]
   );
   if (!result) throw new Error("Metadata failed");
 

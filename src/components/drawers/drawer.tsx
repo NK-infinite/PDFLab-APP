@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, useColorScheme, } from "react-native";
+import { Text, TouchableOpacity, useColorScheme, } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import { StyleSheet } from "react-native";
 import { useTheme } from "../../utils/themeManager";

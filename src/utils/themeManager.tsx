@@ -1,39 +1,37 @@
-// utils/themeManager.js
 import { useColorScheme } from 'react-native';
-
 
 export const COLORS = {
   light: {
     background: 'white',
     header: '#f4f4f4ff',
     quickCard: '#ffcccc',
-    quickCardBorder: '#ffcccc',      // light pink
+    quickCardBorder: '#ffcccc',   
     toolCard: '#cce5ff',
-    toolCardBorder: '#cce5ff',       // blue
-    recentCard: '#b6f3c4ff',      // light green
+    toolCardBorder: '#cce5ff',      
+    recentCard: '#b6f3c4ff',      
     recentCardBorder: '#d4edda',
     drawerCard: '#89fdf3ff',
     drawerCardBorder: '#89fdf3ff',
     textPrimary: '#333333',
     textSecondary: '#555555',
-    sectionTitle: '#1a73e8',    // blue
+    sectionTitle: '#1a73e8',   
     fileCardBg: '#f4f4f4ff',
     shadowColor: '#000000',
   },
   dark: {
     background: '#1e1e1e',
-    header: '#3a3a3aff',//3a3a3aff
-    quickCard: '#5c3333ff',    // red
+    header: '#3a3a3aff',
+    quickCard: '#5c3333ff', 
     quickCardBorder: '#ff0000',
     toolCard: '#314860ff',
-    toolCardBorder: '#0000ff',       // blue
-    recentCard: '#4a8a60ff',      // green
+    toolCardBorder: '#0000ff',       
+    recentCard: '#4a8a60ff',    
     recentCardBorder: '#00ff00ff',
     drawerCard: '#2c5551ff',
     drawerCardBorder: '#00ffeaff',
     textPrimary: '#ffffff',
     textSecondary: '#cccccc',
-    sectionTitle: '#ffcc00',    // yellow
+    sectionTitle: '#ffcc00',    
     fileCardBg: '#3a3a3aff',
     shadowColor: '#ffffffff',
   }

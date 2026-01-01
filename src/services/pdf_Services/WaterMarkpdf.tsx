@@ -74,6 +74,7 @@ export const Watermarkpdf = async (
       pdfDoc,
       `NumberedPDF_${Date.now()}.pdf`,
       'edit',
+      outputPath,
       'Watermark pdf add by PDFLab',
       ['watermark', 'edit']
     );

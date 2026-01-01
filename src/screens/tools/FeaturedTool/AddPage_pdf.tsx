@@ -71,7 +71,14 @@ const AddPage_pdf = ({ navigation }: any) => {
       setIsadding(false);
       Alert.alert(
         'Success',
-        `Page added successfully!\nSaved to:\n${resultPath}`
+        `Page added successfully!\nSaved to:\n${resultPath}`,
+        [
+                        {
+                            text: 'Open PDF',
+                            onPress: () => openPDF('file://' + resultPath),
+                        },
+                        { text: 'OK' },
+                    ]
       );
     }
   };

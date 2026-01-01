@@ -1,5 +1,5 @@
 import { Alert, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/FeaturedTool/MataDataStyle';
@@ -17,8 +17,8 @@ import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 const MataData = ({ navigation }: any) => {
     const { theme } = useTheme()
-    //const styles = Styles(theme)
-    const [styles, setStyles] = useState(Styles(theme));
+    const styles = useMemo(() => Styles(theme), [theme]);
+   // const [styles, setStyles] = useState(Styles(theme));
     const [files, setFiles] = useState<PDFFile[]>([]);
     const [metadataAction, setMetadataAction] = useState<'view' | 'edit' | 'remove'>('view');
     const [viewmatadata, setviewmatadata] = useState<any>()
@@ -32,16 +32,16 @@ const MataData = ({ navigation }: any) => {
 
     //   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        // Development-only interval to refresh styles
-        if (__DEV__) {
-            const interval = setInterval(() => {
-                setStyles(Styles(theme));
-            }, 200); // 200ms, adjust if needed
-            return () => clearInterval(interval);
-        }
-    }, [theme]);
+    //     // Development-only interval to refresh styles
+    //     if (__DEV__) {
+    //         const interval = setInterval(() => {
+    //             setStyles(Styles(theme));
+    //         }, 200); // 200ms, adjust if needed
+    //         return () => clearInterval(interval);
+    //     }
+    // }, [theme]);
 
     const formatDate = (date: any) => {
         if (!date) return 'No data';
@@ -103,7 +103,9 @@ const MataData = ({ navigation }: any) => {
                 });
 
                 setIsLoading(false);
-                Alert.alert('Success', `Metadata updated!\nSaved to:\n${editedPath}`);
+                Alert.alert('Success', `Metadata updated!\nSaved to:\n${editedPath}`,
+                    
+                );
                 break;
             case 'remove':
                 const cleanPath = await removePDFMetadata(fileUri,);

@@ -10,7 +10,7 @@ import { captureImage } from "../../../services/image_Services/cameraService";
 import ImageCard, { ImageFile } from "../../../components/card/ImageCard";
 import { imagesToPDF } from "../../../services/image_Services/imageToPdfService";
 import ClearButton from "../../../components/button/Clear_all";
-import Animated, { BounceIn, BounceInLeft, BounceInRight, BounceInUp, FadeInLeft, FadeInRight } from "react-native-reanimated";
+import Animated, {BounceInUp, FadeInLeft, FadeInRight } from "react-native-reanimated";
 import PDFCard from "../../../components/card/PDFCard";
 import { openPDF } from "../../../utils/open_pdf";
 

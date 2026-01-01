@@ -48,6 +48,7 @@ export const mergePDFs = async (files: PDFFile[]): Promise<PDFFile | null> => {
       mergedPdf,
       `NumberedPDF_${Date.now()}.pdf`,
       'edit',
+      savePath,
       'page Numbere add by PDFLab',
       ['merge', 'edit']
     );

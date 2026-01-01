@@ -9,7 +9,6 @@ import ActionButton from '../../../components/button/ActionButton';
 import PDFCard from '../../../components/card/PDFCard';
 import { openPDF } from '../../../utils/open_pdf';
 import ClearButton from '../../../components/button/Clear_all';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import { compressPDF } from '../../../services/pdf_Services/pdfCompressService';
 import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 

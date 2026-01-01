@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, FlatList, } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/QuickTool/mergestyle';
 import { mergePDFs, openPDF } from '../../../services/pdf_Services/pdfMergeService';

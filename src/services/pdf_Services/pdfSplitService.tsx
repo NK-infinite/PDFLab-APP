@@ -77,6 +77,7 @@ export const splitPDFsService = async ({
             mergedPdf,
             `NumberedPDF_${Date.now()}.pdf`,
             'edit',
+            path,
             'split pdf by PDFLab',
             ['split', 'edit']
           );
@@ -111,6 +112,7 @@ export const splitPDFsService = async ({
               pdfDoc,
               `NumberedPDF_${Date.now()}.pdf`,
               'edit',
+              path,
               'page Numbere add by tool',
               ['split', 'edit']
             );

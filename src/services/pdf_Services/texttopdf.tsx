@@ -54,6 +54,7 @@ export const createPdfFromText = async ({
                 pdfDoc,
                 `NumberedPDF_${Date.now()}.pdf`,
                 'edit',
+                path,
                 'Make pdf with text by PDFLab',
                 ['text', 'edit']
               );
@@ -61,7 +62,7 @@ export const createPdfFromText = async ({
     
               await RNFS.writeFile(path, result.base64, 'base64');
 
-    return path; // ✅ important
+    return path; // important
   } catch (error) {
     console.log('PDF Service Error:', error);
     throw error;

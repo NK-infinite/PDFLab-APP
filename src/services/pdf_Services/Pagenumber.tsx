@@ -76,7 +76,6 @@ export const addNumbersToPDF = async (
                     break;
             }
 
-
             page.drawText(`${firstNumber + i - start}`, {
                 x,
                 y,
@@ -90,10 +89,12 @@ export const addNumbersToPDF = async (
         const outputPath = RNFS.DownloadDirectoryPath + '/NumberedPDF_' + Date.now() + '.pdf';
 
         await RNFS.writeFile(outputPath, pdfBase64Out, 'base64');
+
         const result = await addmyMetadata(
             pdfDoc,
             `NumberedPDF_${Date.now()}.pdf`,
             'edit',
+            outputPath,
             'page Numbere add by PDFLab',
             ['addNumber', 'edit']
         );

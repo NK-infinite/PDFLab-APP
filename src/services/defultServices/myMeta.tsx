@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import RNFS from 'react-native-fs';
 import { PDFDocument } from 'pdf-lib';
 import DeviceInfo from 'react-native-device-info';
 import { Buffer } from 'buffer';
@@ -27,7 +26,8 @@ export type PdfItem = {
 export const addmyMetadata = async (
   pdfDoc: PDFDocument, // Path ki jagah object lo
   pdfName: string,
-  type: 'text' | 'image' | 'edit'  ,
+  type: 'text' | 'image' | 'edit',
+  path: string,
   description?: string,
   tags?: string[]
 ): Promise<{ base64: string; meta: PdfItem } | null> => {
@@ -48,14 +48,14 @@ export const addmyMetadata = async (
     const pdfMeta: PdfItem = {
       id: Date.now().toString(),
       name: pdfName || 'Untitled',
-      path: '',
+      path: path,
       type,
       createdAt: Date.now(),
       creator: 'PDFLab',
       developer: 'Nikhil',
       appVersion: DeviceInfo.getVersion() || '1.0.0',
       deviceInfo: `${DeviceInfo.getBrand()} ${DeviceInfo.getSystemVersion()}`,
-      size: pdfBytes.length, 
+      size: pdfBytes.length,
       lastModified: Date.now(),
       pages: pdfDoc.getPageCount(),
       description: description || '',

@@ -1,11 +1,10 @@
 import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, {  useMemo, useState } from 'react'
 import { Styles } from '../../../styles/toolsstyle/FeaturedTool/protect_pdfstyle'
 import { useTheme } from '../../../utils/themeManager';
 import SelectPDFButton from '../../../components/button/SelectPDF';
 import ActionButton from '../../../components/button/ActionButton';
 import Header from '../../../components/headers/header';
-import Animated, { BounceInLeft, BounceInRight } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PDFCard, { PDFFile } from '../../../components/card/PDFCard';
 import { openPDF } from '../../../utils/open_pdf';
@@ -23,7 +22,7 @@ const protect_pdf = ({ navigation }: any) => {
     const [password, setPassword] = useState('');
     const [confirmpassword, setconfirmpassword] = useState('');
     const [isloading, setIsLoading] = useState(false);
-    
+
     //const [style, setStyles] = useState(Styles(theme));
 
     // useEffect(() => {
@@ -66,14 +65,22 @@ const protect_pdf = ({ navigation }: any) => {
         const protectedPath = await protectPDFFile(Files[0].uri, password);
         if (protectedPath) {
             setIsLoading(false);
-            Alert.alert('Success', `1PDF Protected! Saved to:\n${protectedPath}`);
+            Alert.alert('Success', `1PDF Protected! Saved to:\n${protectedPath}`,
+                [
+                    {
+                        text: 'Open PDF',
+                        onPress: () => openPDF('file://' + protectedPath),
+                    },
+                    { text: 'OK' },
+                ]
+            );
         }
     }
 
     return (
         <SafeAreaView style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
             <Header title="Protect PDF" onPress={() => navigation.goBack()} />
-                
+
             <ScrollView
                 contentContainerStyle={{
                     flexGrow: 1,
@@ -85,21 +92,21 @@ const protect_pdf = ({ navigation }: any) => {
                 <View style={style.container}>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
-                            <SelectPDFButton
-                                onFilesSelected={handleFileSelect}
-                                buttonText="Select PDF"
-                                style={{
-                                    backgroundColor: theme.toolCard,
-                                    borderColor: theme.toolCardBorder
-                                }} />
-                     
-                            <ActionButton title="Protect PDF"
-                                onPress={Prtectpdf}
-                                loading={isloading}
-                                style={{
-                                    backgroundColor: theme.toolCard,
-                                    borderColor: theme.toolCardBorder
-                                }} />
+                        <SelectPDFButton
+                            onFilesSelected={handleFileSelect}
+                            buttonText="Select PDF"
+                            style={{
+                                backgroundColor: theme.toolCard,
+                                borderColor: theme.toolCardBorder
+                            }} />
+
+                        <ActionButton title="Protect PDF"
+                            onPress={Prtectpdf}
+                            loading={isloading}
+                            style={{
+                                backgroundColor: theme.toolCard,
+                                borderColor: theme.toolCardBorder
+                            }} />
                     </View>
 
                     {(Files.length > 0) && (
@@ -168,13 +175,13 @@ const protect_pdf = ({ navigation }: any) => {
                             </View>
                         </>
                     )}
-                    
+
                     {Files.length === 0 && (
-                      <EmptyPlaceholder
-                        icon="file-pdf"
-                        title="No files selected yet"
-                        subtitle="Please select at least one file"
-                      />
+                        <EmptyPlaceholder
+                            icon="file-pdf"
+                            title="No files selected yet"
+                            subtitle="Please select at least one file"
+                        />
                     )}
 
                 </View>

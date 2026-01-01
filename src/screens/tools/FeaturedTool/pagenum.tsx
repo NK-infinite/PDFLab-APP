@@ -1,5 +1,5 @@
 import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/FeaturedTool/pagenumstyle';
@@ -14,7 +14,7 @@ import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
 
 const pagenum = ({ navigation }: any) => {
   const { theme } = useTheme();
-  const styles = Styles(theme);
+  const styles = useMemo(() => Styles(theme), [theme]);
   const [files, setFiles] = React.useState<PDFFile[]>([]);
   const [pageMode, setPageMode] = useState<'single' | 'facing'>('single');
   const [position, setPosition] = useState<
@@ -66,7 +66,15 @@ const pagenum = ({ navigation }: any) => {
 
     if (output) {
       setIsLoading(false);
-      Alert.alert('Success', `Page numbers added!\nSaved to:\n${output}`);
+      Alert.alert('Success', `Page numbers added!\nSaved to:\n${output}`,
+        [
+          {
+            text: 'Open PDF',
+            onPress: () => openPDF('file://' + output),
+          },
+          { text: 'OK' },
+        ]
+      );
     } else {
       setIsLoading(false);
       Alert.alert('Error', 'Failed to add page numbers');

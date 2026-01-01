@@ -41,7 +41,7 @@ const Rotatepdf = ({ navigation }: any) => {
   const handleFileSelect = async (selectedFiles: PDFFile[]) => {
     setFiles(selectedFiles);
     setSelectedPages([]);
-   setPageList([]);
+    setPageList([]);
     try {
       const pdfBase64 = await RNFS.readFile(selectedFiles[0].uri, 'base64');
       const pdfDoc = await PDFDocument.load(pdfBase64);
@@ -49,7 +49,7 @@ const Rotatepdf = ({ navigation }: any) => {
       setPageList(Array.from({ length: totalPages }, (_, i) => i));
     } catch (error) {
       console.error(error);
-      Alert.alert('PDF is Not Selecte'); 
+      Alert.alert('PDF is Not Selecte');
     }
   };
 
@@ -84,13 +84,13 @@ const Rotatepdf = ({ navigation }: any) => {
 
 
 
-useFocusEffect(
-  useCallback(() => {
-    return () => {
-      Clearfile();
-    };
-  }, [])
-);
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        Clearfile();
+      };
+    }, [])
+  );
 
   const Clearfile = () => {
     setSelectedPages([]);
@@ -162,7 +162,7 @@ useFocusEffect(
                     contentContainerStyle={styles.pagesScrollContainer}>
 
                     {pageList.map((pageIndex) => {
-                    const isSelected = selectedPages.includes(pageIndex);
+                      const isSelected = selectedPages.includes(pageIndex);
 
                       return (
                         <TouchableOpacity
@@ -278,14 +278,14 @@ useFocusEffect(
             </View>
           </>
         }
-        
-{Files.length === 0 && (
-  <EmptyPlaceholder
-    icon="file-pdf"
-    title="No PDFs selected yet"
-    subtitle="Select at least 1 PDF"
-  />
-)}
+
+        {Files.length === 0 && (
+          <EmptyPlaceholder
+            icon="file-pdf"
+            title="No PDFs selected yet"
+            subtitle="Select at least 1 PDF"
+          />
+        )}
       </View>
     </SafeAreaView>
   )

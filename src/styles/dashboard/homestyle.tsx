@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utils/hightwidth'
+import { StyleSheet, } from 'react-native'
+import { SCREEN_WIDTH } from '../../utils/hightwidth'
 import { ThemeType } from '../../utils/themeManager';
 export const Styles = (theme: ThemeType) =>
 
@@ -105,6 +105,18 @@ export const Styles = (theme: ThemeType) =>
       // shadowRadius: 2,
       // elevation: 7,
     },
+    emptyRecent: {
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+      opacity: 0.8,
+    },
+    emptyRecentText: {
+      marginTop: 8,
+      fontSize: 14,
+      color: '#999',
+    },
+
     recentTitle: {
       fontSize: 14,
       fontWeight: '600',
@@ -129,7 +141,7 @@ export const Styles = (theme: ThemeType) =>
     },
     viewAllText: {
       alignItems: 'center',
-      color: '#ff6600', // bright orange button text
+      color: '#ff6600',
       fontWeight: '600'
     },
     recentThumb: {

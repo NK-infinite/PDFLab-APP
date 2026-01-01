@@ -1,5 +1,5 @@
-import { Alert, FlatList, PermissionsAndroid, Platform, Text, View } from 'react-native'
-import React, { useEffect, useMemo, useState } from 'react'
+import { Alert, FlatList,   Text, View } from 'react-native'
+import React, {  useMemo, useState } from 'react'
 import { useTheme } from '../../../utils/themeManager';
 import { Styles } from '../../../styles/toolsstyle/QuickTool/image_pdf_style';
 import { PDFFile } from '../../../components/card/PDFCard';
@@ -9,10 +9,10 @@ import ActionButton from '../../../components/button/ActionButton';
 import SelectImageButton from '../../../components/button/SelectImage';
 import ClearButton from '../../../components/button/Clear_all';
 import ImageCard from '../../../components/card/ImageCard';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import { imagesToPDF } from '../../../services/image_Services/imageToPdfService';
 import { ImageFile } from '../../../services/image_Services/imagePickerService';
 import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder';
+import { openPDF } from '../../../utils/open_pdf';
 
 
 interface image_pdfScreenProps {
@@ -54,7 +54,15 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
       }));
 
       const pdfPath = await imagesToPDF(imageFiles, `Image2PDf.pdf`);
-      Alert.alert('PDF Created', `Saved at: ${pdfPath}`);
+      Alert.alert('PDF Created', `Saved at: ${pdfPath}`,
+        [
+          {
+            text: 'Open PDF',
+            onPress: () => openPDF('file://' + pdfPath),
+          },
+          { text: 'OK' },
+        ]
+      );
 
     } catch (error: any) {
       console.error(error);
@@ -116,12 +124,12 @@ const image_pdfScreen = ({ navigation }: image_pdfScreenProps) => {
             </View>
           )
             :
-                 <EmptyPlaceholder
-                icon="file-pdf"
-                title="No files selected yet"
-                subtitle="Please select at least one file"
-              />         
-               }
+            <EmptyPlaceholder
+              icon="file-pdf"
+              title="No files selected yet"
+              subtitle="Please select at least one file"
+            />
+          }
         </View>
       </View>
 

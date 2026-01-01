@@ -1,6 +1,4 @@
-// utils/permissions.ts (The FIX)
-import { PermissionsAndroid, Platform, Alert, Linking } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PermissionsAndroid,} from 'react-native';
 
 export const requestStoragePermissions = async () => {
   

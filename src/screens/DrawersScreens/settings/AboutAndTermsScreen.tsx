@@ -44,7 +44,7 @@ const AboutAndTermsScreen = () => {
   };
 
   const openPrivacyPolicy = () => {
-    Linking.openURL('https://offlinepdftools.com/privacy');
+    Linking.openURL('https://pdf-lab.com/privacy');
   };
 
   return (

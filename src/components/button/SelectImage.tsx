@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, ActivityIndicator, Alert, Platform, Permissions
 import { useTheme } from '../../utils/themeManager';
 import { ImageFile, selectImages } from '../../services/image_Services/imagePickerService';
 import { captureImage } from '../../services/image_Services/cameraService';
-import Animated, { FadeInLeft, useAnimatedStyle, useSharedValue, withTiming, } from 'react-native-reanimated';
+import Animated, {  useAnimatedStyle, useSharedValue, withTiming, } from 'react-native-reanimated';
 import { useFocusEffect } from '@react-navigation/native';
 
 interface SelectImageButtonProps {

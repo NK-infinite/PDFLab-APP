@@ -1,38 +1,28 @@
-import { StyleSheet } from "react-native";
-import { ThemeType } from "../../../utils/themeManager";
-import { SCREEN_HEIGHT } from "../../../utils/hightwidth";
+import { StyleSheet } from "react-native"
+import { ThemeType } from "../../../utils/themeManager"
+import { SCREEN_HEIGHT } from "../../../utils/hightwidth"
 
-export const Styles = (theme: ThemeType) => {
+export const Styles = (theme:ThemeType)=> {
+return StyleSheet.create({
+     container: {
+            flex: 1,
+            padding: 20,
+            backgroundColor: theme.background,
+        },
 
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20,
-      backgroundColor: theme.background
-    },
-    sectionTitle: {
-      fontSize: 18,
-      fontWeight: '700',
-      marginLeft: 16,
-      marginBottom: 12,
-      color: theme.sectionTitle,
-    },
-    pdfPreviewContainer: {
-      marginTop: 8,
-      justifyContent: 'space-between',
-    },
-    buttonRow: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: 20,
-      marginTop: 20,
-      marginBottom: 20,
-    },
-    pdfCardContainer: {
-      marginBottom: 16,
-    },
-    pagesScrollContainer: {
+        sectionTitle: {
+            fontSize: 16,
+            fontWeight: '700',
+            marginLeft: 16,
+            marginBottom: 12,
+            color: theme.sectionTitle,
+        },
+        pdfPreviewContainer: {
+            marginTop: 8,
+            justifyContent: 'space-between',
+        },
+
+ pagesScrollContainer: {
       paddingRight: 16,
       paddingBottom: 10,
     },
@@ -91,6 +81,8 @@ export const Styles = (theme: ThemeType) => {
       marginTop: 10,
       marginBottom: 15,
     },
+
+          
     selectedInfoTitle: {
       fontSize: 14,
       fontWeight: '600',
@@ -123,5 +115,5 @@ export const Styles = (theme: ThemeType) => {
       textAlign: 'center',
       lineHeight: 20,
     },
-  })
-};
+}) 
+}

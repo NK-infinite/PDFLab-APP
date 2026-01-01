@@ -9,6 +9,7 @@ import { useTheme } from '../utils/themeManager';
 import { Loader } from '../components/loading/Loader';
 import drawernavigations from './drawernavigations';
 
+
 // Lazy-loaded screens (uppercase names)
 const MergeScreen = React.lazy(() => import('../screens/tools/QuickTool/MergeScreen'));
 const SplitScreen = React.lazy(() => import('../screens/tools/QuickTool/SplitScreen'));
@@ -19,6 +20,7 @@ const ProtectPdfScreen = React.lazy(() => import('../screens/tools/FeaturedTool/
 const PageNumScreen = React.lazy(() => import('../screens/tools/FeaturedTool/pagenum'));
 const MetaDataScreen = React.lazy(() => import('../screens/tools/FeaturedTool/MataDataScreen'));
 const AddPagePdfScreen = React.lazy(() => import('../screens/tools/FeaturedTool/AddPage_pdf'));
+const DeletePage = React.lazy(() => import ('../screens/DrawersScreens/other_operations/DeletePage'));
 
 const Pagenavigations = () => {
   const Stack = createNativeStackNavigator();
@@ -50,6 +52,7 @@ const Pagenavigations = () => {
         <Stack.Screen name="PageNum" component={withSuspense(PageNumScreen)} />
         <Stack.Screen name="MetaData" component={withSuspense(MetaDataScreen)} />
         <Stack.Screen name="AddPage" component={withSuspense(AddPagePdfScreen)} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

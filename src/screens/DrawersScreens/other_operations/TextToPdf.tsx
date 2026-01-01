@@ -16,6 +16,7 @@ import { openPDF } from '../../../utils/open_pdf'
 import EmptyPlaceholder from '../../../components/common/EmptyPlaceholder'
 
 const TextToPdf = ({ navigation }: any) => {
+
   const { theme } = useTheme();
   const styles = useMemo(() => Style(theme), [theme]);
   const [fileName, setFileName] = useState('');
@@ -53,6 +54,7 @@ const TextToPdf = ({ navigation }: any) => {
       };
     }, [])
   );
+
   const Makepdf = async () => {
     if (!SelectedFiles || !filePath) {
       Alert.alert('Error', 'Please select a text file first');
@@ -123,14 +125,15 @@ const TextToPdf = ({ navigation }: any) => {
             </TouchableOpacity>
           </Animated.View>
         </View>
-    
-{!fileName && (
-  <EmptyPlaceholder
-    icon="file-pdf"
-    title="No PDFs selected yet"
-    subtitle="Select at least 1 PDF"
-  />
-)}
+
+        {!fileName && (
+          <EmptyPlaceholder
+            icon="file-pdf"
+            title="No PDFs selected yet"
+            subtitle="Select at least 1 PDF"
+          />
+        )}
+
         {fileName ? (
           <View style={{ flex: 1, justifyContent: 'space-between' }}>
             <View style={{ flex: 1 }}>
@@ -175,7 +178,7 @@ const TextToPdf = ({ navigation }: any) => {
             </View>
 
             <ClearButton onPress={() => ClearAll()} />
-     
+
           </View>
         ) : null}
 

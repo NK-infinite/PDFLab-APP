@@ -39,7 +39,6 @@ export const addPageToPDF = async (
       pdfDoc.addPage(copiedPage);
     }
 
-
     const pdfBytes = await pdfDoc.save();
     const pdfBase64Out = Buffer.from(pdfBytes).toString('base64');
 
@@ -52,12 +51,12 @@ export const addPageToPDF = async (
       pdfDoc, 
       `AddPage_${fileName}`,
       'edit',
+      outputPath,
       'Added page by PDfLab',
       ['addpage', 'edit']
     );
       if (!result) throw new Error("Metadata failed");
    
-
     await RNFS.writeFile(outputPath, result.base64, 'base64');
     return outputPath;
   

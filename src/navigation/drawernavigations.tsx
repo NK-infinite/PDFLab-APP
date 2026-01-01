@@ -10,6 +10,9 @@ const Watermark = React.lazy(() => import('../screens/DrawersScreens/other_opera
 const QRCodeGenerator = React.lazy(() => import('../screens/DrawersScreens/other_operations/QRCodeGenerator'));
 const TextToPdf = React.lazy(() => import('../screens/DrawersScreens/other_operations/TextToPdf'));
 // const ScaneQRcode = React.lazy(() => import('../screens/DrawersScreens/other_operations/ScaneQRcode'));
+const DeletePage = React.lazy(() => import('../screens/DrawersScreens/other_operations/DeletePage'));
+const MyFilesScreen = React.lazy(() => import('../screens/DrawersScreens/settings/MyFilesScreen'));
+
 
 const drawernavigations = () => {
   const Drawer = createDrawerNavigator();
@@ -35,6 +38,9 @@ const drawernavigations = () => {
       <Drawer.Screen name="Watermark" component={withSuspense(Watermark)} />
       <Drawer.Screen name="QRCode" component={withSuspense(QRCodeGenerator)} />
       <Drawer.Screen name="TextToPdf" component={withSuspense(TextToPdf)} />
+      <Drawer.Screen name="DeletePage" component={withSuspense(DeletePage)} />
+      <Drawer.Screen name="MyFiles" component={withSuspense(MyFilesScreen)} />
+
       {/* <Drawer.Screen name="QrScan" component={withSuspense(ScaneQRcode)} />
        */}
     </Drawer.Navigator>

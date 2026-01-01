@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { ThemeType } from "../../../utils/themeManager";
 
 export const Style = (theme: ThemeType) => {
-
     return StyleSheet.create({
         container: {
             flex: 1,

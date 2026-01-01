@@ -34,6 +34,7 @@ export const rotatePdfPages = async (
         pdfDoc,
         `NumberedPDF_${Date.now()}.pdf`,
         'edit',
+        outputPath,
         'rotate pdf by PDFLab',
         ['rotate', 'edit']
     );

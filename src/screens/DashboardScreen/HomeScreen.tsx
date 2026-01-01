@@ -1,4 +1,4 @@
-import { FlatList, Image, InteractionManager, Text, TouchableOpacity, useColorScheme, useWindowDimensions, View } from 'react-native'
+import { FlatList, Image,  Text, TouchableOpacity, useColorScheme, useWindowDimensions, View } from 'react-native'
 import React, { Suspense, useEffect, useMemo, useState, } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -9,14 +9,14 @@ import {
     useSharedValue,
 } from 'react-native-reanimated';
 import { useIsFocused } from '@react-navigation/native';
-import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Styles } from '../../styles/dashboard/homestyle';
 import { useTheme } from '../../utils/themeManager';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
 import { Loader } from '../../components/loading/Loader';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utils/hightwidth'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { openPDF } from '../../utils/open_pdf';
 
 
 const HomeScreen = () => {
@@ -29,6 +29,7 @@ const HomeScreen = () => {
     const drawerStatus = useDrawerStatus();
     const { width, height } = useWindowDimensions();
     const isFolded = width < 600;
+    const [recentFiles, setRecentFiles] = useState<any[]>([]);
 
     // const [styles, setStyles] = useState(Styles(theme));
     const styles = useMemo(() => Styles(theme), [theme]);
@@ -59,7 +60,6 @@ const HomeScreen = () => {
         transform: [{ translateX: -Animation2.value * 150 }],
     }));
 
-
     // useEffect(() => {
     //     // Development-only interval to refresh styles
     //     if (__DEV__) {
@@ -73,7 +73,7 @@ const HomeScreen = () => {
     const QUICK_ACTIONS = [
         { key: 'Merge', label: 'Merge', icon: 'code-merge' },
         { key: 'Split', label: 'Split', icon: 'arrows-split-up-and-left' },
-        { key: 'Compress', label: 'Compress', icon: 'compress' },
+       //{ key: 'Compress', label: 'Compress', icon: 'compress' },
         { key: 'Images2PDF', label: 'Images → PDF', icon: 'image' },
         { key: 'Scan', label: 'Scan', icon: 'camera' },
     ];
@@ -87,11 +87,8 @@ const HomeScreen = () => {
         { key: 'AddPage', label: 'Add Page in PDf', icon: 'file-circle-plus' },
     ];
 
-    const RECENT_FILES = [
-        { id: '1', name: 'Invoice-Dec-2025.pdf', size: '240 KB' },
-        { id: '2', name: 'Project-Plan.pdf', size: '1.2 MB' },
-        { id: '3', name: 'Resume.pdf', size: '86 KB' },
-    ];
+
+
 
     const renderQuick = ({ item }: any) => (
         <Animated.View
@@ -121,10 +118,16 @@ const HomeScreen = () => {
 
 
     const renderRecent = ({ item }: any) => (
+
+
         <Animated.View
             entering={FadeInRight.springify().damping(damping).stiffness(stiffness).duration(1000)}>
 
-            <TouchableOpacity style={styles.recentCard} onPress={() => console.log('Open file', item.id)}>
+            <TouchableOpacity
+                style={styles.recentCard}
+                onPress={() => openPDF('file://' + item.path)}
+
+            >
                 <Image
                     source={require('../../assets/Image/PDFLab.png')}
                     style={styles.recentThumb}
@@ -132,11 +135,33 @@ const HomeScreen = () => {
                 />
                 <View style={{ flex: 1 }}>
                     <Text style={styles.recentTitle} numberOfLines={1}>{item.name}</Text>
-                    <Text style={styles.recentMeta}>{item.size}</Text>
+                    <Text style={styles.recentMeta}>{formatSizeMB(item.size)}</Text>
                 </View>
             </TouchableOpacity>
         </Animated.View>
+
     );
+    const formatSizeMB = (bytes: number) => {
+        const mb = bytes / (1024 * 1024);
+        return `${mb.toFixed(1)} MB`;
+    };
+
+
+    useEffect(() => {
+        const loadRecentFiles = async () => {
+            try {
+                const data = await AsyncStorage.getItem('PDF_HISTORY');
+                const history = data ? JSON.parse(data) : [];
+                setRecentFiles(history.slice(0, 3));
+            } catch (e) {
+                console.log('Failed to load recent files', e);
+            }
+        };
+
+        if (isFocused) {
+            loadRecentFiles();
+        }
+    }, [isFocused]);
 
     return (
         <SafeAreaView
@@ -173,10 +198,10 @@ const HomeScreen = () => {
                                 {
                                     bar ?
                                         <Icon
-                                        name="xmark" size={30} color={isDarkMode ? '#fff' : '#000'} />
+                                            name="xmark" size={30} color={isDarkMode ? '#fff' : '#000'} />
                                         :
                                         <Icon
-                                        name="bars" size={30} color={isDarkMode ? '#fff' : '#000'} />
+                                            name="bars" size={30} color={isDarkMode ? '#fff' : '#000'} />
                                 }
                             </TouchableOpacity>
                         </Animated.View>
@@ -231,20 +256,39 @@ const HomeScreen = () => {
                         </TouchableOpacity> */}
                                 </View>
 
+                                
                                 {/* Recent Files */}
                                 <View style={[styles.section, { flex: 1 }]}>
                                     <Text style={styles.sectionTitle}>Recent Files</Text>
-                                    <FlatList
-                                        data={RECENT_FILES}
-                                        key={isFocused ? 'focused1' : 'unfocused1'}
-                                        keyExtractor={item => item.id}
-                                        renderItem={renderRecent}
-                                        horizontal
-                                        showsHorizontalScrollIndicator={false}
-                                        showsVerticalScrollIndicator={false}
-                                        contentContainerStyle={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 26 }}
-                                    />
+
+                                    {recentFiles.length === 0 ? (
+                                        <View style={styles.emptyRecent}>
+                                            <Icon
+                                                name="file-circle-xmark"
+                                                size={36}
+                                                color={isDarkMode ? '#666' : '#999'}
+                                            />
+                                            <Text style={styles.emptyRecentText}>
+                                                No Recent Files
+                                            </Text>
+                                        </View>
+                                    ) : (
+                                        <FlatList
+                                            data={recentFiles}
+                                            key={isFocused ? 'focused1' : 'unfocused1'}
+                                            keyExtractor={item => item.id}
+                                            renderItem={renderRecent}
+                                            horizontal
+                                            showsHorizontalScrollIndicator={false}
+                                            contentContainerStyle={{
+                                                paddingLeft: 16,
+                                                paddingTop: 8,
+                                                paddingBottom: 26,
+                                            }}
+                                        />
+                                    )}
                                 </View>
+
 
 
                             </>

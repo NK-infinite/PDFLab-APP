@@ -26,8 +26,8 @@ export const Style = (theme: ThemeType) => {
       marginBottom: 20,
     },
     button: {
-      backgroundColor: theme.quickCard,
-      borderColor: theme.quickCardBorder,
+      backgroundColor: theme.drawerCard,
+      borderColor: theme.drawerCardBorder,
       borderWidth: 2,
       padding: 14,
       borderRadius: 10,

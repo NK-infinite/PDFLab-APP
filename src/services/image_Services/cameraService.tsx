@@ -1,4 +1,3 @@
-// src/services/cameraService.ts
 import { launchCamera, CameraOptions } from 'react-native-image-picker';
 import { ImageFile } from './imagePickerService';
 

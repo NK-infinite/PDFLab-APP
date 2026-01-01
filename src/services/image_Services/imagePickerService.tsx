@@ -1,4 +1,3 @@
-// src/services/imagePickerService.ts
 import { launchImageLibrary, Asset } from 'react-native-image-picker';
 
 export interface ImageFile {
