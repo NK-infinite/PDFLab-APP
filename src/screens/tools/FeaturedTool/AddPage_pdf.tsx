@@ -94,7 +94,7 @@ const AddPage_pdf = ({ navigation }: any) => {
       <View style={style.container}>
         <Header title='Add Page' onPress={() => navigation.goBack()} />
 
-        <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 20 }}>
           <SelectPDFButton
             onFilesSelected={handleFileSelect}
             buttonText="Select PDF"

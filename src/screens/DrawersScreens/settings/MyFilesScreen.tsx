@@ -15,7 +15,6 @@ const MyFilesScreen = ({ navigation }: any) => {
     const styles = useMemo(() => Style(theme), [theme]);
     //const [styles, setStyles] = useState(Style(theme))
     const [recentFiles, setRecentFiles] = useState<any[]>([]);
-    const { width, height } = useWindowDimensions();
     const isFocused = useIsFocused();
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -53,7 +52,6 @@ const MyFilesScreen = ({ navigation }: any) => {
         const mb = bytes / (1024 * 1024);
         return `${mb.toFixed(1)} MB`;
     };
-
 
     useEffect(() => {
         const loadRecentFiles = async () => {

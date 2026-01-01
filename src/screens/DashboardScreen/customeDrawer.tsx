@@ -110,7 +110,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           </View>
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
 
-            <Icon name="arrow-left" size={22} style={{ transform: [isDrawerOpen ? { rotate: '0deg' } : { rotate: '180deg' }] }} color={theme.textPrimary} />
+            <Icon name="arrow-left" size={25} style={{ transform: [isDrawerOpen ? { rotate: '0deg' } : { rotate: '180deg' }] }} color={theme.textPrimary} />
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -161,8 +161,6 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             onPress={() => props.navigation.navigate('DeletePage')}
           />
         </Animated.View>
-
-
 
         <Animated.View
           style={itemStyle(4)}>
@@ -225,7 +223,8 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         {/* <DrawerItem
           iconName="palette"
           label="Theme"
-          onPress={() => props.navigation.navigate('Theme')}
+          onPress={() => console.log('them')
+          }
           /> */}
 
         <Animated.View
@@ -239,8 +238,8 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </Animated.View>
 
         <Animated.View
-          style={itemStyle(10)}
-        >
+          style={itemStyle(10)}>
+
           <DrawerItem
             iconName="share-nodes"
             label="Share App"

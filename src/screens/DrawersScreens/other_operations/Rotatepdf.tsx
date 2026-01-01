@@ -129,7 +129,7 @@ const Rotatepdf = ({ navigation }: any) => {
         </View>
         {Files && Files.length > 0 &&
           <>
-            <View style={{ flex: 1, paddingTop: 15, justifyContent: 'space-between' }}>
+            <View style={{ flex: 1, paddingTop: 15, justifyContent: 'space-evenly' }}>
               <View>
                 <Text style={styles.sectionTitle}>Selected PDF</Text>
                 <View style={styles.pdfPreviewContainer}>

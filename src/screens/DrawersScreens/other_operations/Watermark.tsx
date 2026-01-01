@@ -140,7 +140,7 @@ const Watermark = ({ navigation }: any) => {
                 }
                 } />
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 15, paddingBottom: 15 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 15, paddingBottom: 15 }}>
                     <SelectPDFButton
                         buttonText='Select PDF'
                         onFilesSelected={handelSelect}

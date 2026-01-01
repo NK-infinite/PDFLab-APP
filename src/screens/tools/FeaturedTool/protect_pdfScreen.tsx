@@ -91,7 +91,7 @@ const protect_pdf = ({ navigation }: any) => {
                 keyboardDismissMode="interactive">
                 <View style={style.container}>
 
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 20 }}>
                         <SelectPDFButton
                             onFilesSelected={handleFileSelect}
                             buttonText="Select PDF"

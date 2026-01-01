@@ -26,6 +26,7 @@ export const Style = (theme:ThemeType)=> {
       // elevation: 7,
     },
     emptyRecent: {
+      flex: 1,
       height: 100,
       justifyContent: 'center',
       alignItems: 'center',

@@ -111,7 +111,7 @@ const pagenum = ({ navigation }: any) => {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive">
-          <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 20 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 20 }}>
             <SelectPDFButton
               onFilesSelected={handleFileSelect}
               buttonText="Select PDF"

@@ -1,4 +1,4 @@
-import { FlatList, Image,  Text, TouchableOpacity, useColorScheme, useWindowDimensions, View } from 'react-native'
+import { FlatList, Image, Text, TouchableOpacity, useColorScheme, useWindowDimensions, View } from 'react-native'
 import React, { Suspense, useEffect, useMemo, useState, } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -18,12 +18,10 @@ import { Loader } from '../../components/loading/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { openPDF } from '../../utils/open_pdf';
 
-
 const HomeScreen = () => {
     const { theme } = useTheme();
     const isDarkMode = useColorScheme() === 'dark';
     const Animation = useSharedValue(0);
-    const Animation2 = useSharedValue(0);
     const navigation = useNavigation<any>();
     const isFocused = useIsFocused();
     const drawerStatus = useDrawerStatus();
@@ -31,8 +29,8 @@ const HomeScreen = () => {
     const isFolded = width < 600;
     const [recentFiles, setRecentFiles] = useState<any[]>([]);
 
-    // const [styles, setStyles] = useState(Styles(theme));
-    const styles = useMemo(() => Styles(theme), [theme]);
+    const [styles, setStyles] = useState(Styles(theme));
+    //const styles = useMemo(() => Styles(theme), [theme]);
 
     const damping = 30;
     const stiffness = 10;
@@ -45,10 +43,6 @@ const HomeScreen = () => {
             setBar(false);
         }
     }, [drawerStatus]);
-    // const gearAnimation = () => {
-    //     Animation.value = (withSpring(Animation.value + 120, { duration: 500 }))
-    //     Animation2.value = (withSpring(1, { duration: 500 }))
-    // }
 
     const [bar, setBar] = useState(false);
 
@@ -56,22 +50,21 @@ const HomeScreen = () => {
         transform: [{ rotate: `${Animation.value}deg` }]
     }));
 
-
-    // useEffect(() => {
-    //     // Development-only interval to refresh styles
-    //     if (__DEV__) {
-    //         const interval = setInterval(() => {
-    //             setStyles(Styles(theme));
-    //         }, 200); // 200ms, adjust if needed
-    //         return () => clearInterval(interval);
-    //     }
-    // }, [theme]);
+    useEffect(() => {
+        // Development-only interval to refresh styles
+        if (__DEV__) {
+            const interval = setInterval(() => {
+                setStyles(Styles(theme));
+            }, 200); // 200ms, adjust if needed
+            return () => clearInterval(interval);
+        }
+    }, [theme]);
 
     const QUICK_ACTIONS = [
         { key: 'Merge', label: 'Merge', icon: 'code-merge' },
         { key: 'Split', label: 'Split', icon: 'arrows-split-up-and-left' },
-       //{ key: 'Compress', label: 'Compress', icon: 'compress' },
-        { key: 'Images2PDF', label: 'Images → PDF', icon: 'image' },
+        //{ key: 'Compress', label: 'Compress', icon: 'compress' },
+        { key: 'Images2PDF', label: 'Images to PDF', icon: 'image' },
         { key: 'Scan', label: 'Scan', icon: 'camera' },
     ];
 
@@ -83,9 +76,6 @@ const HomeScreen = () => {
         { key: 'MetaData', label: 'Metadata', icon: 'file-pen' },
         { key: 'AddPage', label: 'Add Page in PDf', icon: 'file-circle-plus' },
     ];
-
-
-
 
     const renderQuick = ({ item }: any) => (
         <Animated.View
@@ -192,13 +182,16 @@ const HomeScreen = () => {
                                     navigation.openDrawer();
                                 }
                             }}>
+
                                 {
                                     bar ?
+
                                         <Icon
-                                            name="xmark" size={30} color={isDarkMode ? '#fff' : '#000'} />
+                                            name="xmark" size={35} color={isDarkMode ? '#fff' : '#000'} />
                                         :
                                         <Icon
-                                            name="bars" size={30} color={isDarkMode ? '#fff' : '#000'} />
+                                            name="bars" size={35} color={isDarkMode ? '#fff' : '#000'} />
+
                                 }
                             </TouchableOpacity>
                         </Animated.View>
@@ -253,7 +246,7 @@ const HomeScreen = () => {
                         </TouchableOpacity> */}
                                 </View>
 
-                                
+
                                 {/* Recent Files */}
                                 <View style={[styles.section, { flex: 1 }]}>
                                     <Text style={styles.sectionTitle}>Recent Files</Text>

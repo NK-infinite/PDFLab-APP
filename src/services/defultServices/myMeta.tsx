@@ -31,6 +31,7 @@ export const addmyMetadata = async (
   description?: string,
   tags?: string[]
 ): Promise<{ base64: string; meta: PdfItem } | null> => {
+  
   try {
     pdfDoc.setTitle(pdfName || 'Untitled');
     pdfDoc.setAuthor(DeviceInfo.getBrand() || 'Local User');
@@ -41,7 +42,7 @@ export const addmyMetadata = async (
     pdfDoc.setSubject(description || '');
     pdfDoc.setModificationDate(new Date());
 
-    // 2. 
+    // 2.
     const pdfBytes = await pdfDoc.save();
     const pdfBase64 = Buffer.from(pdfBytes).toString('base64');
 
