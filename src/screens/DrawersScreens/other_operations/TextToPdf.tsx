@@ -143,13 +143,11 @@ const TextToPdf = ({ navigation }: any) => {
 
                   <Animated.View entering={FadeInUp.duration(1000)}>
                     <View style={styles.card}>
-
                       <Image
                         source={require('../../../assets/Image/PDFLab.png')}
                         style={styles.thumbnail}
                         resizeMode='contain'
                       />
-
                       <Text
                         numberOfLines={1}
                         ellipsizeMode="tail"
@@ -170,12 +168,9 @@ const TextToPdf = ({ navigation }: any) => {
                     />
                   </>
                 }
-
               </View>
             </View>
-
             <ClearButton onPress={() => ClearAll()} />
-
           </View>
         ) : null}
 

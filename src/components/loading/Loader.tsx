@@ -11,8 +11,8 @@ import { useEffect } from "react";
 import Icon from "react-native-vector-icons/FontAwesome6";
 
 export const Loader = () => {
+  
   const { theme } = useTheme();
-
   const rotate = useSharedValue(0);
   const scale = useSharedValue(1);
 

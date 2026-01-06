@@ -17,7 +17,6 @@ const EmptyPlaceholder: React.FC<EmptyPlaceholderProps> = ({
   iconSize = 80,
 }) => {
   const { theme } = useTheme();
-
   return (
     <View style={styles.container}>
       <Icon name={icon} size={iconSize} color={theme.textSecondary} />

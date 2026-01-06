@@ -1,6 +1,6 @@
-import { FlatList, Image, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useEffect, useMemo, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { FlatList, Image, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Style } from '../../../styles/Drawers_Screens_style/setting_Screens_style/MyFileStyle';
 import { useTheme } from '../../../utils/themeManager';
 import Header from '../../../components/headers/header';
@@ -19,7 +19,6 @@ const MyFilesScreen = ({ navigation }: any) => {
     const isDarkMode = useColorScheme() === 'dark';
 
     //const [styles, setStyles] = useState(Style(theme))
-    
     // useEffect(() => {
     //     // Development-only interval to refresh styles
     //     if (__DEV__) {
@@ -49,7 +48,7 @@ const MyFilesScreen = ({ navigation }: any) => {
             </TouchableOpacity>
         </Animated.View>
     );
-    
+
     const formatSizeMB = (bytes: number) => {
         const mb = bytes / (1024 * 1024);
         return `${mb.toFixed(1)} MB`;

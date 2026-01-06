@@ -114,9 +114,7 @@ const DeletePage = ({ navigation }: any) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
             <View style={styles.container}>
                 <Header title='Delete page' onPress={() => navigation.goBack()} />
-
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: 10 }}>
-
                     <SelectPDFButton
                         buttonText='Select PDf'
                         onFilesSelected={handelselectd}

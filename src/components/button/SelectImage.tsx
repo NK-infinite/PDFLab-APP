@@ -74,9 +74,6 @@ const SelectImageButton = ({ onImagesSelected, buttonText = 'Select Images', sty
         }
     };
 
-
-
-
     useFocusEffect(
         useCallback(() => {
             progress.value = 0;

@@ -63,7 +63,7 @@ const HomeScreen = () => {
     const QUICK_ACTIONS = [
         { key: 'Merge', label: 'Merge', icon: 'code-merge' },
         { key: 'Split', label: 'Split', icon: 'arrows-split-up-and-left' },
-        //{ key: 'Compress', label: 'Compress', icon: 'compress' },
+        { key: 'Compress', label: 'Compress', icon: 'compress' },
         { key: 'Images2PDF', label: 'Images to PDF', icon: 'image' },
         { key: 'Scan', label: 'Scan', icon: 'camera' },
     ];
@@ -105,16 +105,12 @@ const HomeScreen = () => {
 
 
     const renderRecent = ({ item }: any) => (
-
-
         <Animated.View
             entering={FadeInRight.springify().damping(damping).stiffness(stiffness).duration(1000)}>
-
             <TouchableOpacity
                 style={styles.recentCard}
-                onPress={() => openPDF('file://' + item.path)}
+                onPress={() => openPDF('file://' + item.path)}>
 
-            >
                 <Image
                     source={require('../../assets/Image/PDFLab.png')}
                     style={styles.recentThumb}
@@ -184,14 +180,11 @@ const HomeScreen = () => {
                             }}>
 
                                 {
-                                    bar ?
-
-                                        <Icon
-                                            name="xmark" size={35} color={isDarkMode ? '#fff' : '#000'} />
+                                    bar
+                                        ?
+                                        <Icon name="xmark" size={35} color={isDarkMode ? '#fff' : '#000'} />
                                         :
-                                        <Icon
-                                            name="bars" size={35} color={isDarkMode ? '#fff' : '#000'} />
-
+                                        <Icon name="bars" size={35} color={isDarkMode ? '#fff' : '#000'} />
                                 }
                             </TouchableOpacity>
                         </Animated.View>
@@ -202,7 +195,6 @@ const HomeScreen = () => {
 
                         renderItem={() => (
                             <>
-
                                 {/* Quick Actions */}
                                 <View style={styles.section}>
                                     <Text style={styles.sectionTitle}>Quick Actions</Text>
@@ -217,7 +209,6 @@ const HomeScreen = () => {
                                         contentContainerStyle={{ paddingLeft: 16, padding: 16 }}
                                     />
                                 </View>
-
 
                                 {/* Featured Tools Grid */}
                                 <View style={[styles.section, { flex: 1, paddingBottom: 8 }]}>
@@ -278,9 +269,6 @@ const HomeScreen = () => {
                                         />
                                     )}
                                 </View>
-
-
-
                             </>
                         )}
                         showsVerticalScrollIndicator={false}
